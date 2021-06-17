@@ -1,0 +1,134 @@
+﻿@model SysHotel.EL.Paginador.PaginadorGenerico<SysHotel.EL.RolUsuario>
+@{
+    ViewBag.Title = "Roles de usuarios";
+}
+
+<h4>Roles de usuarios</h4>
+
+<div class="row">
+    <div class="col s4">
+        <strong class="btn waves-effect waves-light">
+            <span>&#10133</span><a style="color:white" href="~/RolUsuario/Create"> Nuevo Rol de usuario</a>
+        </strong>
+        <br />
+        <br />
+    </div>
+    <div class="col s4">
+
+    </div>
+    <!--Busqueda-->
+    <div class="col s4">
+        <form method="get" action=@Url.Action("Index", "RolUsuario")>
+            <div class="row">
+                <div class="col s10">
+                    <div class="input-field" style="margin:0px; padding:0px">
+                        <input name="busqueda" type="search" required style="border: 1px solid #A9A9A9; padding:0px">
+                        <i class="material-icons">close</i>
+                    </div>
+                    <button style="margin-top:3px;" type="submit" class="btn waves-effect waves-light indigo darken-1 white-text">Buscar</button>
+                    <a style="margin-top:3px;" href="~/RolUsuario" class="btn waves-effect waves-light blue darken-1 white-text">Mostrar todo</a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+<!--Tabla de contenido-->
+<div class="row">
+    <div class="col s12 m6">
+        <table class="striped">
+            <thead>
+                <tr style="background-color:rgb(229, 229, 229); color:rgb(59, 57, 57)">
+                    <th>
+                        Rol usuario
+                    </th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Resultado)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rol)
+                        </td>
+                        <td>
+                            <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Editar" href="~/RolUsuario/Edit/@item.IdRolUsuario">edit</a></i>|
+                            <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/RolUsuario/Details/@item.IdRolUsuario">description</a></i>|
+                            <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/RolUsuario/Delete/@item.IdRolUsuario">delete</a></i>|
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+     <div class="col s12 m3">
+         
+     </div>
+     <div class="col s12 m3">
+
+     </div>
+</div>
+<br />
+<br />
+
+@*CODIGO PARA EL PAGINADOR DE REGISTRO*@
+
+@if (Model.Resultado.Count() > 0)
+{
+    <span>
+        <strong>@Model.TotalRegistro</strong> registros encontrados
+    </span>
+
+    <span>&nbsp;|&nbsp;</span>
+
+    <span>
+        Página <strong>@(Model.PaginaActual)</strong> de
+        <strong>@Model.TotalPagina</strong>
+    </span>
+    <span>&nbsp;||&nbsp;</span>
+}
+else
+{
+    <span>No hay resultados para esta búsqueda</span>
+    <span>&nbsp;|&nbsp;</span>
+}
+
+@if (Model.PaginaActual > 1)
+{
+    @Html.ActionLink("<<", "Index", new { pagina = 1 },
+                                    new { @class = "btn" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { pagina = Model.PaginaActual - 1 },
+                    new { @class = "btn" })
+}
+else
+{
+    @Html.ActionLink("<<", "Index", new { pagina = 1 },
+                    new { @class = "btn disabled" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { pagina = 1 },
+                    new { @class = "btn disabled" })
+}
+<span></span>
+@if (Model.PaginaActual < Model.TotalPagina)
+{
+    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.PaginaActual + 1 },
+                        new { @class = "btn" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPagina },
+                        new { @class = "btn" })
+}
+else
+{
+    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.TotalPagina - 1 },
+                        new { @class = "btn disabled" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPagina },
+                        new { @class = "btn disabled" })
+}
+
+
+@section scripts{
+    <script>M.AutoInit();</script>
+}

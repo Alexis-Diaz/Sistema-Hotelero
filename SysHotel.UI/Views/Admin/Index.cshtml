@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SysHotel.EL.Reservacion>
+
+@{
+    ViewBag.Title = "Administración";
+}
+
+<h3>Administración</h3>
+<div class="row">
+    <div class="col s12">
+        <ul class="tabs">
+            <li class="tab col s4"><a href="#reservas">Reservas para este día</a></li>
+            <li class="tab col s4"><a href="#notas">Mis notas</a></li>
+            <li class="tab col s4"><a href="#anuncios">Anuncios</a></li>
+        </ul>
+    </div>
+    <!--Paneles desplazales-->
+    <div id="reservas" class="col s12">
+        @if (Model.Count() != 0)
+        {
+            foreach (var item in Model)
+            {
+                <div class="col s4">@Html.DisplayFor(modelitem => item.cliente.Nombres)<p>Hola</p></div>
+                <div class="col s1">@Html.DisplayFor(modelitem => item.DiaSalida)hola</div>
+                <div class="col s1">@Html.DisplayFor(modelitem => item.habitacion.NumeroHabitacion)hola</div>
+                <div class="col s1">@Html.DisplayFor(modelitem => item.NumeroPersonas)</div>
+                <div class="col s3">
+                    <i class="material-icons">@Html.ActionLink("", "Marcar", "Reservacion", new { id = item.IdReservacion }, new { @class = "" })touch-app</i>
+                    @Html.ActionLink("", "Edit", "Reservacion", new { id = item.IdReservacion }, new { @class = "" }) |
+                    @Html.ActionLink("", "Details", "Reservacion", new { id = item.IdReservacion }, new { @class = "" })|
+                    @Html.ActionLink("", "Delete", "Reservaion", new { id = item.IdReservacion }, new { @class = "" })
+                </div>
+            }
+        }
+        else
+        {
+            <p>No hay nada que mostrar.</p>
+        }
+    </div>
+    <div id="notas" class="col s12">Notas</div>
+    <div id="anuncios" class="col s12">Anuncios</div>
+</div>
+
+@section scripts{
+    <script src="~/Content/Script/indexAdmin.js"></script>
+}  

@@ -1,0 +1,88 @@
+﻿@model SysHotel.EL.Proveedor
+
+@{
+    ViewBag.Title = "Editar proveedor";
+}
+<div class="row">
+    <div class="col s6">
+        <h4><i class="material-icons">edit</i>Editar proveedor</h4>
+        @if (ViewBag.Message != null)
+        {
+            string clase = "";
+            switch (ViewBag.Message)
+            {
+                case "Ocurrió un error, el cambio no fué posible salvarlo.":
+                    clase = "alert-danger";
+                    break;
+
+                case "No se han hecho cambios.":
+                    clase = "alert-info";
+                    break;
+                case "Ya existe un proveedor con el mismo nombre.":
+                    clase = "alert-warning";
+                    break;
+                case "Upss, los datos se fueron incompletos.":
+                    clase = "alert-error";
+                    break;
+                case "Información incompleta.":
+                    clase = "alert-info";
+                    break;
+            }
+            <div id="closeAlertLogin" class=@clase> <strong>@ViewBag.Message</strong><span onclick="closeAlertFunction( );" class="right spanClose">&#10060;</span></div>
+        }
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="l">
+                <h5>Detalles del proveedor</h5>
+                <br />
+                @Html.ValidationSummary(true, "", new { @class = "red-text" })
+                @Html.HiddenFor(model => model.IdProveedor)
+                @Html.HiddenFor(model => model.Estado)
+
+                <div class="input-field">
+                    @Html.LabelFor(model => model.NombreEmpresa, htmlAttributes: new { @class = "" })
+                    @Html.EditorFor(model => model.NombreEmpresa, new { htmlAttributes = new { @class = "validate" } })
+                    @Html.ValidationMessageFor(model => model.NombreEmpresa, "", new { @class = "red-text" })
+                </div>
+
+                <div class="input-field">
+                    @Html.LabelFor(model => model.Ubicacion, htmlAttributes: new { @class = "" })
+                    @Html.EditorFor(model => model.Ubicacion, new { htmlAttributes = new { @class = "validate" } })
+                    @Html.ValidationMessageFor(model => model.Ubicacion, "", new { @class = "red-text" })
+                </div>
+
+                <div class="input-field">
+                    @Html.LabelFor(model => model.Encargado, htmlAttributes: new { @class = "" })
+                    @Html.EditorFor(model => model.Encargado, new { htmlAttributes = new { @class = "validate" } })
+                    @Html.ValidationMessageFor(model => model.Encargado, "", new { @class = "red-text" })
+                </div>
+                <div class="input-field">
+                    @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "" })
+                    @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "validate" } })
+                    @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "red-text" })
+                </div>
+                <div class="input-field">
+                    @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "" })
+                    @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "validate" } })
+                    @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "red-text" })
+                </div>
+
+                <div class="right">
+                    <button type="submit" class="btn waves-effect waves-light white-text">Guardar cambios</button>
+                </div>
+
+            </div>
+        }
+    </div>
+    <div class="col s6">
+
+    </div>
+</div>
+
+<div>
+    <i class="material-icons">undo</i>@Html.ActionLink("Regresar a la lista", "Index")
+</div>
+<br />
+<br />

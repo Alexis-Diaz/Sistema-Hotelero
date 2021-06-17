@@ -1,0 +1,126 @@
+﻿/*Color del navbar*/
+#navbar {
+    background-color:#1A5276;
+}
+
+/*Manejamos el titulo del navbar*/
+@media only screen and (min-width: 993px){
+    #tituloNavbar {
+        display:none;
+    }
+}
+
+@media only screen and (max-width:500px){
+    #tituloNavbar{
+        display:none
+    }
+}
+
+/*Hacemos que el menu de amburguesa aparezca cuando se elimina la 
+opcion "Cuenta" del navbar y que se ubique a la par del icono*/
+@media only screen and (max-width: 1170px){
+    #liMenuCuenta{
+        display:none;
+    }
+    #sidenav-trigger{
+        display:initial;
+        margin-left:65px;
+    }
+}
+/*Se elimina el menu Facturas*/
+@media only screen and (max-width: 1120px) {
+    #liMenuFacturas {
+        display: none;
+    }
+}
+
+/*Se elimina el menu Proveedores*/
+@media only screen and (max-width: 1050px) {
+    #liMenuProveedores {
+        display: none;
+    }
+}
+
+/*Se elimina el margen al menu amburguesa*/
+@media only screen and (max-width: 992px) {
+    #sidenav-trigger {
+        margin-left:7px;
+    }
+}
+
+/*titulo de Navbar Login*/
+#tituloNavbarLogin {
+    margin-left: 65px;
+}
+
+#menuInicioLogin {
+    margin-left: 50px;
+}
+
+/*Alertas*/
+.alert-info {
+    color: #112735;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgb(133, 248, 255);
+}
+
+.alert-error {
+    color: #112735;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgb(255, 168, 85);
+}
+
+.alert-warning {
+    color:#112735;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgb(254, 255, 191);
+}
+
+.alert-danger {
+    color: #112735;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgb(255, 137, 137);
+}
+
+.alert-succes {
+    color: #112735;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgb(110, 255, 108);
+}
+
+.spanClose:hover {
+    background-color: rgb(68, 68, 68);
+    border-radius: 7px;
+}
+
+.redText {
+    color:rgb(255, 0, 0);
+}
+
+/*Margenes*/
+.narrow-margin{
+    margin-left:10px;
+    margin-right:10px;
+}
+
+/*Subtitulo de create categoriaAlimento*/
+.relleno{
+    padding:10px;
+}
+
+/*Dropdown List*/
+.dropdownList{
+    display:initial;
+}
+
+/*Checkbox*/
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+     position: initial; 
+     opacity: initial; 
+     pointer-events: initial; 
+}

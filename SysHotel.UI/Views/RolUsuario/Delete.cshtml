@@ -1,0 +1,53 @@
+﻿@model SysHotel.EL.RolUsuario
+
+@{
+    ViewBag.Title = "Eliminar rol de usuario";
+}
+<div class="container">
+    <div class="row">
+        <div class="col s6">
+            <h4>Eliminar</h4>
+            @if (ViewBag.Message != null)
+            {
+                string clase = "";
+                switch (ViewBag.Message)
+                {
+                    case "Error crítico, no fué posible eliminar el rol.":
+                        clase = "alert-danger";
+                        break;
+
+                    case "Ocurrió un error, el usuario a eliminar no existe.":
+                        clase = "alert-info";
+                        break;
+                    case "Se recibió un identificador incorrecto.":
+                        clase = "alert-info";
+                        break;
+                }
+                <div id="closeAlertLogin" class=@clase> <strong>@ViewBag.Message</strong><span onclick="closeAlertFunction( );" class="right spanClose">&#10060;</span></div>
+            }
+            <hr />
+            <div class="card blue lighten-5">
+                <div class="card-content grey-text text-darken-4">
+                    <span class="card-title">Descripción del rol seleccionado</span>
+                    <p>
+                        <strong>@Html.DisplayNameFor(model => model.Rol):</strong>
+                        @Html.DisplayFor(model => model.Rol)
+                    </p>
+                    <br />
+                </div>
+                <div class="card-action">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn waves-effect waves-light red lighten-1 white-text">Eliminar</button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col s6">
+
+        </div>
+    </div>
+    <a href="~/RolUsuario"><i class="material-icons">undo</i> Regresar a la lista</a>
+</div>

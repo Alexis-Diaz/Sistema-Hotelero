@@ -1,0 +1,75 @@
+﻿@model SysHotel.EL.Login.LoginViewModel
+@{
+    ViewBag.Title = "Acceso al sistema";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Sistema de reservación</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    @Styles.Render("~/content/css")
+</head>
+<body>
+    <nav>
+        <div id="navbar" class="nav-wrapper">
+            <a href="#" id="imgNavbar" class="brand-logo"><img src="~/Content/Img/Logo/LogoHotelBlanco.png" /></a>
+            <strong id="tituloNavbarLogin">Sistema de reservación</strong>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="~/Home/Index">Volver</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="left col s6">
+                <h2>Iniciar sesión</h2>
+                @if (ViewBag.Message != null)
+                {
+                    string clase = "";
+                    switch (ViewBag.Message)
+                    {
+                        case "Debe llenar los campos para auntenticarse":
+                            clase = "alert-info";
+                            break;
+
+                        case "Acceso denegado al sistema":
+                            clase = "alert-warning";
+                            break;
+                        case "Ocurrio un error inesperado":
+                            clase = "alert-error";
+                            break;
+                        default:
+                            clase = "alert-danger";
+                            break;
+                    }
+                    <div id="closeAlertLogin" class=@clase> <strong>@ViewBag.Message</strong><span onclick="closeAlertFunction( );" class="right spanClose">&#10060;</span></div>
+                }
+                <br />
+                @using (Html.BeginForm("Autenticar", "Login", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="input-field">
+                        @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "" })
+                        @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "validate" } })
+                        @Html.ValidationMessageFor(model => model.Usuario, null, new { @class = "" })
+                    </div>
+                    <div class="input-field">
+                        @Html.LabelFor(model => model.Contraseña, htmlAttributes: new { @class = "" })
+                        @Html.PasswordFor(model => model.Contraseña, new { htmlAttributes = new { @class = "validate" } })
+                        @Html.ValidationMessageFor(model => model.Contraseña, null, new { @class = "" })
+                    </div>
+                    <div>
+                        <button type="submit" class="btn-large waves-effect waves-light white-text text-accent-1">Ingresar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/materialize")
+    @Scripts.Render("~/bundles/scriptLayout")
+</body>
+</html>

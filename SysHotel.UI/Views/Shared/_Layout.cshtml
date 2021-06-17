@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Sistema de reservación</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    @Styles.Render("~/content/css")
+</head>
+<body>
+    @if (SysHotel.EL.Login.SessionHelper.ExistUserInSession())
+    {
+        <nav>
+            <div id="navbar" class="nav-wrapper">
+                <a href="#" id="imgNavbar" class="brand-logo"><img src="~/Content/Img/Logo/LogoHotelBlanco.png" /></a>
+                <strong id="tituloNavbar">Sistema de reservación</strong>
+                <a href="#" data-target="menu-oculto" id="sidenav-trigger" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="~/Admin/Index">Inicio</a></li>
+                    <li><a class="dropdown-trigger" data-target="dropdownReservacion" href="#">Reservaciones<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-trigger" data-target="dropdownHabitaciones" href="#">Habitaciones<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-trigger" data-target="dropdownMenu" href="#">Menú<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-trigger" data-target="dropdownClientes" href="#">Clientes<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-trigger" data-target="dropdownUsuarios" href="#">Usuarios<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li id="liMenuProveedores"><a class="dropdown-trigger" data-target="dropdownProveedores" href="#">Proveedores<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li id="liMenuFacturas"><a class="dropdown-trigger" data-target="dropdownFacturas" href="#">Facturas<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li id="liMenuCuenta"><a class="dropdown-trigger" data-target="dropdownCuenta" href="#">Cuenta<i class="material-icons right">arrow_drop_down</i></a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!--Elementos ocultos-->
+        <!--Menu lateral-->
+        <ul class="sidenav" id="menu-oculto">
+            <li><a href="~/Admin/Index">Inicio</a></li>
+            <li><a class="dropdown-oculto" data-target="dropdownReservacion-oculto" href="#">Reservaciones<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-oculto" data-target="dropdownHabitaciones-oculto" href="#">Habitaciones<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-oculto" data-target="dropdownMenu-oculto" href="#">Menú<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-oculto" data-target="dropdownClientes-oculto" href="#">Clientes<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-oculto" data-target="dropdownUsuarios-oculto" href="#">Usuarios<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-oculto" data-target="dropdownProveedores-oculto" href="#">Proveedores<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-oculto" data-target="dropdownFacturas-oculto" href="#">Facturas<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-oculto" data-target="dropdownCuenta-oculto" href="#">Cuenta<i class="material-icons right">arrow_drop_down</i></a></li>
+        </ul>
+        <!--Fin menu lateral-->
+        <!--Estructura de los dropdown-->
+        <!--Barra de navegación-->
+        <ul id="dropdownReservacion" class="dropdown-content">
+            <li><a href="~/Reservacion/Create">Realizar una reserva</a></li>
+            <li><a href="~/Reservacion/Index">Administrar reservas</a></li>
+            <li><a href="~/Reservacion/ConsultarHabitaciones">Consultar Habitaciones</a></li>
+            <li class="divider"></li>
+            <li><a href="~/Cliente/Create">Añadir cliente</a></li>
+            <li><a href="~/Alimento/Create">Añadir nuevo alimento</a></li>
+        </ul>
+        <ul id="dropdownHabitaciones" class="dropdown-content">
+            <li><a href="~/Habitacion/Create">Nueva habitación</a></li>
+            <li><a href="~/Habitacion/Index">Administrar habitaciones</a></li>
+            <li class="divider"></li>
+            <li><a href="~/TipoHabitacion/Create">Nuevo tipo de habitación</a></li>
+            <li><a href="~/TipoHabitacion/Index">Administrar tipo de habitación</a></li>
+        </ul>
+        <ul id="dropdownMenu" class="dropdown-content">
+            <li><a href="~/Alimento/Create">Nuevo menú</a></li>
+            <li><a href="~/Alimento/Index">Administrar menú</a></li>
+            <li class="divider"></li>
+            <li><a href="~/CategoriaAlimento/Index">Ver categoría alimento</a></li>
+            <li><a href="~/CategoriaAlimento/Create">Nueva categoría alimento</a></li>
+        </ul>
+        <ul id="dropdownClientes" class="dropdown-content">
+            <li><a href="~/Cliente/Create">Nuevo cliente</a></li>
+            <li><a href="~/Cliente/Index">Administrar clientes</a></li>
+            <li class="divider"></li>
+            <li><a href="~/Home/Construccion">Realizar reserva a partir de cliente</a></li>
+        </ul>
+        <ul id="dropdownUsuarios" class="dropdown-content">
+            <li><a href="~/Usuario/Create">Nuevo usuario</a></li>
+            <li><a href="~/Usuario/Index">Administrar usuarios</a></li>
+            <li class="divider"></li>
+            <li><a href="~/RolUsuario/Create">Nuevo rol de usuario</a></li>
+            <li><a href="~/RolUsuario">Administrar roles de usuarios</a></li>
+        </ul>
+        <ul id="dropdownProveedores" class="dropdown-content">
+            <li><a href="~/Proveedor/Create">Nuevo proveedor</a></li>
+            <li><a href="~/Proveedor/Index">Administrar proveedores</a></li>
+        </ul>
+        <ul id="dropdownFacturas" class="dropdown-content">
+            <li><a href="~/Home/Construccion">Generar factura</a></li>
+            <li><a href="~/Home/Construccion">Todas las facturas</a></li>
+            <li><a href="~/Home/Construccion">Historial de facturas emitidas</a></li>
+        </ul>
+        <ul id="dropdownCuenta" class="dropdown-content">
+            <li><a href="~/Home/Construccion">Mi perfil</a></li>
+            <li class="divider"></li>
+            <li><a href="~/Admin/Salir">Cerrar sesión</a></li>
+        </ul>
+        <!--Fin barra de navegación-->
+        <!--Barra lateral-->
+<ul id="dropdownReservacion-oculto" class="dropdown-content">
+    <li><a href="~/Reservacion/Create">Realizar una reserva</a></li>
+    <li><a href="~/Reservacion/Index">Administrar reservas</a></li>
+    <li><a href="~/Reservacion/ConsultarHabitaciones">Consultar Habitaciones</a></li>
+    <li class="divider"></li>
+    <li><a href="~/Cliente/Create">Añadir cliente</a></li>
+    <li><a href="~/Alimento/Create">Añadir nuevo alimento</a></li>
+</ul>
+        <ul id="dropdownHabitaciones-oculto" class="dropdown-content">
+            <li><a href="~/Habitacion/Create">Nueva habitación</a></li>
+            <li><a href="~/Habitacion/Index">Administrar habitaciones</a></li>
+            <li class="divider"></li>
+            <li><a href="~/TipoHabitacion/Create">Nuevo tipo de habitación</a></li>
+            <li><a href="~/TipoHabitacion/Index">Administrar tipo de habitación</a></li>
+        </ul>
+        <ul id="dropdownMenu-oculto" class="dropdown-content">
+            <li><a href="~/Alimento/Create">Nuevo menú</a></li>
+            <li><a href="~/Alimento/Index">Administrar menú</a></li>
+            <li class="divider"></li>
+            <li><a href="~/CategoriaAlimento/Index">Ver categoría alimento</a></li>
+            <li><a href="~/CategoriaAlimento/Create">Nueva categoría alimento</a></li>
+        </ul>
+        <ul id="dropdownClientes-oculto" class="dropdown-content">
+            <li><a href="~/Cliente/Create">Nuevo cliente</a></li>
+            <li><a href="~/Cliente/Index">Administrar clientes</a></li>
+            <li class="divider"></li>
+            <li><a href="~/Home/Construccion">Realizar reserva a partir de cliente</a></li>
+        </ul>
+        <ul id="dropdownUsuarios-oculto" class="dropdown-content">
+            <li><a href="~/Usuario/Create">Nuevo usuario</a></li>
+            <li><a href="~/Usuario/Index">Administrar usuarios</a></li>
+            <li class="divider"></li>
+            <li><a href="~/RolUsuario/Create">Nuevo rol de usuario</a></li>
+            <li><a href="~/RolUsuario">Administrar roles de usuarios</a></li>
+        </ul>
+        <ul id="dropdownProveedores-oculto" class="dropdown-content">
+            <li><a href="~/Proveedor/Create">Nuevo proveedor</a></li>
+            <li><a href="~/Proveedor/Index">Administrar proveedores</a></li>
+        </ul>
+        <ul id="dropdownFacturas-oculto" class="dropdown-content">
+            <li><a href="~/Home/Construccion">Generar factura</a></li>
+            <li><a href="~/Home/Construccion">Todas las facturas</a></li>
+            <li><a href="~/Home/Construccion">Historial de facturas emitidas</a></li>
+        </ul>
+        <ul id="dropdownCuenta-oculto" class="dropdown-content">
+            <li><a href="~/Home/Construccion">Mi perfil</a></li>
+            <li class="divider"></li>
+            <li><a href="~/Admin/Salir">Cerrar sesión</a></li>
+        </ul>
+        <!--Fin barra lateral-->
+        <!--Fin estructuras dropdown-->
+        <!--Fin elementos ocultos-->
+    }
+    else
+    {
+        <nav>
+            <div id="navbar" class="nav-wrapper">
+                <a href="#" id="imgNavbar" class="brand-logo"><img src="~/Content/Img/Logo/LogoHotelBlanco.png" /></a>
+                <strong id="tituloNavbar">Sistema de reservación</strong>
+                <a href="#" data-target="menu-oculto" id="sidenav-trigger" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="~/Home/Index">Inicio</a></li>
+                    <li><a href="#">Realizar una reservación</a></li>
+                    <li><a href="#">Ver habitaciones</a></li>
+                    <li><a href="#">Ver el menú</a></li>
+                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="#">Contáctanos</a></li>
+                    <li><a href="#">Ayuda</a></li>
+                    <li><a href="~/Login/Index">Iniciar sesión</a></li>
+                </ul>
+            </div>
+        </nav>
+        <ul class="sidenav" id="menu-oculto">
+            <li><a href="~/Home/Index">Inicio</a></li>
+            <li><a href="#">Realizar una reservación</a></li>
+            <li><a href="#">Ver habitaciones</a></li>
+            <li><a href="#">Ver el menú</a></li>
+            <li><a href="#">Sobre nosotros</a></li>
+            <li><a href="#">Contáctanos</a></li>
+            <li><a href="#">Ayuda</a></li>
+            <li><a href="~/Login/Index">Iniciar sesión</a></li>
+        </ul>
+    }
+
+    @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+
+    <div class="narrow-margin">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Sistema de reservación</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/materialize")
+    @Scripts.Render("~/bundles/scriptLayout")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

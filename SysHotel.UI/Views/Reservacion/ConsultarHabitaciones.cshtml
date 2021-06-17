@@ -1,0 +1,160 @@
+﻿@model SysHotel.EL.Reservacion
+@{
+    ViewBag.Title = "Consultar Habitaciones";
+}
+
+<h2>Habitaciones Disponibles</h2>
+<p>Por favor ingresa las fechas que deseas consultar para buscar las habitaciones disponibles.</p>
+@if (ViewBag.Message != null)
+{
+    string clase = "";
+    switch (ViewBag.Message)
+    {
+        case "No ha ingresado ninguna fecha.":
+            clase = "alert-info";
+            break;
+        case "La reservación debe hacerse con 7 días de anticipación.":
+            clase = "alert-warning";
+            break;
+        case "La fecha de salida no puede ser menor o igual al día de entrada.":
+            clase = "alert-error";
+            break;
+
+    }
+    <div id="closeAlertLogin" class=@clase> <strong>@ViewBag.Message</strong><span onclick="closeAlertFunction( );" class="right spanClose">&#10060;</span></div>
+}
+<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        @Html.ValidationSummary(true, "", new { @class = "" })
+
+        <div class="col s3 m4">
+            @Html.LabelFor(model => model.DiaEntrada)
+            @Html.EditorFor(model => model.DiaEntrada)
+            @Html.ValidationMessageFor(model => model.DiaEntrada)
+        </div>
+        <div class="col s3 m4">
+            @Html.LabelFor(model => model.DiaSalida)
+            @Html.EditorFor(model => model.DiaSalida)
+            @Html.ValidationMessageFor(model => model.DiaSalida)
+        </div>
+        <div class="col s6 m4">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s3 m4">
+            <input type="submit" value="Consultar" class="btn btn-large waves-effect" />
+        </div>
+        <div class="col s3 m4">
+
+        </div>
+        <div class="col s3 m4">
+
+        </div>
+    </div>
+}
+
+@{
+    if (ViewData["ListaHabitacionesDisponibles"] != null)
+    {
+        int x = 0;
+        int y = 1;
+        string elemApertura = "<div class='row'>";
+        string elemCierre = "</div>";
+
+        var listaHabitaciones = ViewData["ListaHabitacionesDisponibles"] as IList<SysHotel.EL.Habitacion>;
+
+        foreach (var item in listaHabitaciones )
+        {
+            x++;
+            if (x == y)
+            {
+                @Html.Raw(elemApertura);
+                <div class="col s12 m4 l3">
+                    <div class="card">
+                        <div class="card-image">
+                            @if (!string.IsNullOrEmpty(item.Imagen))
+                            {
+                                <img src="@Url.Content(item.Imagen)" />
+                            }
+                            else
+                            {
+                                <img src="~/Content/Img/Habitaciones/vacio.jpg" alt="Sin Imagen" />
+                            }
+                            <div class="card-title" style="background-color:rgba(0, 0, 0, 0.30); width:100%; padding:10px;">
+                                No. de habitación: <span>@Html.DisplayFor(modelItem => item.NumeroHabitacion)</span>
+                            </div>
+                        </div>
+                        <div class="card-content" style="height:200px">
+                            <p>@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                            <p>Cantidad de camas: @Html.DisplayFor(modelItem => item.NumeroCamas)</p>
+                            <p>TV Cable: @Html.DisplayFor(modelItem => item.TVCable)</p>
+                            <p>WIFI: @Html.DisplayFor(modelItem => item.Wifi)</p>
+                            <p>Aire Acondicionado: @Html.DisplayFor(modelItem => item.AireAcondicionado)</p>
+                            <p>Precio: @Html.DisplayFor(modelItem => item.Precio)</p>
+                            <p>Categoría: @Html.DisplayFor(modelItem => item.TipoDeHabitacion.TipoDeHabitacion)</p>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="center" style="padding:10px 0px;">
+                            <i class="material-icons"><a class="tooltipped" style="color: rgb(255, 106, 0)" data-position="bottom" data-tooltip="Editar" href="~/Habitacion/Edit/@item.IdHabitacion">edit</a></i>|
+                            <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/Habitacion/Details/@item.IdHabitacion">description</a></i>|
+                            <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" href="#">add_shopping_cart</a></i>|
+                            <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Habitacion/Delete/@item.IdHabitacion">delete</a></i>
+                        </div>
+                    </div>
+                </div>
+                y += 4;/*Aqui se indica cuantas tarjetas mostrar por fila. Se debe modificar la capacidad de respuesta en el div*/
+            }
+            else
+            {
+                <div class="col s12 m4 l3">
+                    <div class="card">
+                        <div class="card-image">
+                            @if (!string.IsNullOrEmpty(item.Imagen))
+                            {
+                                <img src="@Url.Content(item.Imagen)" />
+                            }
+                            else
+                            {
+                                <img src="~/Content/Img/Alimentos/vacio.jpg" alt="Sin Imagen" />
+                            }
+                            <div class="card-title" style="background-color:rgba(0, 0, 0, 0.40); width:100%; padding:10px;">
+                                No. de habitación: <span>@Html.DisplayFor(modelItem => item.NumeroHabitacion)</span>
+                            </div>
+                        </div>
+                        <div class="card-content" style="height:200px">
+                            <p>@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                            <p>Cantidad de camas: @Html.DisplayFor(modelItem => item.NumeroCamas)</p>
+                            <p>TV Cable: @Html.DisplayFor(modelItem => item.TVCable)</p>
+                            <p>WIFI: @Html.DisplayFor(modelItem => item.Wifi)</p>
+                            <p>Aire Acondicionado: @Html.DisplayFor(modelItem => item.AireAcondicionado)</p>
+                            <p>Precio: @Html.DisplayFor(modelItem => item.Precio)</p>
+                            <p>Categoría: @Html.DisplayFor(modelItem => item.TipoDeHabitacion.TipoDeHabitacion)</p>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="center" style="padding:10px 0px;">
+                            <i class="material-icons"><a class="tooltipped" style="color: rgb(255, 106, 0)" data-position="bottom" data-tooltip="Editar" href="~/Habitacion/Edit/@item.IdHabitacion">edit</a></i>|
+                            <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/Habitacion/Details/@item.IdHabitacion">description</a></i>|
+                            <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" href="#">add_shopping_cart</a></i>|
+                            <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Habitacion/Delete/@item.IdHabitacion">delete</a></i>
+                        </div>
+                    </div>
+                </div>
+            }
+            if (x == y - 1)
+            {
+                @Html.Raw(elemCierre)
+            }
+            if (x == listaHabitaciones.Count())
+            {
+                @Html.Raw(elemCierre)
+            }
+        }
+    }
+}
+@section scripts{
+   <script>M.AutoInit();</script>
+}

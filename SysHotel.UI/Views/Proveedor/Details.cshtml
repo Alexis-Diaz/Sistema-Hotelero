@@ -1,0 +1,51 @@
+﻿@model SysHotel.EL.Proveedor
+
+@{
+    ViewBag.Title = "Detalles del proveedor";
+}
+<div class="container">
+    <div class="row">
+        <div class="col s6">
+            <h4>Detalles</h4>
+            <hr />
+            <div class="card blue lighten-5">
+                <div class="card-content grey-text text-darken-4">
+                    <span class="card-title">Descripción del proveedor seleccionado</span>
+                    <p>
+                        <strong>@Html.DisplayNameFor(model => model.NombreEmpresa):</strong>
+                        @Html.DisplayFor(model => model.NombreEmpresa)
+                    </p>
+                    <br />
+                    <p>
+                        <strong>@Html.DisplayNameFor(model => model.Ubicacion):</strong>
+                        @Html.DisplayFor(model => model.Ubicacion)
+                    </p>
+                    <br />
+                    <p>
+                        <strong>@Html.DisplayNameFor(model => model.Encargado):</strong>
+                        @Html.DisplayFor(model => model.Encargado)
+                    </p>
+                    <br />
+                    <p>
+                        <strong>@Html.DisplayNameFor(model => model.Telefono):</strong>
+                        @Html.DisplayFor(model => model.Telefono)
+                    </p>
+                    <br />
+                    <p>
+                        <strong>@Html.DisplayNameFor(model => model.Correo):</strong>
+                        @Html.DisplayFor(model => model.Correo)
+                    </p>
+                </div>
+                <div class="card-action">
+                    <a class="btn waves-effect waves-light light-blue lighten- white-text" href="~/Proveedor/Edit/@Model.IdProveedor">Editar proveedor</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col s6">
+
+        </div>
+    </div>
+    <a href="~/Proveedor"><i class="material-icons">undo</i> Regresar a la lista</a>
+</div>

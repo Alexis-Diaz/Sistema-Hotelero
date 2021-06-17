@@ -1,0 +1,108 @@
+﻿@model SysHotel.EL.TipoHabitacion
+
+@{
+    ViewBag.Title = "Nuevo tipo de habitación";
+}
+
+<div class="row">
+    <div class="col s12 m6">
+        <h4>Agregar nuevo tipo de habitación</h4>
+        @if (ViewBag.Message != null)
+        {
+            string clase = "";
+            switch (ViewBag.Message)
+            {
+                case "Ocurrió un error crítico, no fué posible guardar el nuevo tipo de habitación.":
+                    clase = "alert-danger";
+                    break;
+
+                case "El tipo de habitación ya existe.":
+                    clase = "alert-warning";
+                    break;
+                case "Datos incompletos.":
+                    clase = "alert-error";
+                    break;
+                case "Información incompleta.":
+                    clase = "alert-info";
+                    break;
+            }
+            <div id="closeAlertLogin" class=@clase> <strong>@ViewBag.Message</strong><span onclick="closeAlertFunction( );" class="right spanClose">&#10060;</span></div>
+        }
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <h5>Características del nuevo tipo de habitación</h5>
+            <br />
+            @Html.ValidationSummary(true, "", new { @class = "redText" })
+            <div class="input-field">
+                @Html.LabelFor(model => model.TipoDeHabitacion, htmlAttributes: new { @class = "" })
+                @Html.EditorFor(model => model.TipoDeHabitacion, new { htmlAttributes = new { @class = "validate" } })
+                @Html.ValidationMessageFor(model => model.TipoDeHabitacion, "", new { @class = "redText" })
+            </div>
+
+            <div class="input-field">
+                @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "" })
+                @Html.TextAreaFor(model => model.Descripcion, new { htmlAttributes = new { @class = "validate" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "redText" })
+            </div>
+            <br />
+            <div class="right">
+                <button type="submit" class="btn waves-effect waves-light white-text">Agregar</button>
+            </div>
+            <br />
+        }
+        <br />
+        <div>
+            <i class="material-icons">undo</i> @Html.ActionLink("Regresar a la lista", "Index")
+        </div>
+        <br />
+    </div>
+    <div class="col s12 m6">
+        <h6 class="relleno indigo lighten-5">Estas son los últimos 10 tipos de habitación ingresados.</h6>
+        @{
+            int x = 0;
+            int y = 1;
+            string elemApertura = "<div class='row'>";
+            string elemCierre = "</div>";
+
+            var viewDataTipoHabitacion = ViewData["TipoDeHabitacionesExistentes"] as IList<SysHotel.EL.TipoHabitacion>;
+            foreach (var item in viewDataTipoHabitacion)
+            {
+                x++;
+                if (x == y)
+                {
+                    @Html.Raw(elemApertura);@*Se convierte el string en una etiqueta html*@
+                    <div class="col s6">
+                        <div class="card">
+                            <div class="card-content">
+                                <b>@item.TipoDeHabitacion</b><br />
+                                @item.Descripcion
+                            </div>
+                        </div>
+                    </div>
+                    y += 2;/*Aqui se indica cuantas tarjetas mostrar por fila*/
+                }
+                else
+                {
+                    <div class="col s6">
+                        <div class="card">
+                            <div class="card-content">
+                                <b>@item.TipoDeHabitacion</b><br />
+                                @item.Descripcion
+                            </div>
+                        </div>
+                    </div>
+                }
+                if (x == y - 1)
+                {
+                    @Html.Raw(elemCierre)
+                }
+                if (x == viewDataTipoHabitacion.Count())
+                {
+                    @Html.Raw(elemCierre)
+                }
+            }
+        }
+    </div>
+</div>

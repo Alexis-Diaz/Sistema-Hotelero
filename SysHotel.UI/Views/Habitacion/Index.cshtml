@@ -1,0 +1,211 @@
+﻿@model SysHotel.EL.Paginador.PaginadorGenerico<SysHotel.EL.Habitacion>
+
+@{
+    ViewBag.Title = "Habitación";
+}
+
+<h4>Catálogo de habitaciones</h4>
+
+<div class="row">
+    <div class="col s12  m4">
+        <strong class="btn waves-effect waves-light">
+            <span>&#10133</span><a style="color:white" href="~/Habitacion/Create"> Nueva habitación</a>
+        </strong>
+        <br />
+        <br />
+    </div>
+    <div class="col s6 m4">
+        <!--Para filtrar la lista por categorias-->
+        <div class="row">
+            <div class="col s4">
+                <strong>Filtrar categorías:</strong>
+            </div>
+            <div class="col s8">
+                @using (Html.BeginForm("Index", "Habitacion", FormMethod.Post))
+                {
+                    @Html.DropDownList("IdCategoria", null, htmlAttributes: new { @class = "form-control" });
+                    <input type="submit" value="Filtrar" class="btn waves-effect waves-light" />
+                }
+            </div>
+        </div>
+    </div>
+    <!--Busqueda-->
+    <div class="col s6 m4">
+        <form method="get" action=@Url.Action("Index", "Habitacion")>
+            <div class="row">
+                <div class="col s10">
+                    <div class="input-field" style="margin:0px; padding:0px">
+                        <input name="busqueda" type="search" required style="border: 1px solid #A9A9A9; padding:0px">
+                        <i class="material-icons">close</i>
+                    </div>
+                    <button style="margin-top:3px;" type="submit" class="btn waves-effect waves-light indigo darken-1 white-text">Buscar</button>
+                    <a style="margin-top:3px;" href="~/Habitacion" class="btn waves-effect waves-light blue darken-1 white-text">Mostrar todo</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@{
+    if (ViewBag.Categoria != null)
+    {
+        <h5>@ViewBag.Categoria.TipoDeHabitacion</h5>
+    }
+    else
+    {
+        <h5>Todas las habitaciones</h5>
+    }
+    int x = 0;
+    int y = 1;
+    string elemApertura = "<div class='row'>";
+    string elemCierre = "</div>";
+
+    foreach (var item in Model.Resultado)
+    {
+        x++;
+        if (x == y)
+        {
+            @Html.Raw(elemApertura);
+            <div class="col s12 m4 l3">
+                <div class="card">
+                    <div class="card-image">
+                        @if (!string.IsNullOrEmpty(item.Imagen))
+                        {
+                            <img src="@Url.Content(item.Imagen)" />
+                        }
+                        else
+                        {
+                            <img src="~/Content/Img/Habitaciones/vacio.jpg" alt="Sin Imagen" />
+                        }
+                        <div class="card-title" style="background-color:rgba(0, 0, 0, 0.30); width:100%; padding:10px;">
+                            No. de habitación: <span>@Html.DisplayFor(modelItem => item.NumeroHabitacion)</span>
+                        </div>
+                    </div>
+                    <div class="card-content" style="height:200px">
+                        <p>@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                        <p>Cantidad de camas: @Html.DisplayFor(modelItem => item.NumeroCamas)</p>
+                        <p>TV Cable: @Html.DisplayFor(modelItem => item.TVCable)</p>
+                        <p>WIFI: @Html.DisplayFor(modelItem => item.Wifi)</p>
+                        <p>Aire Acondicionado: @Html.DisplayFor(modelItem => item.AireAcondicionado)</p>
+                        <p>Precio: @Html.DisplayFor(modelItem => item.Precio)</p>
+                        <p>Categoría: @Html.DisplayFor(modelItem => item.TipoDeHabitacion.TipoDeHabitacion)</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="center" style="padding:10px 0px;">
+                        <i class="material-icons"><a class="tooltipped" style="color: rgb(255, 106, 0)" data-position="bottom" data-tooltip="Editar" href="~/Habitacion/Edit/@item.IdHabitacion">edit</a></i>|
+                        <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/Habitacion/Details/@item.IdHabitacion">description</a></i>|
+                        <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" href="#">add_shopping_cart</a></i>|
+                        <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Habitacion/Delete/@item.IdHabitacion">delete</a></i>
+                    </div>
+                </div>
+            </div>
+            y += 4;/*Aqui se indica cuantas tarjetas mostrar por fila. Se debe modificar*/
+        }
+        else
+        {
+            <div class="col s12 m4 l3">
+                <div class="card">
+                    <div class="card-image">
+                        @if (!string.IsNullOrEmpty(item.Imagen))
+                        {
+                            <img src="@Url.Content(item.Imagen)" />
+                        }
+                        else
+                        {
+                            <img src="~/Content/Img/Alimentos/vacio.jpg" alt="Sin Imagen" />
+                        }
+                        <div class="card-title" style="background-color:rgba(0, 0, 0, 0.40); width:100%; padding:10px;">
+                            No. de habitación: <span>@Html.DisplayFor(modelItem => item.NumeroHabitacion)</span>
+                        </div>
+                    </div>
+                    <div class="card-content" style="height:200px">
+                        <p>@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                        <p>Cantidad de camas: @Html.DisplayFor(modelItem => item.NumeroCamas)</p>
+                        <p>TV Cable: @Html.DisplayFor(modelItem => item.TVCable)</p>
+                        <p>WIFI: @Html.DisplayFor(modelItem => item.Wifi)</p>
+                        <p>Aire Acondicionado: @Html.DisplayFor(modelItem => item.AireAcondicionado)</p>
+                        <p>Precio: @Html.DisplayFor(modelItem => item.Precio)</p>
+                        <p>Categoría: @Html.DisplayFor(modelItem => item.TipoDeHabitacion.TipoDeHabitacion)</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="center" style="padding:10px 0px;">
+                        <i class="material-icons"><a class="tooltipped" style="color: rgb(255, 106, 0)" data-position="bottom" data-tooltip="Editar" href="~/Habitacion/Edit/@item.IdHabitacion">edit</a></i>|
+                        <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/Habitacion/Details/@item.IdHabitacion">description</a></i>|
+                        <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" href="#">add_shopping_cart</a></i>|
+                        <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Habitacion/Delete/@item.IdHabitacion">delete</a></i>
+                    </div>
+                </div>
+            </div>
+        }
+        if (x == y - 1)
+        {
+            @Html.Raw(elemCierre)
+        }
+        if (x == Model.Resultado.Count())
+        {
+            @Html.Raw(elemCierre)
+        }
+
+    }
+}
+
+@*CODIGO PARA EL PAGINADOR DE REGISTRO*@
+
+@if (Model.Resultado.Count() > 0)
+{
+    <span>
+        <strong>@Model.TotalRegistro</strong> registros encontrados
+    </span>
+
+    <span>&nbsp;|&nbsp;</span>
+
+    <span>
+        Página <strong>@(Model.PaginaActual)</strong> de
+        <strong>@Model.TotalPagina</strong>
+    </span>
+    <span>&nbsp;||&nbsp;</span>
+}
+else
+{
+    <span>No hay resultados para esta búsqueda</span>
+    <span>&nbsp;|&nbsp;</span>
+}
+
+@if (Model.PaginaActual > 1)
+{
+    @Html.ActionLink("<<", "Index", new { idCategoria = ViewBag.IdCategoriaGuardada, pagina = 1 },
+                                    new { @class = "btn" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { pagina = Model.PaginaActual - 1 },
+                    new { @class = "btn" })
+}
+else
+{
+    @Html.ActionLink("<<", "Index", new { pagina = 1 },
+                    new { @class = "btn disabled" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { pagina = 1 },
+                    new { @class = "btn disabled" })
+}
+<span></span>
+@if (Model.PaginaActual < Model.TotalPagina)
+{
+    @Html.ActionLink("Siguiente", "Index", new { idCategoria = ViewBag.IdCategoriaGuardada, pagina = Model.PaginaActual + 1 },
+                        new { @class = "btn" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPagina },
+                        new { @class = "btn" })
+}
+else
+{
+    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.TotalPagina - 1 },
+                        new { @class = "btn disabled" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPagina },
+                        new { @class = "btn disabled" })
+}
+
+
+@section scripts{
+    <script>M.AutoInit();</script>
+}

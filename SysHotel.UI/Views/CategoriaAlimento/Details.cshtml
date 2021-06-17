@@ -1,0 +1,37 @@
+﻿@model SysHotel.EL.CategoriaAlimento
+
+@{
+    ViewBag.Title = "Detalles de la categoría";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col s6">
+            <h4>Detalles</h4>
+            <hr />
+            <div class="card blue lighten-5">
+                <div class="card-content grey-text text-darken-4">
+                    <span class="card-title">Descripción de la categoría seleccionada</span>
+                    <p>
+                        <strong>@Html.DisplayNameFor(model => model.NombreCategoria):</strong>
+                        @Html.DisplayFor(model => model.NombreCategoria)
+                    </p>
+                    <br />
+                    <p>
+                        <strong>@Html.DisplayNameFor(model => model.Descripcion):</strong>
+                        @Html.DisplayFor(model => model.Descripcion)
+                    </p>
+                </div>
+                <div class="card-action">
+                    <a class="btn waves-effect waves-light light-blue lighten- white-text" href="~/CategoriaAlimento/Edit/@Model.IdCategoriaAlimento">Editar categoría</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col s6">
+
+        </div>
+    </div>
+    <a href="~/CategoriaAlimento"><i class="material-icons">undo</i> Regresar a la lista</a>
+</div>
