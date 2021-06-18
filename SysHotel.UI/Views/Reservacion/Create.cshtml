@@ -1,90 +1,98 @@
 ﻿@model SysHotel.EL.Reservacion
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Agregar nueva reservación";
 }
 
-<h2>Create</h2>
+<div class="row">
+    <div class="col s12 m6">
+        <h4>Agregar nueva reserva</h4>
+        @if (ViewBag.Message != null)
+        {
+            string clase = "";
+            switch (ViewBag.Message)
+            {
+                case "Ocurrio un error crítico, no fué posible guardar la reservación.":
+                    clase = "alert-danger";
+                    break;
 
-@using (Html.BeginForm("ConsultarHabitaciones", "Reservacion")) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Reservacion</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-          <div class="form-group">
-            @Html.LabelFor(model => model.DiaEntrada, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DiaEntrada, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DiaEntrada, "", new { @class = "text-danger" })
+                case "La reservación debe hacerse con 7 días de anticipación.":
+                    clase = "alert-error";
+                    break;
+                case "La fecha de salida no puede ser menor o igual a la fecha de entrada.":
+                    clase = "alert-error";
+                    break;
+                case "La fecha de entrada coincide con el día de limpieza de la habitación.":
+                    clase = "alert-error";
+                    break;
+                case "La reserva coincide con otra reserva.":
+                    clase = "alert-warning";
+                    break;
+                case "Los datos estan incompletos.":
+                    clase = "alert-error";
+                    break;
+                case "No debe dejar campos vacíos.":
+                    clase = "alert-info";
+                    break;
+            }
+            <div id="closeAlertLogin" class=@clase> <strong>@ViewBag.Message</strong><span onclick="closeAlertFunction( );" class="right spanClose">&#10060;</span></div>
+        }
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <h5>Información de la nueva reserva</h5>
+            <br />
+            @Html.ValidationSummary(true, "", new { @class = "redText" })
+            <div>
+                @Html.LabelFor(model => model.IdCliente, "IdCliente", htmlAttributes: new { @class = "" })
+                @Html.DropDownList("IdCliente", null, htmlAttributes: new { @class = "dropdownList" })
+                @Html.ValidationMessageFor(model => model.IdCliente, "", new { @class = "redText" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DiaSalida, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DiaSalida, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DiaSalida, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaReservacion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaReservacion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaReservacion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NumeroPersonas, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NumeroPersonas, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NumeroPersonas, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Comentarios, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Comentarios, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Comentarios, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div>
-            @Html.LabelFor(model => model.IdCliente, "IdCliente", htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.DropDownList("IdCliente", null, htmlAttributes: new { @class = "dropdownList" })
-            @Html.ValidationMessageFor(model => model.IdCliente, "", new { @class = "text-danger" })
-           
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdHabitacion, "IdHabitacion", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div>
+                @Html.LabelFor(model => model.IdHabitacion, "IdHabitacion", htmlAttributes: new { @class = "" })
                 @Html.DropDownList("IdHabitacion", null, htmlAttributes: new { @class = "dropdownList" })
-                @Html.ValidationMessageFor(model => model.IdHabitacion, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.IdHabitacion, "", new { @class = "redText" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdUsuario, "IdUsuario", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdUsuario", null, htmlAttributes: new { @class = "dropdownList" })
-                @Html.ValidationMessageFor(model => model.IdUsuario, "", new { @class = "text-danger" })
+            <div>
+                @Html.LabelFor(model => model.DiaEntrada, htmlAttributes: new { @class = "" })
+                @Html.EditorFor(model => model.DiaEntrada, new { htmlAttributes = new { @class = "validate" } })
+                @Html.ValidationMessageFor(model => model.DiaEntrada, "", new { @class = "redText" })
             </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="dropdownList">
+                @Html.LabelFor(model => model.DiaSalida, htmlAttributes: new { @class = "" })
+                @Html.EditorFor(model => model.DiaSalida, new { htmlAttributes = new { @class = "validate" } })
+                @Html.ValidationMessageFor(model => model.DiaSalida, "", new { @class = "redText" })
             </div>
+            <div>
+                @Html.LabelFor(model => model.FechaReservacion, htmlAttributes: new { @class = "" })
+                @Html.EditorFor(model => model.FechaReservacion, new { htmlAttributes = new { @disabled = "" } })
+                @Html.ValidationMessageFor(model => model.FechaReservacion, "", new { @class = "redText" })
+            </div>
+            <div class="input-field">
+                @Html.LabelFor(model => model.NumeroPersonas, htmlAttributes: new { @class = "" })
+                @Html.EditorFor(model => model.NumeroPersonas, new { htmlAttributes = new { @class = "validate" } })
+                @Html.ValidationMessageFor(model => model.NumeroPersonas, "", new { @class = "redText" })
+            </div>
+            <div class="input-field">
+                @Html.LabelFor(model => model.Comentarios, htmlAttributes: new { @class = "" })
+                @Html.EditorFor(model => model.Comentarios, new { htmlAttributes = new { @class = "validate" } })
+                @Html.ValidationMessageFor(model => model.Comentarios, "", new { @class = "redText" })
+            </div>
+            <br />
+            <div class="right">
+                <button type="submit" class="btn waves-effect waves-light white-text">Agregar</button>
+            </div>
+            <br />
+        }
+        <br />
+        <div>
+            <i class="material-icons">undo</i> @Html.ActionLink("Regresar a la lista", "Index")
         </div>
+        <br />
     </div>
-}
+    <div class="col s12 m6">
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    </div>
 </div>

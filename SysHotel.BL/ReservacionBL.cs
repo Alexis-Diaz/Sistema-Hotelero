@@ -28,7 +28,7 @@ namespace SysHotel.BL
         {
             try
             {
-                if (reservacion.DiaEntrada != null && reservacion.DiaSalida != null
+                if (reservacion.DiaEntrada > DateTime.Now && reservacion.DiaSalida > DateTime.Now
                 && reservacion.NumeroPersonas > 0 && reservacion.IdCliente > 0 
                 && reservacion.IdHabitacion > 0 && reservacion.IdUsuario > 0 )
                 {

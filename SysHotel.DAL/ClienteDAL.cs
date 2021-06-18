@@ -117,7 +117,7 @@ namespace SysHotel.DAL
             }
         }
 
-        //listar por numero id, documento, nombres, apellido y estado
+        //listar por numero id y documento.
         public async Task<List<Cliente>> ListarClienteUnico(int id, string numeroDocumento)
         {
             try
@@ -153,6 +153,20 @@ namespace SysHotel.DAL
             try
             {
                 return await db.Clientes.FindAsync(id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+        //buscar por numero de documento
+        public async Task<Cliente> BuscarClientePorNumeroDeIdentidad(string numeroDocumento)
+        {
+            try
+            {
+                return await db.Clientes.FindAsync(numeroDocumento);
             }
             catch (Exception)
             {

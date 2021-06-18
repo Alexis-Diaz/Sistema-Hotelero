@@ -212,5 +212,26 @@ namespace SysHotel.BL
                 throw;
             }
         }
+
+        /// <summary>
+        /// Busca un cliente por documento.
+        /// </summary>
+        /// <returns>El cliente encontrado.</returns>
+        public async Task<Cliente> BuscarClientePorDocumentoDeIdentidad(string numeroDocumento)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(numeroDocumento))
+                {
+                    return await clienteDAL.BuscarClientePorNumeroDeIdentidad(numeroDocumento);
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
