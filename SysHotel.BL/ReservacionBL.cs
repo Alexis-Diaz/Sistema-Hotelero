@@ -115,29 +115,35 @@ namespace SysHotel.BL
         {
             try
             {
+                //Se comprueba que la información este completa
                 if (reservacion.DiaEntrada != null && reservacion.DiaSalida != null
                 && reservacion.NumeroPersonas > 0 && reservacion.IdCliente > 0
                 && reservacion.IdHabitacion > 0 && reservacion.IdUsuario > 0)
                 {
-                    Reservacion reservacionExistente = await reservacionDAL.BuscarReservacionPorId(reservacion.IdReservacion);
+                    //Control de cambios
+                    var reservacionExistente = new Reservacion();
+                    reservacionExistente = await reservacionDAL.BuscarReservacionPorId(reservacion.IdReservacion);
                     if (reservacion.DiaEntrada != reservacionExistente.DiaEntrada
                     || reservacion.DiaSalida != reservacionExistente.DiaSalida
                     || reservacion.NumeroPersonas != reservacionExistente.NumeroPersonas
                     || reservacion.Comentarios != reservacionExistente.Comentarios
-                    || reservacion.IdCliente != reservacion.IdCliente
-                    || reservacion.IdHabitacion != reservacion.IdHabitacion)
+                    || reservacion.IdCliente != reservacionExistente.IdCliente
+                    || reservacion.IdHabitacion != reservacionExistente.IdHabitacion
+                    || reservacion.Estado != reservacionExistente.Estado)
                     {
                         //Buscamos las reservaciones para la habitación solicitada y verificamos que la nueva reserva no choque con las que estan hechas.
-                        List<Reservacion> ReservacionDeHabitacion = await reservacionDAL.ListarReservacionesDeHabitacion(reservacion.IdHabitacion);
+                        List<Reservacion> ReservacionDeHabitacion = await reservacionDAL.ListarReservacionesDeHabitacion(reservacion.IdReservacion, reservacion.IdHabitacion);
                         int coincidencia = ReservacionDeHabitacion.Where(r => reservacion.DiaEntrada >= r.DiaEntrada
-                                                                      && reservacion.DiaEntrada <= r.DiaSalida
-                                                                      || reservacion.DiaSalida >= r.DiaEntrada
-                                                                      && reservacion.DiaSalida <= r.DiaSalida)
-                                                                      .Count();
+                                                                           && reservacion.DiaEntrada <= r.DiaSalida
+                                                                           || reservacion.DiaSalida >= r.DiaEntrada
+                                                                           && reservacion.DiaSalida <= r.DiaSalida
+                                                                           || reservacion.DiaEntrada < r.DiaEntrada
+                                                                           && reservacion.DiaSalida > r.DiaSalida)
+                                                                           .Count();
                         if (coincidencia == 0)
                         {
                             //Aqui se indica que se debe dejar un dia entre reservación y reservación del la misma habitación.
-                            List<Reservacion> re = await reservacionDAL.ListarReservacionesDeHabitacion(reservacion.IdHabitacion, reservacion.DiaEntrada);
+                            List<Reservacion> re = await reservacionDAL.ListarReservacionesDeHabitacion(reservacion.IdReservacion, reservacion.IdHabitacion, reservacion.DiaEntrada);
                             int resul = re.Count();
                             if (resul == 0)
                             {
@@ -168,6 +174,31 @@ namespace SysHotel.BL
                 return 7; //los datos no estan completos.
             }
             catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Edita el estado de una reservación. Los estado validos son de 0 a 5. Donde:
+        /// 0 eliminadas; 1 reservas futuras; 2 en curso; 3 finalizadas; 4 canceladas; 5 vencidas
+        /// </summary>
+        /// <param name="estado"></param>
+        /// <returns>0: no guardó, 1: guardó.</returns>
+        public async Task<int> EditarEstadoDeLaReserva(int idReservacion, int estado)
+        {
+            try
+            {
+                //Se comprueba que la información este completa
+                if (estado >= 0 && estado <= 5 && idReservacion > 0)
+                {
+                    Reservacion reser = await reservacionDAL.BuscarReservacionPorId(idReservacion);
+                    reser.Estado = estado;
+                    return await reservacionDAL.EditarReservacion(reser);//retorna 1 El registro se guardó
+                }
+                return 0;
+            }
+            catch(Exception)
             {
                 throw;
             }

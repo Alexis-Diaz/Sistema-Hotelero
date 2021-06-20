@@ -17,13 +17,14 @@ namespace SysHotel.UI.Controllers
     public class ClienteController : Controller
     {
         private ClienteBL clienteBL = new ClienteBL();
+        private BDComun db = new BDComun();
 
         //Variables para el paginador
         private const int registroPorPagina = 15;
         private List<Cliente> clientes;
         private PaginadorGenerico<Cliente> paginadorCliente;
 
-        private BDComun db = new BDComun();
+       
 
         // GET: Cliente
         public async Task<ActionResult> Index(string busqueda, int pagina = 1)

@@ -11,12 +11,14 @@ using SysHotel.EL;
 using SysHotel.EL.Login;
 using SysHotel.BL;
 using SysHotel.UI.Filtros;
+using SysHotel.EL.Paginador;
 
 namespace SysHotel.UI.Controllers
 {
     [Autenticado]
     public class ReservacionController : Controller
     {
+        //Instancias
         private ReservacionBL reservacionBL = new ReservacionBL();
         private ClienteBL clienteBL = new ClienteBL();
         private HabitacionBL habitacionBL = new HabitacionBL();
@@ -24,11 +26,93 @@ namespace SysHotel.UI.Controllers
         private RolUsuarioBL rolUsuarioBL = new RolUsuarioBL();
         private BDComun db = new BDComun();
 
+        //Variables para el paginador
+        private const int registroPorPagina = 50;
+        private List<Reservacion> reservacion;
+        private PaginadorGenerico<Reservacion> paginadorReservacion;
+
         // GET: Reservacion
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string busqueda, int? estado = null, int pagina = 1)
         {
-            var reservacions = db.Reservacions.Include(r => r.cliente).Include(r => r.habitacion).Include(r => r.usuario);
-            return View(await reservacions.ToListAsync());
+            int cantidadRegistrosActualizados = 0;//este dato sirve para indicarle al usuario si se han actulizado registros
+            //Recuperamos la lista de reservaciones
+            if (estado == null)
+            {
+                reservacion = await reservacionBL.ListarTodasLasReservaciones();
+                //Cuando el usuario visite la vista index antes se verificaran las reservas y
+                //todas aquellas que no se marcaron como recibidas despues de un dia pasaran 
+                //a ser automaticamente vencida con un estado 5.
+                foreach(var item in reservacion)
+                {
+                    DateTime fechaDeVencimiento = DateTime.Now;
+                    if (item.DiaEntrada < fechaDeVencimiento && item.Estado == 1)
+                    {
+                        //Cuando estuve tratando de modificar el estado de manera automatica a 5, se me presento el siguiente problema:
+                        //como le cambiaba a la variable item del foreach su estado a 5 (item.Estado = 5;) el objeto contenido en al array
+                        //sufria el mismo cambio porque item es una referencia del objeto contenido en el array, el problema era que cuando mas adelante en la capa
+                        //ReservacionDAL hacia el edit no funcionaba porque de alguna manera la reserva que se iba a buscar a la base de datos
+                        //tambien sufria el cambio y su estado lo mostraba en 5 cuando en realidad era 1 y entonces el metodo me devolvia como
+                        //respuesta que no se habian hecho cambios y por tanto no permitia hacer la modificación en la base de datos.
+                        //Asi para solucionar ese problema era mejor crear un nuevo objeto y pasar todos sus valores como se ve a continuación.
+                        int res = await reservacionBL.EditarEstadoDeLaReserva(item.IdReservacion, 5);
+                        
+                        if(res == 1)
+                        {
+                            cantidadRegistrosActualizados++;//cantidad de actualizaciones.
+                        }
+                    }
+                }
+            }
+            if (estado != null)
+            {
+                reservacion = await reservacionBL.ListarReservacionesPorEstado((int)estado);
+            }
+
+            //BUSQUEDA
+            if (!string.IsNullOrEmpty(busqueda))
+            {
+                busqueda = busqueda.ToUpper();
+                foreach(var item in busqueda.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    reservacion = reservacion.Where(x => x.cliente.Nombres.ToUpper().Contains(item) ||
+                                                         x.cliente.Apellidos.ToUpper().Contains(item) ||
+                                                         x.DiaEntrada.ToString().Contains(item) || 
+                                                         x.DiaEntrada.ToString().Contains(item) ||
+                                                         x.NumeroPersonas.ToString().Contains(item) ||
+                                                         x.habitacion.NumeroHabitacion.ToString().Contains(item) ||
+                                                         x.usuario.NombreUsuario.ToUpper().Contains(item))
+                                                          .ToList();
+                }
+            }
+
+            //PAGINACION
+            int totalRegistros = 0;
+            int totalPaginas = 0;
+
+            //Se cuenta el total de registros encontrados
+            totalRegistros = reservacion.Count();
+
+            //Se obtiene la lista de registro segun la pagina
+            List<Reservacion> listaReservacion = reservacion.OrderBy(x => x.DiaEntrada)
+                                                            .Skip((pagina - 1) * registroPorPagina)
+                                                            .Take(registroPorPagina)
+                                                            .ToList();
+
+            //Numero total de paginas
+            //El metodo Ceiling aproxima el numero hacia arrioba Floor lo hace hacia abajo
+            totalPaginas = (int)Math.Ceiling((double)totalRegistros / registroPorPagina);
+
+            //Llenamos la instancia de clase de paginador generico
+            paginadorReservacion = new PaginadorGenerico<Reservacion>
+            {
+                RegistroPorPagina = registroPorPagina,
+                TotalRegistro = totalRegistros,
+                TotalPagina = totalPaginas,
+                PaginaActual = pagina,
+                Resultado = listaReservacion
+            };
+            ViewBag.RegistrosActualizados = cantidadRegistrosActualizados;
+            return View(paginadorReservacion);
         }
 
         // GET: Reservacion/Details/5
