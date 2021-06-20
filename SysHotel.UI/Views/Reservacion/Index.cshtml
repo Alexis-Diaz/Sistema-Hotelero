@@ -1,81 +1,199 @@
-﻿@model IEnumerable<SysHotel.EL.Reservacion>
+﻿@model SysHotel.EL.Paginador.PaginadorGenerico<SysHotel.EL.Reservacion>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Reservaciones";
 }
+<h4>Reservaciones</h4>
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.cliente.Nombres)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.habitacion.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.usuario.Nombres)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DiaEntrada)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DiaSalida)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaReservacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NumeroPersonas)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comentarios)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Estado)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.cliente.Nombres)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.habitacion.Descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.usuario.Nombres)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DiaEntrada)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DiaSalida)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaReservacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumeroPersonas)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comentarios)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Estado)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdReservacion }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdReservacion }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdReservacion })
-        </td>
-    </tr>
-}
-
+<div class="row">
+    <div class="col s4">
+        <strong class="btn waves-effect waves-light">
+            <span>&#10133</span><a style="color:white" href="~/Reservacion/Create"> Nueva reservación</a>
+        </strong>
+        <br />
+        <br />
+    </div>
+    <div class="col s4">
+        <!--Capturamos la cantida de reservas actualizadas-->
+        @{
+            int cantidad = ViewBag.RegistrosActualizados;
+            if (cantidad > 0)
+            {
+                <input id="notificacion" type="text" value="@cantidad" style="display:none;" />
+            }
+        }
+    </div>
+    <!--Busqueda-->
+    <div class="col s4">
+        <form method="get" action=@Url.Action("Index", "Reservacion")>
+            <div class="row">
+                <div class="col s10">
+                    <div class="input-field" style="margin:0px; padding:0px">
+                        <input name="busqueda" type="search" required style="border: 1px solid #A9A9A9; padding:0px">
+                        <i class="material-icons">close</i>
+                    </div>
+                    <button style="margin-top:3px;" type="submit" class="btn waves-effect waves-light indigo darken-1 white-text">Buscar</button>
+                    <a style="margin-top:3px;" href="~/Reservacion" class="btn waves-effect waves-light blue darken-1 white-text">Mostrar todo</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Tabla de contenido-->
+<table class="striped">
+    <thead>
+        <tr style="background-color:rgb(229, 229, 229); color:rgb(59, 57, 57)">
+            <th colspan="2">
+                Nombre Completo
+            </th>
+            <th>
+                N. habitación
+            </th>
+            <th>
+                CheckIn
+            </th>
+            <th>
+                CheckOut
+            </th>
+            <th>
+                Cant. Personas
+            </th>
+            <th>
+                Registró
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Resultado)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cliente.Nombres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cliente.Apellidos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.habitacion.NumeroHabitacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaEntrada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaSalida)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroPersonas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.usuario.NombreUsuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Editar" href="~/Reservacion/Edit/@item.IdReservacion">edit</a></i>|
+                    <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/Reservacion/Details/@item.IdReservacion">description</a></i>|
+                    <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Reservacion/@item.IdReservacion">delete</a></i>|
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+<br />
+<br />
+
+@*CODIGO PARA EL PAGINADOR DE REGISTRO*@
+
+@if (Model.Resultado.Count() > 0)
+{
+    <span>
+        <strong>@Model.TotalRegistro</strong> registros encontrados
+    </span>
+
+    <span>&nbsp;|&nbsp;</span>
+
+    <span>
+        Página <strong>@(Model.PaginaActual)</strong> de
+        <strong>@Model.TotalPagina</strong>
+    </span>
+    <span>&nbsp;||&nbsp;</span>
+}
+else
+{
+    <span>No hay resultados para esta búsqueda</span>
+    <span>&nbsp;|&nbsp;</span>
+}
+
+@if (Model.PaginaActual > 1)
+{
+    @Html.ActionLink("<<", "Index", new { pagina = 1 },
+                                    new { @class = "btn" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { pagina = Model.PaginaActual - 1 },
+                    new { @class = "btn" })
+}
+else
+{
+    @Html.ActionLink("<<", "Index", new { pagina = 1 },
+                    new { @class = "btn disabled" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { pagina = 1 },
+                    new { @class = "btn disabled" })
+}
+<span></span>
+@if (Model.PaginaActual < Model.TotalPagina)
+{
+    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.PaginaActual + 1 },
+                        new { @class = "btn" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPagina },
+                        new { @class = "btn" })
+}
+else
+{
+    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.TotalPagina - 1 },
+                        new { @class = "btn disabled" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPagina },
+                        new { @class = "btn disabled" })
+}
+
+
+@section scripts{
+    <script>
+        M.AutoInit();//Para las tooltips
+
+        //PARA LAS NOTIFICACIONES
+        //Esperamos que primero se cargue la pagina completa para llamar la funcion que
+        //desplegará las actualizaciones realizadas a las reservas.
+        window.onload = function () {
+            const input = document.getElementById("notificacion").value;
+            if (input !== "") {
+                crearNotificacion(input);
+            }
+        }
+
+        //Propiedades personalizadas para las toast o mensajes emergentes
+        function crearNotificacion (numeroActualizaciones) {
+            const toastHTML = `<span>Se vencieron ${numeroActualizaciones} reservas</span>`;
+            const notificacion = function(){
+                M.toast({
+                    html: toastHTML,//mensaje a mostrar
+                    displayLength: 4000, //duración que estará el mensaje
+                    inDuration: 300, //duracion de la transicion de entrada
+                    outDuration: 375, //duracion de la transicion de salida
+                    classes: "rounded  light-blue darken-4", //clases que se le agregaran al elemento
+                    completeCallback: null,//funcion que se llamara al descartarse el mensaje
+                    activationPercent: 0.8  //Porcentaje de ancho del mensaje que se necesita para que un arrastre descarte el mensaje.
+                });
+            }
+            notificacion();
+        }
+    </script>
+}

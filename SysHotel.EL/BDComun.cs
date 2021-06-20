@@ -29,20 +29,20 @@ namespace SysHotel.EL
         public virtual DbSet<Factura> Facturas { get; set; }
 
 
-        //Este codigo sirve para personaliozar una tabla de union
+        //Este codigo sirve para personalizar una tabla de union
         //EF crea la tabla de union segun configuracion estadar
         //Aqui solamente personalizamos el nombre
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //se especifican las dos tablas a relacionar
             modelBuilder.Entity<RolUsuario>()
-                .HasMany<Permisos>(p => p.Permisos)
-                .WithMany(r => r.RolUsuario)
-                .Map(rp =>
-                {
-                    //aqui se personaliza el nombre de la tabla de union
-                    rp.ToTable("PermisosDenegadosPorRol");
-                });
+                        .HasMany<Permisos>(p => p.Permisos)
+                        .WithMany(r => r.RolUsuario)
+                        .Map(rp =>
+                        {
+                            //aqui se personaliza el nombre de la tabla de union
+                            rp.ToTable("PermisosDenegadosPorRol");
+                        });
         }
     }
 }

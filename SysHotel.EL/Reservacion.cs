@@ -42,10 +42,12 @@ namespace SysHotel.EL
         public int Estado { get; set; }
 
         [Required]
+        [Display(Name = "Cliente")]
         public int IdCliente { get; set; }
         public virtual Cliente cliente { get; set; }
 
         [Required]
+        [Display(Name = "Número de habitación")]
         public int IdHabitacion { get; set; }
         public virtual Habitacion habitacion { get; set; }
 

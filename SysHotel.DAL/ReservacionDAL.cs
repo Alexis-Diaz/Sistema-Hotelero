@@ -124,6 +124,23 @@ namespace SysHotel.DAL
             }
         }
 
+        //listar por habitacion
+        public async Task<List<Reservacion>> ListarReservacionesDeHabitacion(int idReserva, int idHabitacion)
+        {
+            try
+            {
+                List<Reservacion>listaReservacio = await db.Reservacions.Where(x => x.IdReservacion != idReserva 
+                                                                                 && x.IdHabitacion == idHabitacion
+                                                                                 && x.Estado == 1 || x.Estado == 2)
+                                                                                     .ToListAsync();
+                return listaReservacio;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         //listar reservas actuales
         public async Task<List<Reservacion>> ListarReservacionesActuales( )
         {
@@ -137,12 +154,48 @@ namespace SysHotel.DAL
             }
         }
 
-        //listar por habitacion y fecha entrada
+        
+        /// <summary>
+        /// Este método devuelve una lista de reserva filtrada por el idHabitacion y una fecha de entrada.
+        /// Se debe tener en cuenta que el método incluirá en la respuesta todas las reservas que cumplan
+        /// la condición, si no es esto lo que espera, se puede usar en su lugar, la sobrecarga de método para excluir
+        /// una reserva especifica por el id de la reserva.
+        /// </summary>
+        /// <param name="idHabitacion">El id de la habitación</param>
+        /// <param name="fechaEntrada">Una fecha de entrada de una reserva</param>
+        /// <returns>La lista de reservas</returns>
         public async Task<List<Reservacion>> ListarReservacionesDeHabitacion(int idHabitacion, DateTime fechaEntrada)
         {
             try
             {
-                return await db.Reservacions.Where(x => x.IdHabitacion == idHabitacion && x.Estado == 1 || x.Estado == 2 || x.Estado ==3 && x.DiaSalida.AddDays(1) == fechaEntrada).ToListAsync();
+                fechaEntrada = fechaEntrada.AddDays(-1);
+                return await db.Reservacions.Where(x => x.IdHabitacion == idHabitacion && x.Estado == 1 || x.Estado == 2 || x.Estado == 3 && x.DiaSalida >= fechaEntrada).ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Este método devuelve una lista de reserva filtrada por el idHabitacion y una fecha de entrada,
+        /// pero excluye de los resultados la reserva que tiene el idReservacion pasado por el parametro.
+        /// </summary>
+        /// <param name="idHabitacion"></param>
+        /// <param name="fechaEntrada"></param>
+        /// <param name="idReservacion"></param>
+        /// <returns>La lista de reservas</returns>
+        public async Task<List<Reservacion>> ListarReservacionesDeHabitacion(int idReservacion, int idHabitacion, DateTime fechaEntrada)
+        {
+            try
+            {
+                fechaEntrada = fechaEntrada.AddDays(-1);
+                return await db.Reservacions.Where(x => x.IdReservacion != idReservacion 
+                                                     && x.IdHabitacion == idHabitacion
+                                                     && x.Estado == 1 
+                                                     || x.Estado == 2 
+                                                     || x.Estado == 3 
+                                                     && x.DiaSalida >= fechaEntrada).ToListAsync();
             }
             catch (Exception)
             {
@@ -157,7 +210,8 @@ namespace SysHotel.DAL
             {
                 if (id > 0)
                 {
-                    return await db.Reservacions.FindAsync(id);
+                    Reservacion reser = await db.Reservacions.FindAsync(id);
+                    return reser;
                 }
                 return null;
             }
