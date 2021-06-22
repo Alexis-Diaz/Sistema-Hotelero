@@ -138,6 +138,7 @@
     <Compile Include="Controllers\AlimentoController.cs" />
     <Compile Include="Controllers\CategoriaAlimentoController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\FacturaController.cs" />
     <Compile Include="Controllers\HabitacionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -211,6 +212,13 @@
     <Content Include="Views\Reservacion\ConsultarHabitaciones.cshtml" />
     <Content Include="Views\Reservacion\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Reservacion\Cancel.cshtml" />
+    <Content Include="Views\Factura\Create.cshtml" />
+    <Content Include="Views\Factura\Delete.cshtml" />
+    <Content Include="Views\Factura\Details.cshtml" />
+    <Content Include="Views\Factura\Edit.cshtml" />
+    <Content Include="Views\Factura\Index.cshtml" />
+    <Content Include="Views\Factura\GenerarFactura.cshtml" />
+    <Content Include="Views\Reservacion\Marcar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

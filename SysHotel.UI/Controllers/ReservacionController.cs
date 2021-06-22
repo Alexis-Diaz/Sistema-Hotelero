@@ -279,7 +279,6 @@ namespace SysHotel.UI.Controllers
                         break;
                     case 1:
                         return RedirectToAction("Index");
-                        
                     case 2:
                         message = "La reservación debe hacerse con 7 días de anticipación.";
                         break;
@@ -341,6 +340,21 @@ namespace SysHotel.UI.Controllers
             ViewBag.IdCliente = new SelectList(db.Clientes, "IdCliente", "Nombres", reservacion.IdCliente);
             ViewBag.IdHabitacion = new SelectList(db.Habitacions, "IdHabitacion", "Descripcion", reservacion.IdHabitacion);
             ViewBag.IdUsuario = new SelectList(db.Usuarios, "IdUsuario", "Nombres", reservacion.IdUsuario);
+            return View(reservacion);
+        }
+
+        //GET: Reservacion/Marcar/5
+        public async Task<ActionResult> Marcar(int? id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Reservacion reservacion = await reservacionBL.ObtenerReservaPorId((int)id);
+            if(reservacion == null)
+            {
+                return HttpNotFound();
+            }
             return View(reservacion);
         }
 

@@ -227,14 +227,18 @@ namespace SysHotel.DAL
             }
         }
 
-        //buscar habitacion disponible por fecha entrada y salida
+        //buscar habitacion disponible por fecha entrada y salida y que su estado sea 1 0 2
         public async Task<List<Reservacion>> BuscarReservacionesPorDiaEntradaYSalida (DateTime checkIn, DateTime checkOut)
         {
             try
             {
-                List<Reservacion> ListadeReservaciones = await db.Reservacions.Where(x => x.DiaEntrada >= checkIn && x.DiaEntrada <= checkOut ||
-                                                    x.DiaSalida >= checkIn && x.DiaSalida <= checkOut ||
-                                                    x.DiaEntrada < checkIn && x.DiaSalida > checkOut).ToListAsync();
+                List<Reservacion> ListadeReservaciones = await db.Reservacions.Where(x => x.DiaEntrada >= checkIn 
+                                                                                       && x.DiaEntrada <= checkOut 
+                                                                                       || x.DiaSalida >= checkIn 
+                                                                                       && x.DiaSalida <= checkOut 
+                                                                                       //&& x.DiaEntrada < checkIn 
+                                                                                       //&& x.DiaSalida > checkOut
+                                                                                       && x.Estado == 1 || x.Estado == 2).ToListAsync();
                 return ListadeReservaciones;
             }
             catch (Exception)
