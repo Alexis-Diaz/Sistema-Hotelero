@@ -169,7 +169,12 @@ namespace SysHotel.DAL
             try
             {
                 fechaEntrada = fechaEntrada.AddDays(-1);
-                return await db.Reservacions.Where(x => x.IdHabitacion == idHabitacion && x.Estado == 1 || x.Estado == 2 || x.Estado == 3 && x.DiaSalida >= fechaEntrada).ToListAsync();
+                return await db.Reservacions.Where(x => x.IdHabitacion == idHabitacion
+                                                     && x.DiaSalida >= fechaEntrada
+                                                     && x.Estado == 1 
+                                                     || x.Estado == 2 
+                                                     || x.Estado == 3)
+                                                         .ToListAsync();
             }
             catch (Exception)
             {

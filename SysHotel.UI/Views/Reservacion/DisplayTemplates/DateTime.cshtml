@@ -1,0 +1,16 @@
+﻿@model  DateTime
+
+<!--Esta vista es un DisplayTemplates. Los Template son vistas que usan los
+    Html.Display o HtmlDisplayFor, como estos son controles que se acomodan 
+    al tipo de datos que reciben se pueden personalizar por si la vista que
+    despliegan no es la adecuada (por ejemplo, para booleanos muestra un checkbox
+    por defecto). Lo unico que se necesita es crear una carpeta en la vista del
+    controlador donde se necesita, el nombre es estrictamente necesario que sea
+    DisplayTemplate, y luego agregar vistas que reciban como modelo el tipo de datos
+    que procesaran para personalizarlo. Si esta carpeta se desea usar en todo el 
+    proyecto entonces se debe ubicar en la carpeta shared. De esta forma cada vez
+    que un Html.Display procese su dato para luego mostrarlo en la vista primero
+    vera si existe un Display personalizado para él.
+    Nota: es importatante que la vista tenga el mismo nombre al modelo que 
+    recibe. En este caso recibe un DateTime por eso la vista tiene el mismo nombre.-->
+<span>@Model.ToString("dd/MM/yyyy")</span>
