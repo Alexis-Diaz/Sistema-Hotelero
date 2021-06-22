@@ -20,13 +20,13 @@ namespace SysHotel.EL
 
         [Required(ErrorMessage = "Este campo es requerido")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Check Out (Salida)")]
         public DateTime DiaSalida { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha de reservación")]
         public DateTime FechaReservacion { get; set; }
 

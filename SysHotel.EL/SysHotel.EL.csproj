@@ -74,6 +74,7 @@
     <Compile Include="Proveedor.cs" />
     <Compile Include="Reservacion.cs" />
     <Compile Include="RolUsuario.cs" />
+    <Compile Include="Tags\EstadosReservacion.cs" />
     <Compile Include="Tags\RutaFoto.cs" />
     <Compile Include="TipoHabitacion.cs" />
     <Compile Include="Usuario.cs" />

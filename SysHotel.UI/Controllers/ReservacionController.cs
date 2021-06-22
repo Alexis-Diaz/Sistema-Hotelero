@@ -12,6 +12,7 @@ using SysHotel.EL.Login;
 using SysHotel.BL;
 using SysHotel.UI.Filtros;
 using SysHotel.EL.Paginador;
+using SysHotel.EL.Tags;
 
 namespace SysHotel.UI.Controllers
 {
@@ -32,17 +33,17 @@ namespace SysHotel.UI.Controllers
         private PaginadorGenerico<Reservacion> paginadorReservacion;
 
         // GET: Reservacion
-        public async Task<ActionResult> Index(string busqueda, int? estado = null, int pagina = 1)
+        public async Task<ActionResult> Index(string busqueda, int? estados = null, int pagina = 1)
         {
             int cantidadRegistrosActualizados = 0;//este dato sirve para indicarle al usuario si se han actulizado registros
             //Recuperamos la lista de reservaciones
-            if (estado == null)
+            if (estados == null || estados == 0)
             {
                 reservacion = await reservacionBL.ListarTodasLasReservaciones();
                 //Cuando el usuario visite la vista index antes se verificaran las reservas y
                 //todas aquellas que no se marcaron como recibidas despues de un dia pasaran 
                 //a ser automaticamente vencida con un estado 5.
-                foreach(var item in reservacion)
+                foreach (var item in reservacion)
                 {
                     DateTime fechaDeVencimiento = DateTime.Now;
                     if (item.DiaEntrada < fechaDeVencimiento && item.Estado == 1)
@@ -55,28 +56,28 @@ namespace SysHotel.UI.Controllers
                         //respuesta que no se habian hecho cambios y por tanto no permitia hacer la modificación en la base de datos.
                         //Asi para solucionar ese problema era mejor crear un nuevo objeto y pasar todos sus valores como se ve a continuación.
                         int res = await reservacionBL.EditarEstadoDeLaReserva(item.IdReservacion, 5);
-                        
-                        if(res == 1)
+
+                        if (res == 1)
                         {
                             cantidadRegistrosActualizados++;//cantidad de actualizaciones.
                         }
                     }
                 }
             }
-            if (estado != null)
+            if (estados != null && estados > 0)
             {
-                reservacion = await reservacionBL.ListarReservacionesPorEstado((int)estado);
+                reservacion = await reservacionBL.ListarReservacionesPorEstado((int)estados);
             }
 
             //BUSQUEDA
             if (!string.IsNullOrEmpty(busqueda))
             {
                 busqueda = busqueda.ToUpper();
-                foreach(var item in busqueda.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var item in busqueda.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     reservacion = reservacion.Where(x => x.cliente.Nombres.ToUpper().Contains(item) ||
                                                          x.cliente.Apellidos.ToUpper().Contains(item) ||
-                                                         x.DiaEntrada.ToString().Contains(item) || 
+                                                         x.DiaEntrada.ToString().Contains(item) ||
                                                          x.DiaEntrada.ToString().Contains(item) ||
                                                          x.NumeroPersonas.ToString().Contains(item) ||
                                                          x.habitacion.NumeroHabitacion.ToString().Contains(item) ||
@@ -93,7 +94,7 @@ namespace SysHotel.UI.Controllers
             totalRegistros = reservacion.Count();
 
             //Se obtiene la lista de registro segun la pagina
-            List<Reservacion> listaReservacion = reservacion.OrderBy(x => x.DiaEntrada)
+            List<Reservacion> listaReservacion = reservacion.OrderByDescending(x => x.DiaEntrada)
                                                             .Skip((pagina - 1) * registroPorPagina)
                                                             .Take(registroPorPagina)
                                                             .ToList();
@@ -111,6 +112,20 @@ namespace SysHotel.UI.Controllers
                 PaginaActual = pagina,
                 Resultado = listaReservacion
             };
+
+            string[] Estados = {"Selecciona un estado", "Reservado", "En Curso", "Finalizado", "Cancelado", "Vencido" };
+            List<EstadosReservacion> ListaEstados = new List<EstadosReservacion>();
+            for (int x = 0; x <= 5; x++)
+            {
+                EstadosReservacion Estado = new EstadosReservacion()
+                {
+                    NumeroEstado = x,
+                    Estado = Estados[x]
+                };
+                ListaEstados.Add(Estado);
+            }
+            ViewBag.Estado = Estados;//Estos estados sirven para enviar a la tabla de la vista un texto en lugar del numero de estado.
+            ViewBag.Estados = new SelectList(ListaEstados, "NumeroEstado", "Estado", 0);//Este ViewBag sirve para llenar el dropdown list.
             ViewBag.RegistrosActualizados = cantidadRegistrosActualizados;
             return View(paginadorReservacion);
         }
@@ -141,7 +156,14 @@ namespace SysHotel.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ConsultarHabitaciones([Bind(Include ="DiaEntrada, DiaSalida")] Reservacion reservacion)
         {
-            string mensaje = "No ha ingresado ninguna fecha.";
+            string mensaje;
+            if (!ModelState.IsValid)
+            {
+                mensaje = "No ha ingresado ninguna fecha.";
+                ViewBag.Message = mensaje;
+                return View(reservacion);
+            }
+            
 
             if (reservacion.DiaEntrada <= DateTime.Now.AddDays(7))
             {
@@ -204,6 +226,7 @@ namespace SysHotel.UI.Controllers
                     //Primero verificamos si las variables temporales existen
                     if (TempData.ContainsKey("DiaEntrada") && TempData.ContainsKey("DiaSalida"))
                     {
+                         
                         reservacion.DiaEntrada = (DateTime)TempData["DiaEntrada"];
                         reservacion.DiaSalida = (DateTime)TempData["DiaSalida"];
                     }
@@ -221,6 +244,7 @@ namespace SysHotel.UI.Controllers
                         ViewBag.IdHabitacion = new SelectList(await habitacionBL.ListarHabitacionesActivas(), "IdHabitacion", "NumeroHabitacion", habitacionAReservar.IdHabitacion);
                         return View(reservacion);
                     }
+
                     ViewBag.IdCliente = new SelectList(await clienteBL.ListarClientesActivos(), "IdCliente", "Nombres");
                     ViewBag.IdHabitacion = new SelectList(await habitacionBL.ListarHabitacionesActivas(), "IdHabitacion", "NumeroHabitacion", habitacionAReservar.IdHabitacion);
                     return View(reservacion);
@@ -318,6 +342,41 @@ namespace SysHotel.UI.Controllers
             ViewBag.IdHabitacion = new SelectList(db.Habitacions, "IdHabitacion", "Descripcion", reservacion.IdHabitacion);
             ViewBag.IdUsuario = new SelectList(db.Usuarios, "IdUsuario", "Nombres", reservacion.IdUsuario);
             return View(reservacion);
+        }
+
+        //GET: Reservacion/Cancel/5
+        public async Task<ActionResult> Cancel (int? id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Reservacion reservacion = await reservacionBL.ObtenerReservaPorId((int)id);
+            if(reservacion == null)
+            {
+                return HttpNotFound();
+            }
+            return View(reservacion);
+        }
+
+        //POST: Reservacion/Cancel/5
+        [HttpPost, ActionName("Cancel")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CancelConfirmed(int id)
+        {
+            int respuesta = await reservacionBL.CambiarEstadoDeReservacion(id, 4);
+            if (respuesta == 0)
+            {
+                ViewBag.Message = "Error critico, no fué posible cancelar la reserva.";
+                return View();
+            }
+            if(respuesta == 2)
+            {
+                ViewBag.Message = ("Ocurrió algo inesperado, la reservado ha sido eliminada por otro usuario.");
+                return View();
+            }
+            return RedirectToAction("Index");
+
         }
 
         // GET: Reservacion/Delete/5
