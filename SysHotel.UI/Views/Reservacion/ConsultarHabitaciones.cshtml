@@ -3,26 +3,37 @@
     ViewBag.Title = "Consultar Habitaciones";
 }
 
-<h2>Habitaciones Disponibles</h2>
-<p>Por favor ingresa las fechas que deseas consultar para buscar las habitaciones disponibles.</p>
-@if (ViewBag.Message != null)
-{
-    string clase = "";
-    switch (ViewBag.Message)
-    {
-        case "No ha ingresado ninguna fecha.":
-            clase = "alert-info";
-            break;
-        case "La reservación debe hacerse con 7 días de anticipación.":
-            clase = "alert-warning";
-            break;
-        case "La fecha de salida no puede ser menor o igual al día de entrada.":
-            clase = "alert-error";
-            break;
+<div class="row">
+    <div class="col s12 m6">
+        <h2>Habitaciones Disponibles</h2>
+        <p>Por favor ingresa las fechas que deseas consultar para buscar las habitaciones disponibles.</p>
+        @if (ViewBag.Message != null)
+        {
+            string clase = "";
+            switch (ViewBag.Message)
+            {
+                case "No ha ingresado ninguna fecha.":
+                    clase = "alert-info";
+                    break;
+                case "La reservación debe hacerse con 7 días de anticipación.":
+                    clase = "alert-warning";
+                    break;
+                case "La fecha de salida no puede ser menor o igual al día de entrada.":
+                    clase = "alert-error";
+                    break;
+                case "Lo sentimos no hay habitaciones disponibles para estas fechas.":
+                    clase = "alert-info";
+                    break;
 
-    }
-    <div id="closeAlertLogin" class=@clase> <strong>@ViewBag.Message</strong><span onclick="closeAlertFunction( );" class="right spanClose">&#10060;</span></div>
-}
+
+            }
+            <div id="closeAlertLogin" class=@clase> <strong>@ViewBag.Message</strong><span onclick="closeAlertFunction( );" class="right spanClose">&#10060;</span></div>
+        }
+    </div>
+    <div class="col s12 m6">
+
+    </div>
+</div>
 <br />
 @using (Html.BeginForm())
 {

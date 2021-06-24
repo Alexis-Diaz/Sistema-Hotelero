@@ -45,7 +45,7 @@ namespace SysHotel.UI.Controllers
                 //a ser automaticamente vencida con un estado 5.
                 foreach (var item in reservacion)
                 {
-                    DateTime fechaDeVencimiento = DateTime.Now;
+                    DateTime fechaDeVencimiento = DateTime.Now.Date;
                     if (item.DiaEntrada < fechaDeVencimiento && item.Estado == 1)
                     {
                         //Cuando estuve tratando de modificar el estado de manera automatica a 5, se me presento el siguiente problema:
@@ -183,10 +183,10 @@ namespace SysHotel.UI.Controllers
             //disponibles.
             try
             {
-                var HabitacionesDisponibles = await reservacionBL.ConsultarHabitacionesPorFechaEntradaYSalida(reservacion.DiaEntrada, reservacion.DiaSalida);
+                var HabitacionesDisponibles = await reservacionBL.ConsultarHabitacionesDisponiblesPorFechaEntradaYSalida(reservacion.DiaEntrada, reservacion.DiaSalida);
                 if(HabitacionesDisponibles.Count() == 0)
                 {
-                    mensaje = "No hay habitaciones disponibles para estas fechas.";
+                    mensaje = "Lo sentimos no hay habitaciones disponibles para estas fechas.";
                     ViewBag.Message = mensaje;
                     return View(reservacion);
                 }
@@ -286,7 +286,7 @@ namespace SysHotel.UI.Controllers
                         message = "La fecha de salida no puede ser menor o igual a la fecha de entrada.";
                         break;
                     case 4:
-                        message = "La fecha de entrada coincide con el día de limpieza de la habitación.";
+                        message = "Una de las fechas coincide con el día de limpieza de la habitación.";
                         break;
                     case 5:
                         message = "La reserva coincide con otra reserva.";
@@ -313,14 +313,13 @@ namespace SysHotel.UI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Reservacion reservacion = await db.Reservacions.FindAsync(id);
+            Reservacion reservacion = await reservacionBL.ObtenerReservaPorId((int)id);
             if (reservacion == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.IdCliente = new SelectList(db.Clientes, "IdCliente", "Nombres", reservacion.IdCliente);
-            ViewBag.IdHabitacion = new SelectList(db.Habitacions, "IdHabitacion", "Descripcion", reservacion.IdHabitacion);
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "IdUsuario", "Nombres", reservacion.IdUsuario);
+            ViewBag.IdCliente = new SelectList(await clienteBL.ListarClientesActivos(), "IdCliente", "Nombres", reservacion.IdCliente);
+            ViewBag.IdHabitacion = new SelectList(await habitacionBL.ListarHabitacionesActivas(), "IdHabitacion", "NumeroHabitacion", reservacion.IdHabitacion);
             return View(reservacion);
         }
 
@@ -333,13 +332,43 @@ namespace SysHotel.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(reservacion).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                string mensaje = "";
+                int res = await reservacionBL.EditarReserva(reservacion);
+                switch (res)
+                {
+                    case 0:
+                        mensaje = "Ocurrió un error crítico, no fué posible guardar el cambio.";
+                        break;
+                    case 1:
+                        return RedirectToAction("Index");
+
+                    case 2:
+                        mensaje = "La reserva se debe hacer con 7 días de anticipación.";
+                        break;
+                    case 3:
+                        mensaje = "La fecha de salida no puede ser inferior al fecha de entrada.";
+                        break;
+                    case 4:
+                        mensaje = "La habitación estará en limpieza el día de entrada.";
+                        break;
+                    case 5:
+                        mensaje = "Esta habitación ya está reservada para la misma fecha.";
+                        break;
+                    case 6:
+                        mensaje = "No se han hecho cambios.";
+                        break;
+                    case 7:
+                        mensaje = "Datos incompletos.";
+                        break;
+                }
+                ViewBag.Message = mensaje;
+                ViewBag.IdCliente = new SelectList(await clienteBL.ListarClientesActivos(), "IdCliente", "Nombres", reservacion.IdCliente);
+                ViewBag.IdHabitacion = new SelectList(await habitacionBL.ListarHabitacionesActivas(), "IdHabitacion", "NumeroHabitacion", reservacion.IdHabitacion);
+                return View(reservacion);
             }
-            ViewBag.IdCliente = new SelectList(db.Clientes, "IdCliente", "Nombres", reservacion.IdCliente);
-            ViewBag.IdHabitacion = new SelectList(db.Habitacions, "IdHabitacion", "Descripcion", reservacion.IdHabitacion);
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "IdUsuario", "Nombres", reservacion.IdUsuario);
+            ViewBag.Message = "Información incompleta";
+            ViewBag.IdCliente = new SelectList(await clienteBL.ListarClientesActivos(), "IdCliente", "Nombres", reservacion.IdCliente);
+            ViewBag.IdHabitacion = new SelectList(await habitacionBL.ListarHabitacionesActivas(), "IdHabitacion", "NumeroHabitacion", reservacion.IdHabitacion);
             return View(reservacion);
         }
 
@@ -356,6 +385,25 @@ namespace SysHotel.UI.Controllers
                 return HttpNotFound();
             }
             return View(reservacion);
+        }
+
+        //POST: Reservacion/Marcar/5
+        [HttpPost, ActionName("Marcar")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> MarcarCofirmed(int id)
+        {
+            int respuesta = await reservacionBL.CambiarEstadoDeReservacion(id, 2);
+            if (respuesta == 0)
+            {
+                ViewBag.Message = "Error critico, no fué posible marcar la reserva.";
+                return View();
+            }
+            if (respuesta == 2)
+            {
+                ViewBag.Message = "Ocurrió algo inesperado, no se encontró la reserva.";
+                return View();
+            }
+            return RedirectToAction("Index");
         }
 
         //GET: Reservacion/Cancel/5
@@ -386,7 +434,7 @@ namespace SysHotel.UI.Controllers
             }
             if(respuesta == 2)
             {
-                ViewBag.Message = ("Ocurrió algo inesperado, la reservado ha sido eliminada por otro usuario.");
+                ViewBag.Message = "Ocurrió algo inesperado, la reservado ha sido eliminada por otro usuario.";
                 return View();
             }
             return RedirectToAction("Index");

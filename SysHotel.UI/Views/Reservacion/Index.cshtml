@@ -95,9 +95,11 @@
                     break;
                 case 2:
                     Estado = ViewBag.Estado[2];
+                    Clase = " light-blue lighten-3";
                     break;
                 case 3:
                     Estado = ViewBag.Estado[3];
+                    Clase = "light-blue lighten-2";
                     break;
                 case 4:
                     Estado = ViewBag.Estado[4];
@@ -134,11 +136,28 @@
                     @Html.DisplayFor(m => Estado)
                 </td>
                 <td>
-                    <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Editar" href="~/Reservacion/Edit/@item.IdReservacion">edit</a></i>|
-                    <i class="material-icons"><a class="tooltipped" style="color:gray" data-position="bottom" data-tooltip="Detalles" href="~/Reservacion/Details/@item.IdReservacion">description</a></i>|
-                    <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Marcar" href="~/Reservacion/Marcar/@item.IdReservacion">today</a></i>|
-                    <i class="material-icons"><a class="tooltipped" style="color:orange" data-position="bottom" data-tooltip="Cancelar" href="~/Reservacion/Cancel/@item.IdReservacion">cancel</a></i>|
-                    <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Reservacion/Delete/@item.IdReservacion">delete</a></i>|
+                    <!--Se modifican las acciones de acuerdo a estados-->
+                    @if (item.Estado != 3 || item.Estado != 4 || item.Estado != 5)
+                    {<i class="material-icons"><a class="tooltipped" style="color:rgb(16 107 0); pointer-events:" data-position="bottom" data-tooltip="Editar" href="~/Reservacion/Edit/@item.IdReservacion">edit</a></i>}
+                    else
+                    { <i class="material-icons"><a class="tooltipped" style="color:rgb(154 154 154); cursor:no-drop;" data-position="bottom" data-tooltip="Editar">edit</a></i>}
+
+                    <i class="material-icons"><a class="tooltipped" style="color:mediumpurple" data-position="bottom" data-tooltip="Detalles" href="~/Reservacion/Details/@item.IdReservacion">description</a></i>|
+
+                    @if (item.Estado == 1 && item.DiaEntrada == DateTime.Now.Date)
+                    {<i class="material-icons"><a class="tooltipped" style="color:rgb(32 66 204)" data-position="bottom" data-tooltip="Marcar" href="~/Reservacion/Marcar/@item.IdReservacion">today</a></i>}
+                    else
+                    { <i class="material-icons"><a class="tooltipped" style="color: rgb(154 154 154); cursor:no-drop;" data-position="bottom" data-tooltip="Marcar">today</a></i>}
+
+                    @if (item.Estado == 1)
+                    {<i class="material-icons"><a class="tooltipped" style="color:orange" data-position="bottom" data-tooltip="Cancelar" href="~/Reservacion/Cancel/@item.IdReservacion">cancel</a></i>}
+                    else
+                    { <i class="material-icons"><a class="tooltipped" style="color: rgb(154 154 154); cursor:no-drop;" data-position="bottom" data-tooltip="Cancelar">cancel</a></i>}
+
+                    @if (item.Estado == 3 || item.Estado == 4 || item.Estado == 5) 
+                    { <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Reservacion/Delete/@item.IdReservacion">delete</a></i>}
+                    else 
+                    { <i class="material-icons"><a class="tooltipped" style="color:rgb(154 154 154); cursor:no-drop;" data-position="bottom" data-tooltip="Eliminar">delete</a></i>}
 
                 </td>
             </tr>

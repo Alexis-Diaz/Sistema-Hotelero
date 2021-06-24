@@ -111,12 +111,13 @@ namespace SysHotel.DAL
             }
         }
 
-        //listar por habitacion
-        public async Task<List<Reservacion>> ListarReservacionesDeHabitacion(int idHabitacion)
+        //listar reservas actuales
+        public async Task<List<Reservacion>> ListarReservacionesActuales()
         {
             try
             {
-                return await db.Reservacions.Where(x => x.IdHabitacion == idHabitacion && x.Estado ==1 || x.Estado ==2).ToListAsync();
+                DateTime fechaActual = DateTime.Now.Date;
+                return await db.Reservacions.Where(x => x.DiaEntrada == fechaActual && x.Estado == 1).ToListAsync();
             }
             catch (Exception)
             {
@@ -124,14 +125,40 @@ namespace SysHotel.DAL
             }
         }
 
-        //listar por habitacion
-        public async Task<List<Reservacion>> ListarReservacionesDeHabitacion(int idReserva, int idHabitacion)
+        /// <summary>
+        /// Este método devuelve una lista de reserva filtrada por el idHabitacion y que su estado es 1 0 2.
+        /// Se debe tener en cuenta que el método incluirá en la respuesta todas las reservas que cumplan
+        /// la condición, si no es esto lo que espera, se puede usar en su lugar, la sobrecarga de método para excluir
+        /// una reserva especifica por el id de la reserva.
+        /// </summary>
+        /// <param name="idHabitacion"></param>
+        /// <returns>Las reservas filtradas por la habitación</returns>
+        public async Task<List<Reservacion>> ListarReservacionesPorHabitacion(int idHabitacion)
+        {
+            try
+            {
+                return await db.Reservacions.Where(x => x.IdHabitacion == idHabitacion && (x.Estado ==1 || x.Estado ==2)).ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Este método devuelve una lista de reserva filtrada por el idHabitacion y que su estado es 1 0 2..
+        /// pero excluye de los resultados la reserva que tiene el idReservacion pasado por el parametro.
+        /// </summary>
+        /// <param name="idReserva"></param>
+        /// <param name="idHabitacion"></param>
+        /// <returns></returns>
+        public async Task<List<Reservacion>> ListarReservacionesPorHabitacion(int idReserva, int idHabitacion)
         {
             try
             {
                 List<Reservacion>listaReservacio = await db.Reservacions.Where(x => x.IdReservacion != idReserva 
-                                                                                 && x.IdHabitacion == idHabitacion
-                                                                                 && x.Estado == 1 || x.Estado == 2)
+                                                                                &&  x.IdHabitacion == idHabitacion
+                                                                                && (x.Estado == 1 || x.Estado == 2))
                                                                                      .ToListAsync();
                 return listaReservacio;
             }
@@ -141,40 +168,24 @@ namespace SysHotel.DAL
             }
         }
 
-        //listar reservas actuales
-        public async Task<List<Reservacion>> ListarReservacionesActuales( )
-        {
-            try
-            {
-                return await db.Reservacions.Where(x => x.DiaEntrada == DateTime.Now && x.Estado == 1).ToListAsync();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        
         /// <summary>
-        /// Este método devuelve una lista de reserva filtrada por el idHabitacion y una fecha de entrada.
+        /// Este método devuelve una lista de reserva filtrada por el idHabitacion, que a su vez estrán en limpieza las fechas indicadas y que su estado es 1 0 2.
         /// Se debe tener en cuenta que el método incluirá en la respuesta todas las reservas que cumplan
         /// la condición, si no es esto lo que espera, se puede usar en su lugar, la sobrecarga de método para excluir
         /// una reserva especifica por el id de la reserva.
         /// </summary>
         /// <param name="idHabitacion">El id de la habitación</param>
         /// <param name="fechaEntrada">Una fecha de entrada de una reserva</param>
-        /// <returns>La lista de reservas</returns>
-        public async Task<List<Reservacion>> ListarReservacionesDeHabitacion(int idHabitacion, DateTime fechaEntrada)
+        /// <returns>La lista de reservas que su idHabitacion y fecha de entrada sean iguales a los parámetros.</returns>
+        public async Task<List<Reservacion>> ListarReservacionesPorHabitacion(int idHabitacion, DateTime LimpiezaAnterior, DateTime LimpiezaPosterior)
         {
             try
             {
-                fechaEntrada = fechaEntrada.AddDays(-1);
+                LimpiezaAnterior = LimpiezaAnterior.AddDays(-1);
+                LimpiezaPosterior = LimpiezaPosterior.AddDays(1);
                 return await db.Reservacions.Where(x => x.IdHabitacion == idHabitacion
-                                                     && x.DiaSalida >= fechaEntrada
-                                                     && x.Estado == 1 
-                                                     || x.Estado == 2 
-                                                     || x.Estado == 3)
-                                                         .ToListAsync();
+                                                    && (x.DiaSalida == LimpiezaAnterior || x.DiaEntrada == LimpiezaPosterior)
+                                                    && (x.Estado == 1 || x.Estado == 2)).ToListAsync();
             }
             catch (Exception)
             {
@@ -183,24 +194,23 @@ namespace SysHotel.DAL
         }
 
         /// <summary>
-        /// Este método devuelve una lista de reserva filtrada por el idHabitacion y una fecha de entrada,
+        /// Este método devuelve una lista de reserva filtrada por el idHabitacion y que se encuentre en limpieza los dias indicados,
         /// pero excluye de los resultados la reserva que tiene el idReservacion pasado por el parametro.
         /// </summary>
         /// <param name="idHabitacion"></param>
         /// <param name="fechaEntrada"></param>
         /// <param name="idReservacion"></param>
         /// <returns>La lista de reservas</returns>
-        public async Task<List<Reservacion>> ListarReservacionesDeHabitacion(int idReservacion, int idHabitacion, DateTime fechaEntrada)
+        public async Task<List<Reservacion>> ListarReservacionesPorHabitacion(int idReservacion, int idHabitacion, DateTime LimpiezaAnterior, DateTime LimpiezaPosterior)
         {
             try
             {
-                fechaEntrada = fechaEntrada.AddDays(-1);
-                return await db.Reservacions.Where(x => x.IdReservacion != idReservacion 
-                                                     && x.IdHabitacion == idHabitacion
-                                                     && x.Estado == 1 
-                                                     || x.Estado == 2 
-                                                     || x.Estado == 3 
-                                                     && x.DiaSalida >= fechaEntrada).ToListAsync();
+                LimpiezaAnterior = LimpiezaAnterior.AddDays(-1);
+                LimpiezaPosterior = LimpiezaPosterior.AddDays(1);
+                return await db.Reservacions.Where(x => x.IdReservacion != idReservacion
+                                                    &&  x.IdHabitacion  == idHabitacion
+                                                    && (x.DiaSalida     == LimpiezaAnterior || x.DiaEntrada == LimpiezaPosterior)
+                                                    && (x.Estado        == 1                || x.Estado     == 2)).ToListAsync();
             }
             catch (Exception)
             {
@@ -232,17 +242,43 @@ namespace SysHotel.DAL
         {
             try
             {
-                List<Reservacion> ListadeReservaciones = await db.Reservacions.Where(x => x.DiaEntrada >= checkIn 
-                                                                                       && x.DiaEntrada <= checkOut 
-                                                                                       || x.DiaSalida >= checkIn 
-                                                                                       && x.DiaSalida <= checkOut 
-                                                                                       //&& x.DiaEntrada < checkIn 
-                                                                                       //&& x.DiaSalida > checkOut
-                                                                                       && x.Estado == 1 || x.Estado == 2).ToListAsync();
+                List<Reservacion> ListadeReservaciones = await db.Reservacions.Where(x => (x.DiaEntrada >= checkIn && x.DiaEntrada <= checkOut)
+                                                                                       || (x.DiaSalida  >= checkIn && x.DiaSalida  <= checkOut)
+                                                                                       || (x.DiaEntrada <  checkIn && x.DiaSalida  >  checkOut)
+                                                                                       && (x.Estado == 1 || x.Estado == 2)).ToListAsync();
                 return ListadeReservaciones;
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Este método busca todas las reservas donde su habitación recibirá limpieza antes o después de la reservación según
+        /// las fechas enviadas por parametros. La lista retornada tiene estado 1 0 2.
+        /// Parámetro 1: corresponde a la fecha de limpieza antes de iniciar la reservación.
+        /// Parámetro 2: corresponde a la fecha de limpieza después de finalizar la reservación.
+        /// </summary>
+        /// <param name="LimpiezaAnterior"></param>
+        /// <param name="LimpiezaPosterior"></param>
+        /// <returns>Las reservas cuyas habitaciones estarán en limpieza en culquiera de las fechas indicadas.</returns>
+        public async Task<List<Reservacion>> BuscarReservasPorDiaDeLimpieza (DateTime LimpiezaAnterior, DateTime LimpiezaPosterior)
+        {
+            try
+            {
+                LimpiezaAnterior = LimpiezaAnterior.AddDays(-1);
+                LimpiezaPosterior = LimpiezaPosterior.AddDays(1);
+                List<Reservacion> ListaReservaciones = await db.Reservacions.Where(x => x.DiaSalida == LimpiezaAnterior 
+                                                                                     || x.DiaEntrada == LimpiezaPosterior
+                                                                                     && x.Estado == 1 
+                                                                                     || x.Estado == 2)
+                                                                                         .ToListAsync();
+                return ListaReservaciones;
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }
