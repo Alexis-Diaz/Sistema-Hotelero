@@ -33,18 +33,15 @@ namespace SysHotel.BL
                 && reservacion.IdHabitacion > 0 && reservacion.IdUsuario > 0 )
                 {
                     //Buscamos las reservaciones para la habitación solicitada y verificamos que la nueva reserva no choque con las que estan hechas.
-                    List<Reservacion> ReservacionDeHabitacion = await reservacionDAL.ListarReservacionesDeHabitacion(reservacion.IdHabitacion);
-                    int coincidencia = ReservacionDeHabitacion.Where(r => reservacion.DiaEntrada >= r.DiaEntrada 
-                                                                  && reservacion.DiaEntrada <= r.DiaSalida 
-                                                                  || reservacion.DiaSalida >= r.DiaEntrada 
-                                                                  && reservacion.DiaSalida <= r.DiaSalida
-                                                                  || reservacion.DiaEntrada < r.DiaEntrada
-                                                                  && reservacion.DiaSalida > r.DiaSalida)
-                                                                  .Count();
+                    List<Reservacion> ReservacionDeHabitacion = await reservacionDAL.ListarReservacionesPorHabitacion(reservacion.IdHabitacion);
+                    int coincidencia = ReservacionDeHabitacion.Where(r => (reservacion.DiaEntrada >= r.DiaEntrada && reservacion.DiaEntrada <= r.DiaSalida)
+                                                                       || (reservacion.DiaSalida  >= r.DiaEntrada && reservacion.DiaSalida  <= r.DiaSalida)
+                                                                       || (reservacion.DiaEntrada <  r.DiaEntrada && reservacion.DiaSalida  >  r.DiaSalida))
+                                                                                      .Count();
                     if (coincidencia == 0)
                     {
                         //Aqui se indica que se debe dejar un dia entre reservación y reservación del la misma habitación.
-                        List<Reservacion> re = await reservacionDAL.ListarReservacionesDeHabitacion(reservacion.IdHabitacion, reservacion.DiaEntrada);
+                        List<Reservacion> re = await reservacionDAL.ListarReservacionesPorHabitacion(reservacion.IdHabitacion, reservacion.DiaEntrada, reservacion.DiaSalida);
                         int resul = re.Count();
                         if (resul == 0)
                         {
@@ -132,18 +129,15 @@ namespace SysHotel.BL
                     || reservacion.Estado != reservacionExistente.Estado)
                     {
                         //Buscamos las reservaciones para la habitación solicitada y verificamos que la nueva reserva no choque con las que estan hechas.
-                        List<Reservacion> ReservacionDeHabitacion = await reservacionDAL.ListarReservacionesDeHabitacion(reservacion.IdReservacion, reservacion.IdHabitacion);
-                        int coincidencia = ReservacionDeHabitacion.Where(r => reservacion.DiaEntrada >= r.DiaEntrada
-                                                                           && reservacion.DiaEntrada <= r.DiaSalida
-                                                                           || reservacion.DiaSalida >= r.DiaEntrada
-                                                                           && reservacion.DiaSalida <= r.DiaSalida
-                                                                           || reservacion.DiaEntrada < r.DiaEntrada
-                                                                           && reservacion.DiaSalida > r.DiaSalida)
-                                                                           .Count();
+                        List<Reservacion> ReservacionDeHabitacion = await reservacionDAL.ListarReservacionesPorHabitacion(reservacion.IdReservacion, reservacion.IdHabitacion);
+                        int coincidencia = ReservacionDeHabitacion.Where(r => (reservacion.DiaEntrada >= r.DiaEntrada && reservacion.DiaEntrada <= r.DiaSalida)
+                                                                           || (reservacion.DiaSalida  >= r.DiaEntrada && reservacion.DiaSalida  <= r.DiaSalida)
+                                                                           || (reservacion.DiaEntrada <  r.DiaEntrada && reservacion.DiaSalida  >  r.DiaSalida))
+                                                                                          .Count();
                         if (coincidencia == 0)
                         {
                             //Aqui se indica que se debe dejar un dia entre reservación y reservación del la misma habitación.
-                            List<Reservacion> re = await reservacionDAL.ListarReservacionesDeHabitacion(reservacion.IdReservacion, reservacion.IdHabitacion, reservacion.DiaEntrada);
+                            List<Reservacion> re = await reservacionDAL.ListarReservacionesPorHabitacion(reservacion.IdReservacion, reservacion.IdHabitacion, reservacion.DiaEntrada, reservacion.DiaSalida);
                             int resul = re.Count();
                             if (resul == 0)
                             {
@@ -158,9 +152,7 @@ namespace SysHotel.BL
                                 {
                                     if (reservacion.DiaEntrada < reservacion.DiaSalida)
                                     {
-                                        reservacion.FechaReservacion = DateTime.Now;
-                                        reservacion.Estado = 1;// 0 eliminadas; 1 reservas futuras; 2 en curso; 3 finalizadas; 4 canceladas; 5 vencidas
-                                        return await reservacionDAL.AgregarReservacion(reservacion);//retorna 1 El registro se guardó
+                                        return await reservacionDAL.EditarReservacion(reservacion);//retorna 1 El registro se guardó
                                     }
                                     return 3; //La fecha de salida es menor o igual que la fecha de entrada.
                                 }
@@ -314,7 +306,7 @@ namespace SysHotel.BL
         /// <returns>Una lista de las habitaciones disponibles.
         /// En caso de que las entradas de fecha esten incorrectas o no se encuentre ninguna habitación
         /// disponible, devuelve null.</returns>
-        public async Task<List<Habitacion>>ConsultarHabitacionesPorFechaEntradaYSalida(DateTime checkIn, DateTime checkOut)
+        public async Task<List<Habitacion>>ConsultarHabitacionesDisponiblesPorFechaEntradaYSalida(DateTime checkIn, DateTime checkOut)
         {
             if (checkIn != null && checkOut != null)
             {
@@ -334,6 +326,13 @@ namespace SysHotel.BL
                 {
                     List<Reservacion> ListaRerservaciones = await reservacionDAL.BuscarReservacionesPorDiaEntradaYSalida(checkIn, checkOut);
                     List<Habitacion> HabitacionesDisponibles = await habitacionDAL.ListarHabitaciones();
+                    foreach (var item in ListaRerservaciones)
+                    {
+                        Habitacion habitacion = await habitacionDAL.BuscarHabitacionPorId(item.IdHabitacion);
+                        HabitacionesDisponibles.Remove(habitacion);
+                    }
+                    //Ahora restamos las habitaciones que estaran en limpieza cualquiera de las dos fechas.
+                    ListaRerservaciones = await reservacionDAL.BuscarReservasPorDiaDeLimpieza(checkIn, checkOut);
                     foreach (var item in ListaRerservaciones)
                     {
                         Habitacion habitacion = await habitacionDAL.BuscarHabitacionPorId(item.IdHabitacion);

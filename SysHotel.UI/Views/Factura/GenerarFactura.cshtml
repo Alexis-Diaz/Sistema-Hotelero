@@ -1,0 +1,79 @@
+﻿@model IEnumerable<SysHotel.EL.Reservacion>
+
+@{
+    ViewBag.Title = "GenerarFactura";
+}
+
+<h2>Generar Factura</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.cliente.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.habitacion.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuario.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiaEntrada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiaSalida)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaReservacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumeroPersonas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comentarios)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cliente.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.habitacion.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuario.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiaEntrada)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiaSalida)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaReservacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumeroPersonas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comentarios)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.ActionLink("Generar", "Edit", new { id=item.IdReservacion }) |
+        </td>
+    </tr>
+}
+
+</table>

@@ -6,7 +6,7 @@
 
 <h3>Administración</h3>
 <div class="row">
-    <div class="col s12">
+    <div class="col s12" style="margin-bottom:7px;">
         <ul class="tabs">
             <li class="tab col s4"><a href="#reservas">Reservas para este día</a></li>
             <li class="tab col s4"><a href="#notas">Mis notas</a></li>
@@ -19,16 +19,19 @@
         {
             foreach (var item in Model)
             {
-                <div class="col s4">@Html.DisplayFor(modelitem => item.cliente.Nombres)<p>Hola</p></div>
-                <div class="col s1">@Html.DisplayFor(modelitem => item.DiaSalida)hola</div>
-                <div class="col s1">@Html.DisplayFor(modelitem => item.habitacion.NumeroHabitacion)hola</div>
-                <div class="col s1">@Html.DisplayFor(modelitem => item.NumeroPersonas)</div>
-                <div class="col s3">
-                    <i class="material-icons">@Html.ActionLink("", "Marcar", "Reservacion", new { id = item.IdReservacion }, new { @class = "" })touch-app</i>
-                    @Html.ActionLink("", "Edit", "Reservacion", new { id = item.IdReservacion }, new { @class = "" }) |
-                    @Html.ActionLink("", "Details", "Reservacion", new { id = item.IdReservacion }, new { @class = "" })|
-                    @Html.ActionLink("", "Delete", "Reservaion", new { id = item.IdReservacion }, new { @class = "" })
+                <div class="row" style="font-size:18px;">
+                    <div class="col s12 m6 l3"><b>Cliente: </b>@Html.DisplayFor(modelitem => item.cliente.Nombres)</div>
+                    <div class="col s12 m6 l3"><b>Ingreso: </b>@Html.DisplayFor(modelitem => item.DiaSalida)</div>
+                    <div class="col s12 m6 l2"><b>Habitación: </b>@Html.DisplayFor(modelitem => item.habitacion.NumeroHabitacion)</div>
+                    <div class="col s12 m6 l2"><b>Personas: </b>@Html.DisplayFor(modelitem => item.NumeroPersonas)</div>
+                    <div class="col s12 m6 l2">
+                        <i class="material-icons"><a class="tooltipped" style="color:rgb(16 107 0)" data-position="bottom" data-tooltip="Editar" href="~/Reservacion/Edit/@item.IdReservacion">edit</a></i>|
+                        <i class="material-icons"><a class="tooltipped" style="color:mediumpurple" data-position="bottom" data-tooltip="Detalles" href="~/Reservacion/Details/@item.IdReservacion">description</a></i>|
+                        <i class="material-icons"><a class="tooltipped" style="color:rgb(32 66 204)" data-position="bottom" data-tooltip="Marcar" href="~/Reservacion/Marcar/@item.IdReservacion">today</a></i>|
+                        <i class="material-icons"><a class="tooltipped" style="color:orange" data-position="bottom" data-tooltip="Cancelar" href="~/Reservacion/Cancel/@item.IdReservacion">cancel</a></i>|
+                    </div>
                 </div>
+                <div class="divider"></div>
             }
         }
         else
@@ -41,5 +44,6 @@
 </div>
 
 @section scripts{
+    <script>M.AutoInit();</script>
     <script src="~/Content/Script/indexAdmin.js"></script>
 }  
