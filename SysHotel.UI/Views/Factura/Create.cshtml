@@ -1,78 +1,103 @@
-﻿@model SysHotel.EL.Factura
+﻿@model SysHotel.EL.View.FacturaView<SysHotel.EL.Detalle>
 
 @{
     ViewBag.Title = "Create";
 }
-
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
+<br />
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Factura</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.NumeroFactura, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NumeroFactura, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NumeroFactura, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(true, "", new {@class=" "})
+    @Html.HiddenFor(model => model.IdReservacion)
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m8">
+                <h1 class="text-f4 text-align-center mt-7 mb-5">Nombre del hotel</h1>
+                <h2 class="text-f2 text-align-center mt-0">Lema</h2>
+                <p>Otra información relevante como la dirección y la ubicación de otros locales.</p>
+            </div>
+            <div class="col s12 m4">
+                <div id="factura-info" class="text-align-center">
+                    <span class="text-f2"> Factura Nº</span><br><span class="text-f3">@Html.DisplayFor(model => model.NumeroFactura)</span><br>
+                    NIT:121-002291-101-1<br>
+                    NRC:09878
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaEmision, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaEmision, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaEmision, "", new { @class = "text-danger" })
+        <div class="row factura-encabezado">
+            <div class="col s12 m6 l4">
+                <span>NIT ó DUI:</span> <span>@Html.DisplayFor(model => model.NumeroDocumento) </span><br>
+                <span>CLIENTE:</span> <span>@Html.DisplayFor(model => model.NombreCliente) @Html.DisplayFor(model => model.ApellidoCliente)</span><br>
+                <span>DIRECCIÓN:</span> <span>@Html.DisplayFor(model => model.DireccionCliente)</span>
+            </div>
+            <div class="col s12 m6 l4">
+                <span>FECHA:</span> <span>@Html.DisplayFor(model => model.FechaEmision)</span><br>
+                <span>ATENDIÓ:</span> <span>@Html.DisplayFor(model => model.Vendedor)</span>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IVA, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IVA, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IVA, "", new { @class = "text-danger" })
+        <div class="factura-cuerpo">
+            <div class="row blue accent-2 white-text mb-0 bb-2" id="factura-cuerpo-titulo">
+                <div class="col s2">
+                    <span>CANT.</span>
+                </div>
+                <div class="col s6">
+                    <span>DESCRIPCIÓN</span>
+                </div>
+                <div class="col s2 text-align-right">
+                    <span>P.UNITARIO</span>
+                </div>
+                <div class="col s2 text-align-right">
+                    <span>TOTAL</span>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SubTotal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SubTotal, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SubTotal, "", new { @class = "text-danger" })
+            <!--Aqui van los detalles de la reserva-->
+            <div class="row mb-0 bb-2">
+                <div class="col s2">
+                    <span>@Html.DisplayFor(model => model.Cantidad)</span>
+                </div>
+                <div class="col s6">
+                    <span>@Html.DisplayFor(model => model.Descripcion)</span>
+                </div>
+                <div class="col s2 text-align-right">
+                    <span>$@Html.DisplayFor(model => model.PrecioUnitario)</span>
+                </div>
+                <div class="col s2 text-align-right">
+                    <span>$@Html.DisplayFor(model => model.SubtotalProducto)</span>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TotalFactura, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalFactura, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TotalFactura, "", new { @class = "text-danger" })
+            <!--Aqui van otros detalles-->
+            @foreach (var item in Model.Detalle)
+            {
+                <div class="row mb-0 bb-2">
+                    <div class="col s2">
+                        <span>@Html.DisplayFor(model => item.Cantidad)</span>
+                    </div>
+                    <div class="col s6">
+                        <span>@Html.DisplayFor(model => item.alimento.Descripcion)</span>
+                    </div>
+                    <div class="col s2 text-align-right">
+                        <span>$@Html.DisplayFor(model => item.alimento.Precio)</span>
+                    </div>
+                    <div class="col s2 text-align-right">
+                        <span>$@Html.DisplayFor(model => item.TotalDetalle)</span>
+                    </div>
+                </div>
+            }
+            <!--Aqui van los totales-->
+            <div class="row mb-0">
+                <div class="col s8"></div>
+                <div class="col s2 bl-2 bb-2 blue accent-1">Sumas</div>
+                <div class="col s2 text-align-right bb-2 blue accent-1">$@Html.DisplayFor(model => model.SubtotalFactura)</div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+            <div class="row mb-0">
+                <div class="col s8">SON: <span>Quinientos treinta y cuatro 94/100</span></div>
+                <div class="col s2 bl-2 bb-2 blue accent-1">IVA</div>
+                <div class="col s2 text-align-right bb-2 blue accent-1">$@Html.DisplayFor(model => model.IVA)</div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdReservacion, "IdReservacion", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdReservacion", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdReservacion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="row mb-0">
+                <div class="col s8"></div>
+                <div class="col s2 bl-2 blue accent-1">Total</div>
+                <div class="col s2 text-align-right blue accent-1" id="factura-cuerpo-pie">$@Html.DisplayFor(model => model.TotalFactura)</div>
             </div>
         </div>
     </div>

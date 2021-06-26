@@ -15,22 +15,22 @@ namespace SysHotel.EL.View
 
         [Required(ErrorMessage = "Este valor es requerido")]
         [Display(Name = "Nº Factura")]
-        public int NumeroFactura { get; set; }
+        public string NumeroFactura { get; set; }
 
         [Required(ErrorMessage = "Este valor es obligatorio")]
         public string NumeroDocumento { get; set; }
 
         [Required(ErrorMessage = "Este valor es obligatorio")]
-        public string NombreCliente { get; set; }
+        public string NombreCompleto { get; set; }
 
-        [Required(ErrorMessage = "Este valor es obligatorio")]
-        public string ApellidoCliente { get; set; }
+        //[Required(ErrorMessage = "Este valor es obligatorio")]
+        //public string ApellidoCliente { get; set; }
 
         [Required(ErrorMessage = "Este valor es obligatorio")]
         public string DireccionCliente { get; set; }
 
         [Required(ErrorMessage = "La fecha es requerida")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha de emisión")]
         public DateTime FechaEmision { get; set; }
 

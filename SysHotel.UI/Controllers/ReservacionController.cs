@@ -78,7 +78,7 @@ namespace SysHotel.UI.Controllers
                     reservacion = reservacion.Where(x => x.cliente.Nombres.ToUpper().Contains(item) ||
                                                          x.cliente.Apellidos.ToUpper().Contains(item) ||
                                                          x.DiaEntrada.ToString().Contains(item) ||
-                                                         x.DiaEntrada.ToString().Contains(item) ||
+                                                         x.DiaSalida.ToString().Contains(item) ||
                                                          x.NumeroPersonas.ToString().Contains(item) ||
                                                          x.habitacion.NumeroHabitacion.ToString().Contains(item) ||
                                                          x.usuario.NombreUsuario.ToUpper().Contains(item))

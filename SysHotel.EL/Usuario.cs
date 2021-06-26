@@ -101,7 +101,8 @@ namespace SysHotel.EL
             }
             catch (Exception e)
             {
-                rm.SetResponse(false, "Error crítico, perdona los inconvenientes.");
+
+                rm.SetResponse(false, "Error crítico, perdona los inconvenientes. Si el problema persiste notifica al administrador del sistema.");
             }
             return rm;
         }
