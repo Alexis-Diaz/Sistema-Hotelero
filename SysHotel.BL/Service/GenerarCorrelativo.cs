@@ -14,6 +14,7 @@ namespace SysHotel.BL.Service
         private FacturaDAL facturaDAL = new FacturaDAL();
         /// <summary>
         /// Genera un codigo con un numero correlativo para un documento.
+        /// Recibe un parámetros que sirve como 
         /// </summary>
         /// <param name="codigo"></param>
         /// <returns>Una cadena que contiene el nuevo codigo correlativo para un documento</returns>
@@ -45,12 +46,12 @@ namespace SysHotel.BL.Service
                 {
                     Numero++;
                     NumeroFactura = codigo + "000" + Numero;
-                }   //100 a 1000
+                }   //100 a 999
                 else if (Numero >= 99 && Numero < 999)
                 {
                     Numero++;
                     NumeroFactura = codigo + "000" + Numero;
-                }   //1000 a 9999
+                }   //1000 a 10000
                 else if (Numero >= 999 && Numero < 10000)
                 {
                     Numero++;

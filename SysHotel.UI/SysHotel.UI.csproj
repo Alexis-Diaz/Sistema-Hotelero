@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Css\factura.css" />
     <Content Include="Content\Css\materialize.css" />
     <Content Include="Content\Css\materialize.min.css" />
     <Content Include="Content\Css\style.css" />
@@ -219,6 +220,7 @@
     <Content Include="Views\Factura\Index.cshtml" />
     <Content Include="Views\Factura\GenerarFactura.cshtml" />
     <Content Include="Views\Reservacion\Marcar.cshtml" />
+    <Content Include="Views\Factura\DisplayTemplates\DateTime.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -173,7 +173,7 @@ namespace SysHotel.DAL
         {
             try
             {
-                return await db.Facturas.OrderByDescending(t => t.FechaEmision).FirstOrDefaultAsync();
+                return await db.Facturas.OrderByDescending(factura => factura.FechaEmision).FirstOrDefaultAsync();
             }
             catch (Exception)
             {

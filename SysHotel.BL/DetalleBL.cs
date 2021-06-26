@@ -20,7 +20,7 @@ namespace SysHotel.BL
         /// </summary>
         /// <param name="detalle"></param>
         /// <returns>Un entero, donde:
-        /// 0: no guardó, 1: guardó, 2: fecha de comida incorrecta, 3: La reservación no está activa, 4: El detalle es incompleto.</returns>
+        /// 0: no guardó, 1: guardó, 2: no existe el alimento, 3: fecha de comida incorrecta, 4: La reservación no está activa, 5: El detalle es incompleto.</returns>
         public async Task<int> AgregarNuevoDetalle(Detalle detalle)
         {
             try
@@ -28,7 +28,7 @@ namespace SysHotel.BL
                 if (detalle.Dia != null && !string.IsNullOrEmpty(detalle.TiempoDeComida)
                 && detalle.Cantidad > 0 && detalle.IdReservacion > 0 && detalle.IdAlimento > 0)
                 {
-                   if(detalle.IdReservacion == 1)
+                   if(detalle.reservacion.Estado == 2)
                     {
                         //validamos que la fecha sea futura
                         //La hora de anticipacion es personalizable
@@ -36,18 +36,19 @@ namespace SysHotel.BL
                         {
                             //Calculamos el total del detalle
                             Alimento alimento = await alimentoDAL.BuscarAlimentoPorId(detalle.IdAlimento);
-                            if (alimento != null)
+                            if (alimento == null)
                             {
-                                detalle.TotalDetalle = alimento.Precio * detalle.Cantidad;
+                                return 2;
                             }
+                            detalle.TotalDetalle = alimento.Precio * detalle.Cantidad;
                             detalle.Estado = 1;//Detalle activo
                             return await detalleDAL.AgregarDetalle(detalle);
                         }
-                        return 2;//Indica que la fecha de comida es incorrecta, debe hacerse con anticipación
+                        return 3;//Indica que la fecha de comida es incorrecta, debe hacerse con anticipación
                     }
-                    return 3;//La resercación no está activa.
+                    return 4;//La reservación no está en curso.
                 }
-                return 4;//El objeto detalle se recibe incompleto.
+                return 5;//El objeto detalle se recibe incompleto.
             }
             catch (Exception)
             {
@@ -56,7 +57,7 @@ namespace SysHotel.BL
         }
 
         /// <summary>
-        /// Cancela un detalle de pedido de comida aseguirando que se haga
+        /// Cancela un detalle de pedido de comida asegurando que se haga
         /// según el tiempo de anticipación.
         /// </summary>
         /// <param name="id"></param>
@@ -74,7 +75,7 @@ namespace SysHotel.BL
                         //Verificamos que la cancelación se haga con anticipación.
                         //La hora de cancelación se puede personalizar.
                         if (VerificarTiempo(detalleExistente.TiempoDeComida, detalleExistente.Dia, 6)) {
-                            detalleExistente.Estado = 2;//El detalle esta cancelado.
+                            detalleExistente.Estado = 3;//El detalle esta cancelado.
                             return await detalleDAL.EditarDetalle(detalleExistente);
                         }
                         return 2; //La comida ya no se puede cancelar.
@@ -107,7 +108,7 @@ namespace SysHotel.BL
                         //Verificamos que sea un detalle activo
                         if (detalleExistente.Estado == 1)
                         {
-                            detalleExistente.Estado = 3;//El detalle está cobrado.
+                            detalleExistente.Estado = 2;//El detalle está cobrado.
                             return await detalleDAL.EditarDetalle(detalleExistente);
                         }
                         return 2;//El detalle no esta activo.
@@ -138,7 +139,7 @@ namespace SysHotel.BL
                     Detalle detalleExistente = await detalleDAL.BuscarDetallePorId(id);
                     if (detalleExistente != null)
                     {
-                        //Verificamos que sea un detalle activo
+                        //Verificamos que sea un detalle cancelado o cobrado
                         if (detalleExistente.Estado == 2 || detalleExistente.Estado == 3)
                         {
                             detalleExistente.Estado = 0;//El detalle está eliminado.
@@ -303,7 +304,7 @@ namespace SysHotel.BL
                     //tomando en cuenta las horas de anticipación;
                     if (DiaComida > FechaActual.AddHours(HoraAnticipacion))
                     {
-                        Respuesta = true;//fecha valida para el desayuno
+                        Respuesta = true;//fecha valida para el almuerzo
                     }
                     break;
 
@@ -313,7 +314,7 @@ namespace SysHotel.BL
                     //tomando en cuenta las horas de anticipación;
                     if (DiaComida > FechaActual.AddHours(HoraAnticipacion))
                     {
-                        Respuesta = true;//fecha valida para el desayuno
+                        Respuesta = true;//fecha valida para la cena
                     }
                     break;
             }

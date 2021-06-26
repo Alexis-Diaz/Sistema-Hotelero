@@ -16,6 +16,11 @@ namespace SysHotel.EL
         [Display(Name = "Nº Factura")]
         public string NumeroFactura { get; set; }
 
+        [Required(ErrorMessage = "Es valor es necesario")]
+        [Display(Name = "Vendedor")]
+        [StringLength(50)]
+        public string Vendedor { get; set; }
+
         [Required(ErrorMessage = "La fecha es requerida")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha de emisión")]

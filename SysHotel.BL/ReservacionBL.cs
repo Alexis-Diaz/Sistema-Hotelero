@@ -28,7 +28,7 @@ namespace SysHotel.BL
         {
             try
             {
-                if (reservacion.DiaEntrada > DateTime.Now && reservacion.DiaSalida > DateTime.Now
+                if (reservacion.DiaEntrada > DateTime.Now.Date && reservacion.DiaSalida > DateTime.Now.Date
                 && reservacion.NumeroPersonas > 0 && reservacion.IdCliente > 0 
                 && reservacion.IdHabitacion > 0 && reservacion.IdUsuario > 0 )
                 {
@@ -56,7 +56,7 @@ namespace SysHotel.BL
                             {
                                 if (reservacion.DiaEntrada < reservacion.DiaSalida)
                                 {
-                                    reservacion.FechaReservacion = DateTime.Now;
+                                    reservacion.FechaReservacion = DateTime.Now.Date;
                                     reservacion.Estado = 1;// 0 eliminadas; 1 reservas futuras; 2 en curso; 3 finalizadas; 4 canceladas; 5 vencidas
                                     return await reservacionDAL.AgregarReservacion(reservacion);//retorna 1 El registro se guardó
                                 }

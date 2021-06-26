@@ -24,7 +24,7 @@ namespace SysHotel.UI.Controllers
         private ProveedorBL proveedorBL = new ProveedorBL();
 
         //Variables para el paginador generico
-        private const int registroPorPagina = 5;
+        private const int registroPorPagina = 16;
         private List<Alimento> alimentos;
         private PaginadorGenerico<Alimento> paginadorAlimento;
 
