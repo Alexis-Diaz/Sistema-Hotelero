@@ -30,7 +30,7 @@ namespace SysHotel.UI.Controllers
         private PaginadorGenerico<Habitacion> paginadorHabitacion;
 
         // GET: Habitacion
-        public async Task<ActionResult> Index(string busqueda = "", int idCategoria = 0, int pagina = 0)
+        public async Task<ActionResult> Index(string busqueda = "", int idCategoria = 0, int pagina = 1)
         {
             //Recuperamos la lista de habitaciones completa
             habitaciones = await habitacionBL.ListarHabitacionesActivas();

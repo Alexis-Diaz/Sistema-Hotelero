@@ -36,8 +36,8 @@ namespace SysHotel.UI.Controllers
         // GET: Factura
         public async Task<ActionResult> Index()
         {
-            var facturas = db.Facturas.Include(f => f.reservacion);
-            return View(await facturas.ToListAsync());
+            List<Factura> listaFacturas = await facturaBL.ObtenerTodasLasFacturas();
+            return View(listaFacturas);
         }
 
         public async Task<ActionResult> GenerarFactura(string busqueda, int pagina = 1)
@@ -98,7 +98,7 @@ namespace SysHotel.UI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Factura factura = await db.Facturas.FindAsync(id);
+            Factura factura = await facturaBL.ObtenerFacturaPorId((int)id);
             if (factura == null)
             {
                 return HttpNotFound();
@@ -165,62 +165,79 @@ namespace SysHotel.UI.Controllers
                 IdReservacion = reservacion.IdReservacion,
                 Detalle = detallePorReservacion
             };
-
+            TempData["factura"] = facturaView;//Esta información la recuperaremos en el metodo de accion Create
             return View(facturaView);
         }
 
-       
-
-        // POST: Factura/Create
+        // POST: Factura/Create/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdFactura,NumeroFactura,FechaEmision,IVA,SubTotal,TotalFactura,Estado,IdReservacion")] Factura factura)
+        public async Task<ActionResult> Create(int id)
         {
-            if (ModelState.IsValid)
+            if (TempData.ContainsKey("factura"))
             {
-                db.Facturas.Add(factura);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                FacturaView<Detalle> fv = TempData["factura"] as FacturaView<Detalle>;
+                Reservacion reservacion = await reservacionBL.ObtenerReservaPorId(id);
+                if (reservacion != null)
+                {
+                    int res = await reservacionBL.CambiarEstadoDeReservacion(id, 3);
+                    if (res == 1)
+                    {
+                        Factura nuevaFactura = new Factura()
+                        {
+                            NumeroFactura = fv.NumeroFactura,
+                            Vendedor = fv.Vendedor,
+                            FechaEmision = fv.FechaEmision,
+                            IVA = fv.IVA,
+                            SubTotal = fv.SubtotalFactura,
+                            TotalFactura = fv.TotalFactura,
+                            Estado = 1,
+                            IdReservacion = fv.IdReservacion
+                        };
+                        res = await facturaBL.AgregarFacturaUnica(nuevaFactura);
+                        if (res == 1)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                    }
+                }
             }
-
-            ViewBag.IdReservacion = new SelectList(db.Reservacions, "IdReservacion", "Comentarios", factura.IdReservacion);
-            return View(factura);
+            return View( );
         }
 
         // GET: Factura/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Factura factura = await db.Facturas.FindAsync(id);
-            if (factura == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.IdReservacion = new SelectList(db.Reservacions, "IdReservacion", "Comentarios", factura.IdReservacion);
-            return View(factura);
-        }
+        //public async Task<ActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Factura factura = await facturaBL.ObtenerFacturaPorId((int)id);
+        //    if (factura == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(factura);
+        //}
 
-        // POST: Factura/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdFactura,NumeroFactura,FechaEmision,IVA,SubTotal,TotalFactura,Estado,IdReservacion")] Factura factura)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(factura).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.IdReservacion = new SelectList(db.Reservacions, "IdReservacion", "Comentarios", factura.IdReservacion);
-            return View(factura);
-        }
+        //// POST: Factura/Edit/5
+        //// Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
+        //// más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit([Bind(Include = "IdFactura,NumeroFactura,FechaEmision,IVA,SubTotal,TotalFactura,Estado,IdReservacion")] Factura factura)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(factura).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.IdReservacion = new SelectList(db.Reservacions, "IdReservacion", "Comentarios", factura.IdReservacion);
+        //    return View(factura);
+        //}
 
         // GET: Factura/Delete/5
         public async Task<ActionResult> Delete(int? id)
