@@ -12,9 +12,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.reservacion.Comentarios)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.NumeroFactura)
         </th>
         <th>
@@ -38,9 +35,6 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.reservacion.Comentarios)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.NumeroFactura)
         </td>
         <td>
@@ -59,11 +53,9 @@
             @Html.DisplayFor(modelItem => item.Estado)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdFactura }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdFactura }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdFactura })
+            @Html.ActionLink("Details", "Details", new { id = item.IdFactura }) |
+            @Html.ActionLink("Anular", "Details", new { id = item.IdFactura })
         </td>
     </tr>
 }
-
 </table>

@@ -59,6 +59,12 @@
             </tr>
         </thead>
         <tbody>
+            @if(Model.Resultado.Count() == 0)
+            {
+                <tr>
+                    <td colspan="9">No hay nada que mostrar</td>
+                </tr>
+            }
             @foreach (var item in Model.Resultado)
             {
                 <tr class="light-blue lighten-3" style="border-bottom: solid 1px rgb(150,150,150)">
@@ -88,7 +94,6 @@
                             string estado = (item.Estado == 2) ? "En curso" : "No valido";
                             @estado
                         }
-
                     </td>
                     <td>
                         <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Generar factura" href="~/Factura/Create/@item.IdReservacion">archive</a></i>

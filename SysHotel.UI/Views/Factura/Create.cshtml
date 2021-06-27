@@ -27,7 +27,7 @@
         <div class="row factura-encabezado">
             <div class="col s12 m6 l4">
                 <span>NIT ó DUI:</span> <span>@Html.DisplayFor(model => model.NumeroDocumento) </span><br>
-                <span>CLIENTE:</span> <span>@Html.DisplayFor(model => model.NombreCliente) @Html.DisplayFor(model => model.ApellidoCliente)</span><br>
+                <span>CLIENTE:</span> <span>@Html.DisplayFor(model => model.NombreCompleto)</span><br>
                 <span>DIRECCIÓN:</span> <span>@Html.DisplayFor(model => model.DireccionCliente)</span>
             </div>
             <div class="col s12 m6 l4">
@@ -44,7 +44,7 @@
                     <span>DESCRIPCIÓN</span>
                 </div>
                 <div class="col s2 text-align-right">
-                    <span>P.UNITARIO</span>
+                    <span>P.UNIT</span>
                 </div>
                 <div class="col s2 text-align-right">
                     <span>TOTAL</span>
@@ -99,6 +99,10 @@
                 <div class="col s2 bl-2 blue accent-1">Total</div>
                 <div class="col s2 text-align-right blue accent-1" id="factura-cuerpo-pie">$@Html.DisplayFor(model => model.TotalFactura)</div>
             </div>
+        </div>
+        <br />
+        <div class="row text-align-right">
+            <input type="submit" class="btn btn-large waves-effect waves-light" value="Generar">
         </div>
     </div>
 }
