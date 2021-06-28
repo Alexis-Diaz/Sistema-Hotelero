@@ -124,3 +124,24 @@ opcion "Cuenta" del navbar y que se ubique a la par del icono*/
      opacity: initial; 
      pointer-events: initial; 
 }
+
+/*Login*/
+#container-block{
+    position:relative;
+}
+
+#loader{
+    position:absolute;
+    background-image:url(../Img/Login/gif-cargando-sin-fondo-3.gif);
+    background-position: 50% 50%;
+    background-size: 150px;
+    background-repeat: no-repeat;
+    background-color: black;
+    opacity: 0.8;
+    border:blue 1px solid;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index:1;
+}

@@ -121,11 +121,13 @@
     <Content Include="Content\Img\Carrousel\e.jpg" />
     <Content Include="Content\Img\Construccion\Construccion.gif" />
     <Content Include="Content\Img\Habitaciones\vacio.jpg" />
+    <Content Include="Content\Img\Login\gif-cargando-sin-fondo-3.gif" />
     <Content Include="Content\Img\Logo\LogoHotelBlanco.png" />
     <Content Include="Content\Img\Logo\LogoHotelNegro.png" />
     <Content Include="Content\Script\createCategoriaAlimento.js" />
     <Content Include="Content\Script\indexAdmin.js" />
     <Content Include="Content\Script\indexHome.js" />
+    <Content Include="Content\Script\indexLogin.js" />
     <Content Include="Content\Script\layout.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Script\materialize.js" />
