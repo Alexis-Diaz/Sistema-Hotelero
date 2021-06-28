@@ -24,7 +24,7 @@
     </nav>
     <div class="container">
         <div class="row">
-            <div class="left col s6">
+            <div class="left col s12 m6">
                 <h2>Iniciar sesión</h2>
                 @if (ViewBag.Message != null)
                 {
@@ -51,18 +51,20 @@
                 @using (Html.BeginForm("Autenticar", "Login", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
-                    <div class="input-field">
-                        @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "" })
-                        @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "validate" } })
-                        @Html.ValidationMessageFor(model => model.Usuario, null, new { @class = "" })
-                    </div>
-                    <div class="input-field">
-                        @Html.LabelFor(model => model.Contraseña, htmlAttributes: new { @class = "" })
-                        @Html.PasswordFor(model => model.Contraseña, new { htmlAttributes = new { @class = "validate" } })
-                        @Html.ValidationMessageFor(model => model.Contraseña, null, new { @class = "" })
-                    </div>
-                    <div>
-                        <button type="submit" class="btn-large waves-effect waves-light white-text text-accent-1">Ingresar</button>
+                    <div id="container-block">
+                        <div class="input-field">
+                            @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "validate" } })
+                            @Html.ValidationMessageFor(model => model.Usuario, null, new { @class = "" })
+                        </div>
+                        <div class="input-field">
+                            @Html.LabelFor(model => model.Contraseña, htmlAttributes: new { @class = "" })
+                            @Html.PasswordFor(model => model.Contraseña, new { htmlAttributes = new { @class = "validate" } })
+                            @Html.ValidationMessageFor(model => model.Contraseña, null, new { @class = "" })
+                        </div>
+                        <div>
+                            <button type="submit" class="btn-large waves-effect waves-light white-text text-accent-1" onclick="loader()">Ingresar</button>
+                        </div>
                     </div>
                 }
             </div>
@@ -70,6 +72,6 @@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/materialize")
-    @Scripts.Render("~/bundles/scriptLayout")
+    @Scripts.Render("~/bundles/hotel")
 </body>
 </html>

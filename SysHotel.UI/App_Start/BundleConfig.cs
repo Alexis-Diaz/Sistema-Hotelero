@@ -14,7 +14,8 @@ namespace SysHotel.UI.App_Start
             //archivos js
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Content/Script/jquery-{versión}.js"));
             bundles.Add(new ScriptBundle("~/bundles/materialize").Include("~/Content/Script/materialize.js"));
-            bundles.Add(new ScriptBundle("~/bundles/scriptLayout").Include("~/Content/Script/layout.js"));
+            bundles.Add(new ScriptBundle("~/bundles/hotel").Include("~/Content/Script/layout.js",
+                                                                    "~/Content/Script/indexLogin.js"));
         }
 
     }
