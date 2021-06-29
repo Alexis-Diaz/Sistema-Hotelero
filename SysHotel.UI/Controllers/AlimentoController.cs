@@ -126,7 +126,7 @@ namespace SysHotel.UI.Controllers
             {
                 string mensaje = "";
                 var picture = string.Empty;
-                var folder = "~/Content/Img/Alimentos";
+                var folder = "~/content/img/alimentos";
 
                 if (alimentoView.Foto != null)
                 {
@@ -195,7 +195,7 @@ namespace SysHotel.UI.Controllers
             {
                 string mensaje = "";
                 var picture = string.Empty;
-                var folder = "~/Content/Img/Alimentos";
+                var folder = "~/content/img/alimentos";
 
                 if (alimentoView.Foto != null)
                 {
