@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Sistema de reservación</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    @Styles.Render("~/content/css")
+    @Styles.Render("~/bundles/css")
 </head>
 <body>
     @if (SysHotel.EL.Login.SessionHelper.ExistUserInSession())
@@ -156,24 +156,24 @@
                 <a href="#" data-target="menu-oculto" id="sidenav-trigger" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="~/Home/Index">Inicio</a></li>
-                    <li><a href="#">Realizar una reservación</a></li>
-                    <li><a href="#">Ver habitaciones</a></li>
-                    <li><a href="#">Ver el menú</a></li>
-                    <li><a href="#">Sobre nosotros</a></li>
-                    <li><a href="#">Contáctanos</a></li>
-                    <li><a href="#">Ayuda</a></li>
+                    <li><a href="~/Home/Construccion">Realizar una reservación</a></li>
+                    <li><a href="~/Home/Construccion">Ver habitaciones</a></li>
+                    <li><a href="~/Home/Construccion">Ver el menú</a></li>
+                    <li><a href="~/Home/Construccion">Sobre nosotros</a></li>
+                    <li><a href="~/Home/Construccion">Contáctanos</a></li>
+                    <li><a href="~/Home/Construccion">Ayuda</a></li>
                     <li><a href="~/Login/Index">Iniciar sesión</a></li>
                 </ul>
             </div>
         </nav>
         <ul class="sidenav" id="menu-oculto">
             <li><a href="~/Home/Index">Inicio</a></li>
-            <li><a href="#">Realizar una reservación</a></li>
-            <li><a href="#">Ver habitaciones</a></li>
-            <li><a href="#">Ver el menú</a></li>
-            <li><a href="#">Sobre nosotros</a></li>
-            <li><a href="#">Contáctanos</a></li>
-            <li><a href="#">Ayuda</a></li>
+            <li><a href="~/Home/Construccion">Realizar una reservación</a></li>
+            <li><a href="~/Home/Construccion">Ver habitaciones</a></li>
+            <li><a href="~/Home/Construccion">Ver el menú</a></li>
+            <li><a href="~/Home/Construccion">Sobre nosotros</a></li>
+            <li><a href="~/Home/Construccion">Contáctanos</a></li>
+            <li><a href="~/Home/Construccion">Ayuda</a></li>
             <li><a href="~/Login/Index">Iniciar sesión</a></li>
         </ul>
     }

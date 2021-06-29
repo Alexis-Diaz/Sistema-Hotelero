@@ -8,14 +8,14 @@ namespace SysHotel.UI.App_Start
         public static void RegisterBundles(BundleCollection bundles)
         {
             //archivos css
-            bundles.Add(new StyleBundle("~/content/css").Include("~/Content/Css/materialize.css",
-                                                                 "~/Content/Css/style.css",
-                                                                 "~/Content/Css/factura.css"));
+            bundles.Add(new StyleBundle("~/bundles/css").Include("~/content/css/materialize.min.css",
+                                                                 "~/content/css/style.css",
+                                                                 "~/content/css/factura.css"));
             //archivos js
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Content/Script/jquery-{versión}.js"));
-            bundles.Add(new ScriptBundle("~/bundles/materialize").Include("~/Content/Script/materialize.js"));
-            bundles.Add(new ScriptBundle("~/bundles/hotel").Include("~/Content/Script/layout.js",
-                                                                    "~/Content/Script/indexLogin.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/content/script/jquery-{versión}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/materialize").Include("~/content/script/materialize.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/hotel").Include("~/content/script/layout.js",
+                                                                    "~/content/script/indexLogin.js"));
         }
 
     }
