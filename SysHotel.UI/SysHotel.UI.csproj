@@ -111,12 +111,49 @@
     <Content Include="Content\css\materialize.css" />
     <Content Include="Content\css\materialize.min.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\img\alimentos\1.jpg" />
+    <Content Include="Content\img\alimentos\2.jpg" />
+    <Content Include="Content\img\alimentos\3.jpg" />
+    <Content Include="Content\img\alimentos\4.jpg" />
+    <Content Include="Content\img\alimentos\5.jpg" />
+    <Content Include="Content\img\alimentos\7up.jpg" />
+    <Content Include="Content\img\alimentos\budin.jpg" />
+    <Content Include="Content\img\alimentos\cafe.jpg" />
+    <Content Include="Content\img\alimentos\cebada.jpg" />
+    <Content Include="Content\img\alimentos\cenafrijoles.jpg" />
+    <Content Include="Content\img\alimentos\chocolate.jpg" />
+    <Content Include="Content\img\alimentos\cocacola.jpg" />
+    <Content Include="Content\img\alimentos\frambuesa.jpg" />
+    <Content Include="Content\img\alimentos\horchata.jpg" />
+    <Content Include="Content\img\alimentos\kolashanpan.jpg" />
+    <Content Include="Content\img\alimentos\limonada.jpg" />
+    <Content Include="Content\img\alimentos\pastel-1.jpg" />
+    <Content Include="Content\img\alimentos\pepsi.jpg" />
+    <Content Include="Content\img\alimentos\pizza.jpg" />
+    <Content Include="Content\img\alimentos\sadwichs.jpg" />
+    <Content Include="Content\img\alimentos\sopa de res.jpg" />
+    <Content Include="Content\img\alimentos\vacio.jpg" />
+    <Content Include="Content\img\alimentos\vino blanco chardonnay.jpg" />
+    <Content Include="Content\img\alimentos\vino blanco riesling.jpg" />
+    <Content Include="Content\img\alimentos\vino tinto malbec.jpg" />
     <Content Include="Content\img\carrousel\a.jpg" />
     <Content Include="Content\img\carrousel\b.jpg" />
     <Content Include="Content\img\carrousel\c.jpg" />
     <Content Include="Content\img\carrousel\d.jpg" />
     <Content Include="Content\img\carrousel\e.jpg" />
     <Content Include="Content\img\construccion\Construccion.gif" />
+    <Content Include="Content\img\habitaciones\01.jpg" />
+    <Content Include="Content\img\habitaciones\02.jpg" />
+    <Content Include="Content\img\habitaciones\03.jpg" />
+    <Content Include="Content\img\habitaciones\04.jpg" />
+    <Content Include="Content\img\habitaciones\05.jpg" />
+    <Content Include="Content\img\habitaciones\06.jpg" />
+    <Content Include="Content\img\habitaciones\10.jpg" />
+    <Content Include="Content\img\habitaciones\11.jpg" />
+    <Content Include="Content\img\habitaciones\12.jpg" />
+    <Content Include="Content\img\habitaciones\13.jpg" />
+    <Content Include="Content\img\habitaciones\15.jpg" />
+    <Content Include="Content\img\habitaciones\16.jpg" />
     <Content Include="Content\img\habitaciones\vacio.jpg" />
     <Content Include="Content\img\login\gif-cargando-sin-fondo-3.gif" />
     <Content Include="Content\img\logo\LogoHotelBlanco.png" />
@@ -229,7 +266,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\img\alimentos\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
