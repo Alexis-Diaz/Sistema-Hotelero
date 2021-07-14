@@ -130,9 +130,9 @@ opcion "Cuenta" del navbar y que se ubique a la par del icono*/
     position:relative;
 }
 
-#loader{
-    position:absolute;
-    background-image:url(../img/login/gif-cargando-sin-fondo-3.gif);
+#loader {
+    position: absolute;
+    background-image: url("../img/login/cargador.gif");
     background-position: 50% 50%;
     background-size: 150px;
     background-repeat: no-repeat;
@@ -142,5 +142,5 @@ opcion "Cuenta" del navbar y que se ubique a la par del icono*/
     width: 100%;
     top: 0;
     right: 0;
-    z-index:1;
+    z-index: 1;
 }

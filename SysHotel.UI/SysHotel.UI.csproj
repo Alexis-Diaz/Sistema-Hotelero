@@ -155,7 +155,7 @@
     <Content Include="Content\img\habitaciones\15.jpg" />
     <Content Include="Content\img\habitaciones\16.jpg" />
     <Content Include="Content\img\habitaciones\vacio.jpg" />
-    <Content Include="Content\img\login\gif-cargando-sin-fondo-3.gif" />
+    <Content Include="Content\img\login\cargador.gif" />
     <Content Include="Content\img\logo\LogoHotelBlanco.png" />
     <Content Include="Content\img\logo\LogoHotelNegro.png" />
     <Content Include="Content\script\createCategoriaAlimento.js" />
