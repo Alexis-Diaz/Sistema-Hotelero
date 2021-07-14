@@ -6,8 +6,8 @@ namespace SysHotel.EL
 {
     public class BDComun : DbContext
     {
-        //private static string conn = @"workstation id=HotelMyreDB.mssql.somee.com;packet size=4096;user id=Alex45_SQLLogin_1;pwd=q2txuksdt5;data source=HotelMyreDB.mssql.somee.com;persist security info=False;initial catalog=HotelMyreDB";
-        private static string conn = @"Data source=DELL-PC\SQLEXPRESS; Initial catalog=HotelBD; Integrated Security=True; App=EntityFramework";
+        private static string conn = @"workstation id=HotelMyreDB.mssql.somee.com;packet size=4096;user id=Alex45_SQLLogin_1;pwd=q2txuksdt5;data source=HotelMyreDB.mssql.somee.com;persist security info=False;initial catalog=HotelMyreDB";
+        //private static string conn = @"Data source=DELL-PC\SQLEXPRESS; Initial catalog=HotelBD; Integrated Security=True; App=EntityFramework";
         public BDComun()
             : base(conn)
         {
