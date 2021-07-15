@@ -88,7 +88,7 @@ namespace SysHotel.UI.Controllers
             TipoHabitacion tipo = new TipoHabitacion()
             {
                 IdTipoDeHabitacion = 0,
-                TipoDeHabitacion = "Selecciones una categoría."
+                TipoDeHabitacion = "Escoger categoría."
             };
 
             listaCategoria.Add(tipo);
