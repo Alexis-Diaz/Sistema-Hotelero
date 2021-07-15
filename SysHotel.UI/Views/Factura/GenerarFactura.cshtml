@@ -7,14 +7,14 @@
 
 
 <div class="row">
-    <div class="col s6 m4">
+    <div class="col s12 m6">
 
     </div>
-    <div class="col s6 m4">
+    <div class="col s12 m6">
 
     </div>
     <!--Busqueda-->
-    <div class="col s6 m4">
+    <div class="col s12 m6 l4">
         <form method="get" action=@Url.Action("GenerarFactura", "Factura")>
             <div class="row">
                 <div class="col s10">
@@ -127,7 +127,7 @@ else
     <span>No hay resultados para esta búsqueda</span>
     <span>&nbsp;|&nbsp;</span>
 }
-
+<br /><br />
 @if (Model.PaginaActual > 1)
 {
     @Html.ActionLink("<<", "Index", new { pagina = 1 },

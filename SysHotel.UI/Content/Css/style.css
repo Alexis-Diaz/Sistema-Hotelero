@@ -132,7 +132,7 @@ opcion "Cuenta" del navbar y que se ubique a la par del icono*/
 
 #loader {
     position: absolute;
-    background-image: url("../img/login/cargador.gif");
+    background-image: url("../../Content/img/login/cargador.gif");
     background-position: 50% 50%;
     background-size: 150px;
     background-repeat: no-repeat;

@@ -6,7 +6,7 @@ namespace SysHotel.EL
 {
     public class BDComun : DbContext
     {
-       
+        
         public BDComun()
             : base(conn)
         {

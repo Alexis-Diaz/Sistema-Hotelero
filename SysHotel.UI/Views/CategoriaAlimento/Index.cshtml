@@ -7,21 +7,21 @@
 <h4>Categorías de alimentos</h4>
 
 <div class="row">
-    <div class="col s4">
+    <div class="col s12 m5 l4">
         <strong class="btn waves-effect waves-light">
             <span>&#10133</span><a style="color:white" href="~/CategoriaAlimento/Create"> Nueva categoría</a>
         </strong>
         <br />
         <br />
     </div>
-    <div class="col s4">
+    <div class="col s12 m1 l4">
 
     </div>
     <!--Busqueda-->
-    <div class="col s4">
+    <div class="col s12 m6 l4">
         <form method="get" action=@Url.Action("Index", "CategoriaAlimento")>
             <div class="row">
-                <div class="col s10">
+                <div class="col s12">
                     <div class="input-field" style="margin:0px; padding:0px">
                         <input name="busqueda" type="search" required style="border: 1px solid #A9A9A9; padding:0px">
                         <i class="material-icons">close</i>
@@ -58,9 +58,9 @@
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </td>
                 <td>
-                    <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Editar" href="~/CategoriaAlimento/Edit/@item.IdCategoriaAlimento">edit</a></i>|
-                    <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/CategoriaAlimento/Details/@item.IdCategoriaAlimento">description</a></i>|
-                    <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/CategoriaAlimento/Delete/@item.IdCategoriaAlimento">delete</a></i>|
+                    <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Editar" href="~/CategoriaAlimento/Edit/@item.IdCategoriaAlimento">edit</a></i>
+                    <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/CategoriaAlimento/Details/@item.IdCategoriaAlimento">description</a></i>
+                    <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/CategoriaAlimento/Delete/@item.IdCategoriaAlimento">delete</a></i>
                 </td>
             </tr>
         }
@@ -90,7 +90,8 @@ else
     <span>No hay resultados para esta búsqueda</span>
     <span>&nbsp;|&nbsp;</span>
 }
-
+<br />
+<br />
 @if (Model.PaginaActual > 1)
 {
     @Html.ActionLink("<<", "Index", new { pagina = 1 },

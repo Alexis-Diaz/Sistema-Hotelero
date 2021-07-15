@@ -7,21 +7,21 @@
 <h4>Proveedores</h4>
 
 <div class="row">
-    <div class="col s4">
+    <div class="col s12 m5 l4">
         <strong class="btn waves-effect waves-light">
             <span>&#10133</span><a style="color:white" href="~/Proveedor/Create"> Nuevo proveedor</a>
         </strong>
         <br />
         <br />
     </div>
-    <div class="col s4">
+    <div class="col s12 m1 l4">
 
     </div>
     <!--Busqueda-->
-    <div class="col s4">
+    <div class="col s12 m6 l4">
         <form method="get" action=@Url.Action("Index", "Proveedor")>
             <div class="row">
-                <div class="col s10">
+                <div class="col s12">
                     <div class="input-field" style="margin:0px; padding:0px">
                         <input name="busqueda" type="search" required style="border: 1px solid #A9A9A9; padding:0px">
                         <i class="material-icons">close</i>
@@ -35,59 +35,61 @@
     </div>
 </div>
 <!--Tabla de contenido-->
-<table class="striped">
-    <thead>
-        <tr style="background-color:rgb(229, 229, 229); color:rgb(59, 57, 57)">
-            <th>
-               Empresa
-            </th>
-            <th>
-              Ubicación
-            </th>
-            <th>
-               Encargado
-            </th>
-            <th>
-              Teléfono
-            </th>
-            <th>
-                Correo
-            </th>
-            <th>
-                Acciones
-            </th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model.Resultado)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreEmpresa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ubicacion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Encargado)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Correo)
-                </td>
-                <td>
-                    <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Editar" href="~/Proveedor/Edit/@item.IdProveedor">edit</a></i>|
-                    <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/Proveedor/Details/@item.IdProveedor">description</a></i>|
-                    <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Proveedor/Delete/@item.IdProveedor">delete</a></i>|
-                </td>
+<div style="overflow-x:auto">
+    <table class="striped">
+        <thead>
+            <tr style="background-color:rgb(229, 229, 229); color:rgb(59, 57, 57)">
+                <th>
+                    Empresa
+                </th>
+                <th>
+                    Ubicación
+                </th>
+                <th>
+                    Encargado
+                </th>
+                <th>
+                    Teléfono
+                </th>
+                <th>
+                    Correo
+                </th>
+                <th>
+                    Acciones
+                </th>
             </tr>
-        }
+        </thead>
 
-    </tbody>
-</table>
+        <tbody>
+            @foreach (var item in Model.Resultado)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombreEmpresa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ubicacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Encargado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Correo)
+                    </td>
+                    <td>
+                        <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Editar" href="~/Proveedor/Edit/@item.IdProveedor">edit</a></i>
+                        <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/Proveedor/Details/@item.IdProveedor">description</a></i>
+                        <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Proveedor/Delete/@item.IdProveedor">delete</a></i>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
 <br />
 <br />
 @*CODIGO PARA EL PAGINADOR DE REGISTRO*@
@@ -111,7 +113,7 @@ else
     <span>No hay resultados para esta búsqueda</span>
     <span>&nbsp;|&nbsp;</span>
 }
-
+<br /><br />
 @if (Model.PaginaActual > 1)
 {
     @Html.ActionLink("<<", "Index", new { pagina = 1 },
