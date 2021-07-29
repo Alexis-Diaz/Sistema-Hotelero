@@ -251,3 +251,1120 @@ opcion "Cuenta" del navbar y que se ubique a la par del icono*/
 .mb-20{margin-bottom:20px;}
 .mb-30{margin-bottom:30px;}
 .mb-60{margin-bottom:60px;}
+
+/*avatar*/
+#avatar1{
+    border-radius:50px;
+    border:1px solid black;
+    height:90px;
+    width:90px;
+    background: url(../../Content/img/avatar/avatarSprite.jpg) 0 0;
+}
+#avatar2 {
+    border-radius: 50px;
+    border: 1px solid black;
+    height: 90px;
+    width: 90px;
+    background: url(../../Content/img/avatar/avatarSprite.jpg) -100px 0;
+}
+#avatar3 {
+    border-radius: 50px;
+    border: 1px solid black;
+    height: 90px;
+    width: 90px;
+    background: url(../../Content/img/avatar/avatarSprite.jpg) -190px 0;
+}
+#avatar4 {
+    border-radius: 50px;
+    border: 1px solid black;
+    height: 90px;
+    width: 90px;
+    background: url(../../Content/img/avatar/avatarSprite.jpg) 0 -100px;
+}
+#avatar5 {
+    border-radius: 50px;
+    border: 1px solid black;
+    height: 90px;
+    width: 90px;
+    background: url(../../Content/img/avatar/avatarSprite.jpg) -100px -100px;
+}
+#avatar6 {
+    border-radius: 50px;
+    border: 1px solid black;
+    height: 90px;
+    width: 90px;
+    background: url(../../Content/img/avatar/avatarSprite.jpg) -190px -100px;
+}
+#avatar7 {
+    border-radius: 50px;
+    border: 1px solid black;
+    height: 90px;
+    width: 90px;
+    background: url(../../Content/img/avatar/avatarSprite.jpg) 0 -190px;
+}
+#avatar8 {
+    border-radius: 50px;
+    border: 1px solid black;
+    height: 90px;
+    width: 90px;
+    background: url(../../Content/img/avatar/avatarSprite.jpg) -100px -190px;
+}
+#avatar9 {
+    border-radius: 50px;
+    border: 1px solid black;
+    height: 90px;
+    width: 90px;
+    background: url(../../Content/img/avatar/avatarSprite.jpg) -190px -190px;
+}
+
+/*Chat avatar*/
+@media only screen and (min-width:899px) {
+    #chat-avatar1 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar2 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 50px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar3 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 180px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar4 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 275px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar5 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 370px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar6 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 460px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar7 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 550px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar8 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 560px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar9 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 75%;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+}
+
+@media only screen and (min-width:1060px) {
+    #chat-avatar1 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 10%;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+    #chat-avatar2 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 20%;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+    #chat-avatar3 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 29%;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+    #chat-avatar4 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 35%;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+    #chat-avatar5 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 43%;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+    #chat-avatar6 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 50%;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+    #chat-avatar7 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 57%;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+    #chat-avatar8 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 64%;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+}
+
+@media only screen and (max-width:898px) {
+    #chat-avatar1 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar2 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar3 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 180px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar4 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 275px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar5 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 370px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar6 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 460px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar7 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 550px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar8 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 560px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar9 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 300px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+}
+
+@media only screen and (max-width:804px) {
+    #chat-avatar1 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar2 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar3 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 180px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar4 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 275px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar5 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 350px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar6 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 370px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar7 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 470px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar8 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 230px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar9 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 300px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+}
+
+@media only screen and (max-width:711px) {
+    #chat-avatar1 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar2 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar3 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 180px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar4 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 275px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar5 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 275px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar6 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 370px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar7 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 135px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar8 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 230px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar9 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 300px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+}
+
+@media only screen and (max-width:617px) {
+    #chat-avatar1 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar2 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar3 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 180px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar4 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 275px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar5 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 275px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar6 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar7 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 135px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar8 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 230px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar9 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 275px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+}
+
+@media only screen and (max-width:523px) {
+    #chat-avatar1 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 400px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar2 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 400px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar3 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 400px;
+        left: 180px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar4 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 400px;
+        left: 190px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar5 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar6 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar7 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 180px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar8 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 190px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar9 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 133px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+}
+
+@media only screen and (max-width:429px) {
+    #chat-avatar1 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 400px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar2 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 400px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar3 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 400px;
+        left: 140px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar4 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar5 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar6 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 140px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar7 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar8 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar9 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 140px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+}
+
+@media only screen and (max-width:380px) {
+    #chat-avatar1 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 400px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 3px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar2 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 400px;
+        left: 40px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar3 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 400px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar4 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar5 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 40px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar6 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 300px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar7 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 0px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar8 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 40px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+
+    #chat-avatar9 {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        bottom: 200px;
+        left: 80px;
+        background-color: rgb(174 174 174);
+        padding: 10px;
+        color: white;
+        display: none;
+    }
+}
