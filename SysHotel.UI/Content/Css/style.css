@@ -253,6 +253,10 @@ opcion "Cuenta" del navbar y que se ubique a la par del icono*/
 .mb-60{margin-bottom:60px;}
 
 /*avatar*/
+.character {
+    position: relative;
+    display: inline-block;
+}
 #avatar1{
     border-radius:50px;
     border:1px solid black;
@@ -439,7 +443,8 @@ opcion "Cuenta" del navbar y que se ubique a la par del icono*/
 
 @media only screen and (min-width:1060px) {
     #chat-avatar1 {
-        position: relative;
+        /*nota: pasar todos los char a absolute y cambiar sus valores*/
+        position: absolute;
         width: 200px;
         height: 100px;
         border: 1px solid black;
@@ -1368,3 +1373,121 @@ opcion "Cuenta" del navbar y que se ubique a la par del icono*/
         display: none;
     }
 }
+
+/*Modal que se levanta para agregar alimentos*/
+#modal-agregar {
+    top: 10%;
+    left: 10%;
+    height: 80%;
+    width: 80%;
+    box-shadow: 2px 2px 5px rgb(47 47 47), -2px -2px 5px rgb(47 47 47);
+    background-color: rgb(193 193 193);
+    z-index: 1;
+}
+.title-modal {
+    padding:7px;
+    margin: 7px 10px 0 10px;
+    font-size:1.5em;
+    position:sticky;
+    top:0;
+    z-index:1;
+}
+.label-modal{
+    margin-right:3px;
+    color:rgb(16,16,16);
+}
+/*Como el select al revisar el codigo fuente
+    se convierte a un input entonces en vez de 
+    llamar al elemento select llame input y de
+    una vez estableci el color y tamaño para el
+    resto de los input.
+*/
+#modal-agregar input {
+    padding-left: 5px;
+    background-color: rgba(255, 255, 255, 0.55);
+}
+
+/*
+    Las clases .select-wrapper .caret son de materialize sirve para la flecha svg del 
+    dropdown. Le modifique la posicion porque hice mas pequeño el
+    dropdown.
+*/
+/*.select-wrapper .caret{
+    z-index: 1;
+}*/
+
+#modal-agregar .input-modal {
+    
+    height: 1.5em;
+    width: 12em;
+    background-color: rgb(255 255 255);
+}
+.btn{
+    margin:3px;
+}
+
+#btn-modal{
+    position:relative;
+    height:1.8em;
+    bottom:1px;
+    margin-bottom:3px;
+}
+
+#btn-cesta-modal {
+    height: 65px;
+    position: relative;
+   
+}
+
+#btn-comprar-modal {
+    height:65px;
+    position: relative;
+   
+}
+
+#btn-cancelar-modal {
+    height:65px;
+    position: relative;
+    
+}
+@media only screen and (min-width:993px){
+    #btn-cesta-modal {
+        height: 65px;
+        position: absolute;
+        bottom: 5px;
+        left: 110px;
+
+    }
+    #btn-comprar-modal{
+        height:65px;
+        position:absolute;
+        bottom:5px;
+        right:5px;
+    }
+    #btn-cancelar-modal {
+        height: 65px;
+        position: absolute;
+        width:100px;
+        bottom: 5px;
+        left: 5px;
+    }
+}
+/*@media only screen and (max-width:958px) {
+    #btn-cesta-modal {
+        height: 65px;
+        position: relative;
+       
+        
+    }
+
+    #btn-comprar-modal {
+        height: 65px;
+        position: relative;
+        
+    }
+
+    #btn-cancelar-modal {
+        height: 65px;
+        position: relative;
+    }
+}*/

@@ -229,6 +229,8 @@ namespace SysHotel.UI.Controllers
                          
                         reservacion.DiaEntrada = (DateTime)TempData["DiaEntrada"];
                         reservacion.DiaSalida = (DateTime)TempData["DiaSalida"];
+                        TempData.Keep("DiaEntrada");//guardamos los valores temporales
+                        TempData.Keep("DiaSalida");
                     }
                    
                     int IdUsuario = SessionHelper.GetUser();//recuperamos el usuario de la session actual
@@ -244,7 +246,7 @@ namespace SysHotel.UI.Controllers
                         ViewBag.IdHabitacion = new SelectList(await habitacionBL.ListarHabitacionesActivas(), "IdHabitacion", "NumeroHabitacion", habitacionAReservar.IdHabitacion);
                         return View(reservacion);
                     }
-
+                    reservacion.NumeroPersonas = habitacionAReservar.NumeroCamas;//de forma automatica se sugiere la cantidad de personas por la cantidad de camas de la habitacion
                     ViewBag.IdCliente = new SelectList(await clienteBL.ListarClientesActivos(), "IdCliente", "Nombres");
                     ViewBag.IdHabitacion = new SelectList(await habitacionBL.ListarHabitacionesActivas(), "IdHabitacion", "NumeroHabitacion", habitacionAReservar.IdHabitacion);
                     return View(reservacion);
@@ -254,6 +256,8 @@ namespace SysHotel.UI.Controllers
             //Si la reserva se realiza desde cero no se envia nada a la vista.
             ViewBag.IdCliente = new SelectList( await clienteBL.ListarClientesActivos(), "IdCliente", "Nombres");
             ViewBag.IdHabitacion = new SelectList(await habitacionBL.ListarHabitacionesActivas(), "IdHabitacion", "NumeroHabitacion");
+            reservacion.DiaEntrada = DateTime.Now.AddDays(7);
+            reservacion.DiaSalida = DateTime.Now.AddDays(8);
             return View(reservacion);
         }
 

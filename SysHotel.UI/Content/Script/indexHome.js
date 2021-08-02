@@ -12,11 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 
-//Scripta para mostrar los comentarios del avatar
+//Script para mostrar los comentarios del avatar
 const avatar1 = document.getElementById('avatar1');
 avatar1.onmouseover = function () {
     document.getElementById("chat-avatar1").style.display = "block";
-    
 }
 avatar1.onmouseout = function () {
     document.getElementById("chat-avatar1").style.display = "none";

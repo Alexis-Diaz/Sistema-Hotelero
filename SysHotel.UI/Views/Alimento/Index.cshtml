@@ -90,7 +90,7 @@
                     <div class="center" style="padding:10px 0px;">
                         <i class="material-icons"><a class="tooltipped" style="color: rgb(255, 106, 0)" data-position="bottom" data-tooltip="Editar" href="~/Alimento/Edit/@item.IdAlimento">edit</a></i>|
                         <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/Alimento/Details/@item.IdAlimento">description</a></i>|
-                        <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" href="~/Home/Construccion">add_shopping_cart</a></i>|
+                        <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" onclick="openModal();">add_shopping_cart</a></i>|
                         <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Alimento/Delete/@item.IdAlimento">delete</a></i>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                     <div class="center" style="padding:10px 0px;">
                         <i class="material-icons"><a class="tooltipped" style="color:rgb(255, 106, 0)" data-position="bottom" data-tooltip="Editar" href="~/Alimento/Edit/@item.IdAlimento">edit</a></i>|
                         <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/Alimento/Details/@item.IdAlimento">description</a></i>|
-                        <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" href="~/Home/Construccion">add_shopping_cart</a></i>|
+                        <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" onclick="openModal();">add_shopping_cart</a></i>|
                         <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Alimento/Delete/@item.IdAlimento">delete</a></i>
                     </div>
                 </div>
@@ -141,6 +141,56 @@
 
     }
 }
+<!--Estructura del modal-->
+<div id="modal-agregar" style="display:none; overflow:auto;">
+    <h1 class="title-modal center green lighten-3">Para continuar, por favor completa los siguientes campos.</h1>
+    <div class="row">
+        <div class="col s12 m12 l6">
+            <fieldset>
+                <legend>Datos de la reserva</legend>
+                <label class="label-modal t5">Ingresa el ID de la reserva</label><input type="number" class="input-modal" placeholder="Ejemplo (345)" /><button id="btn-modal">Buscar</button><br />
+                <label class="label-modal t5">Cliente</label><input type="text" class="input-modal" disabled /><br />
+                <label class="label-modal t5">Numero de habitación</label><input type="number" class="input-modal" disabled/><br />
+                <label class="label-modal t5">Día Entrada</label><input type="date" class="input-modal" disabled/><br />
+                <label class="label-modal t5">Día Salida</label><input type="date" class="input-modal" disabled/>
+            </fieldset>
+        </div>
+        <div class="col s12 m12 l6">
+            <fieldset>
+                <legend>Datos de los alimentos</legend>
+                <input hidden value="" />
+                <label class="label-modal t5">Nombre</label><input type="text" class="input-modal" disabled /><br />
+                <label class="label-modal t5">Precio</label><input type="number" class="input-modal" disabled/>
+            </fieldset>
+        </div>
+        <div class="col s12 m12 l6">
+           
+        </div>
+        <div class="col s12 m12 l6">
+            <fieldset>
+                <legend>Información sobre el pedido</legend>
+                <label class="label-modal t5">Día</label><input type="date" class="input-modal" id="input-modal-dia" /><br />
+                <label class="label-modal t5">Tiempo de comida</label>
+                <select id="select-modal-tiempo">
+                    <option selected>Seleccionar</option>
+                    <option>Desayuno</option>
+                    <option>Almuerzo</option>
+                    <option>Cena</option>
+                </select><br />
+                <label class="label-modal t5">Cantidad</label><input type="number" class="input-modal" id="input-modal-cantidad"/><br />
+                <label class="label-modal t5">Subtotal</label><input type="text" class="input-modal" id="input-modal-subtotal" />
+            </fieldset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 ">
+            <button id="btn-cancelar-modal" class="btn waves-effect waves-light" onclick="closeModal();">Cancelar</button>
+            <button id="btn-comprar-modal" class="btn waves-effect waves-light right">Comprar</button>
+            <button id="btn-cesta-modal" class="btn waves-effect waves-light">Añadir a la cesta y seguir comprando</button>
+        </div>
+    </div>
+</div>
+<!--Fin modal-->
 <br />
 <br />
 @*CODIGO PARA EL PAGINADOR DE REGISTRO*@
@@ -204,5 +254,23 @@
 
 
 @section scripts{
-    <script>M.AutoInit();</script>
+    <script>
+        M.AutoInit();
+
+        //abre el modal
+        function openModal() {
+            let modal = document.getElementById("modal-agregar");
+            modal.style.display = "block";
+            modal.style.position = "fixed";
+        }
+
+        //cierra el modal y borra los datos ingresados
+        function closeModal() {
+            let modal = document.getElementById("modal-agregar");
+            modal.style.display = "none";
+            document.getElementById("input-modal-dia").value = "";
+            document.getElementById("input-modal-cantidad").value = "";
+            document.getElementById("input-modal-subtotal").value = "";
+        }
+    </script>
 }
