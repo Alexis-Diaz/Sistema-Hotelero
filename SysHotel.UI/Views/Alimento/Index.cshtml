@@ -90,7 +90,7 @@
                     <div class="center" style="padding:10px 0px;">
                         <i class="material-icons"><a class="tooltipped" style="color: rgb(255, 106, 0)" data-position="bottom" data-tooltip="Editar" href="~/Alimento/Edit/@item.IdAlimento">edit</a></i>|
                         <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/Alimento/Details/@item.IdAlimento">description</a></i>|
-                        <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" href="~/Home/Construccion">add_shopping_cart</a></i>|
+                        <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" onclick="openModal(@item.IdAlimento,'@item.Nombre','@item.Precio')">add_shopping_cart</a></i>|
                         <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Alimento/Delete/@item.IdAlimento">delete</a></i>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                     <div class="center" style="padding:10px 0px;">
                         <i class="material-icons"><a class="tooltipped" style="color:rgb(255, 106, 0)" data-position="bottom" data-tooltip="Editar" href="~/Alimento/Edit/@item.IdAlimento">edit</a></i>|
                         <i class="material-icons"><a class="tooltipped" data-position="bottom" data-tooltip="Detalles" href="~/Alimento/Details/@item.IdAlimento">description</a></i>|
-                        <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" href="~/Home/Construccion">add_shopping_cart</a></i>|
+                        <i class="material-icons"><a class="tooltipped" style="color:green" data-position="bottom" data-tooltip="Adquirir" onclick="openModal(@item.IdAlimento,'@item.Nombre','@item.Precio');">add_shopping_cart</a></i>|
                         <i class="material-icons"><a class="tooltipped" style="color:red" data-position="bottom" data-tooltip="Eliminar" href="~/Alimento/Delete/@item.IdAlimento">delete</a></i>
                     </div>
                 </div>
@@ -141,6 +141,56 @@
 
     }
 }
+<!--Estructura del modal-->
+<div id="modal-agregar" style="display:none; overflow:auto;">
+    <h1 class="title-modal center green lighten-3">Completa los siguientes campos</h1>
+    <div class="row">
+        <div class="col s12 m12 l6">
+            <fieldset>
+                <legend>Datos de la reserva</legend>
+                <label for="idReservacion" class="label-modal t5">Ingresa el ID de la reserva</label><input id="idReservacion" type="number" class="input-modal" placeholder="Ejemplo (345)" /><button id="btn-modal" onclick="idReservacion();">Buscar</button><br />
+                <label class="label-modal t5">Cliente</label><input id="txtNombreCliente" type="text" class="input-modal" readonly /><br />
+                <label class="label-modal t5">Numero de habitación</label><input id="txtNumeroHabitacion" type="number" class="input-modal" readonly/><br />
+                <label class="label-modal t5">Día Entrada</label><input id="txtDiaEntrada" type="text" class="input-modal" readonly/><br />
+                <label class="label-modal t5">Día Salida</label><input id="txtDiaSalida" type="text" class="input-modal" readonly />
+            </fieldset>
+        </div>
+        <div class="col s12 m12 l6">
+            <fieldset>
+                <legend>Información del alimento</legend>
+                <input id="txtIdAlimento" hidden />
+                <label for="txtNombre" class="label-modal t5">Nombre</label><input id="txtNombre" type="text" class="input-modal" readonly /><br />
+                <label for="txtPrecio" class="label-modal t5">Precio</label><input id="txtPrecio" type="text" class="input-modal" readonly/>
+            </fieldset>
+        </div>
+        <div class="col s12 m12 l6">
+           
+        </div>
+        <div class="col s12 m12 l6">
+            <fieldset>
+                <legend>Información sobre el pedido</legend>
+                <label class="label-modal t5">Día</label><input type="date" class="input-modal" id="input-modal-dia" /><br />
+                <label class="label-modal t5">Tiempo de comida</label>
+                <select id="select-modal-tiempo">
+                    <option selected>Seleccionar</option>
+                    <option>Desayuno</option>
+                    <option>Almuerzo</option>
+                    <option>Cena</option>
+                </select><br />
+                <label class="label-modal t5">Cantidad</label><input type="number" class="input-modal" id="input-modal-cantidad"/><br />
+                <label class="label-modal t5">Subtotal</label><input type="text" class="input-modal" id="input-modal-subtotal" />
+            </fieldset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 ">
+            <button id="btn-cancelar-modal" class="btn waves-effect waves-light" onclick="closeModal();">Cancelar</button>
+            <button id="btn-comprar-modal" class="btn waves-effect waves-light right">Comprar</button>
+            <button id="btn-cesta-modal" class="btn waves-effect waves-light">Añadir a la cesta y seguir comprando</button>
+        </div>
+    </div>
+</div>
+<!--Fin modal-->
 <br />
 <br />
 @*CODIGO PARA EL PAGINADOR DE REGISTRO*@
@@ -204,5 +254,56 @@
 
 
 @section scripts{
-    <script>M.AutoInit();</script>
+    <script>
+        M.AutoInit();
+
+        //abre el modal
+        function openModal(id, nombre, precio) {
+            let modal = document.getElementById("modal-agregar");
+            modal.style.display = "block";
+            modal.style.position = "fixed";
+            document.getElementById("txtIdAlimento").value = id;
+            document.getElementById("txtNombre").value = nombre;
+            document.getElementById("txtPrecio").value = "$ "+precio;
+        }
+
+        //cierra el modal y borra los datos ingresados
+        function closeModal() {
+            let modal = document.getElementById("modal-agregar");
+            modal.style.display = "none";
+            document.getElementById("input-modal-dia").value = "";
+            document.getElementById("input-modal-cantidad").value = "";
+            document.getElementById("input-modal-subtotal").value = "";
+        }
+
+       //Recuperacion del id ingresado
+        function idReservacion() {
+            const id = document.getElementById("idReservacion").value;
+            cargarDatosDeReserva(id);
+        }
+         //peticion al servidor por medio de AJAX
+        function cargarDatosDeReserva(id) {
+            const ajax = new XMLHttpRequest();
+            ajax.onload = function () {
+                const reservaEncontrada = JSON.parse(ajax.responseText);
+                //let date1 = formatearFecha(reservaEncontrada.DiaEntrada);
+                //let date2 = formatearFecha(reservaEncontrada.DiaSalida);
+                
+                //Llenamos los controles del formulario con la información obtenida
+                document.getElementById("txtNombreCliente").value = reservaEncontrada["IdReservacion"];
+                document.getElementById("txtNumeroHabitacion").value = reservaEncontrada["IdHabitacion"];
+                document.getElementById("txtDiaEntrada").value = reservaEncontrada["DiaEntrada"];
+                document.getElementById("txtDiaSalida").value = reservaEncontrada["DiaSalida"];
+            }
+            ajax.open("GET",`Reservacion?id=${id}`);
+            ajax.send();
+        }
+
+        //Se puede formatear la fecha si se usa con input type date
+        //ya que tiene el formato yyyy/MM/dd
+        //function formatearFecha(fecha) {
+        //    let time = fecha.split("/");
+        //    return `${time[2]}-${time[1]}-${time[0]}`;
+        //}
+    </script>
 }
