@@ -58,4 +58,36 @@ namespace SysHotel.EL
         public virtual ICollection<Detalle> Detalles { get; set; }
         public virtual ICollection<Factura> Facturas { get; set; }
     }
+
+    public class ReservacionView 
+    {
+        public int IdReservacion { get; set; }
+        public int IdHabitacion { get; set; }
+        public int IdCliente { get; set; }
+        public int IdUsuario { get; set; }
+        public string FechaReservacion { get; set; }
+        public string DiaEntrada { get; set; }
+        public string DiaSalida { get; set; }
+        public int NumeroPersonas { get; set; }
+        public string Comentarios { get; set; }
+        public int Estado { get; set; }
+
+        public ReservacionView(int pIdReservacion, int pIdHabitacion, int pIdCliente, int pIdUsuario, string pFechaReservacion, string pDiaEntrada, string pDiaSalida, int pNumeroPersonas, string pComentarios, int pEstado)
+        {
+            this.IdReservacion = pIdReservacion;
+            this.IdHabitacion = pIdHabitacion;
+            this.IdCliente = pIdCliente;
+            this.IdUsuario = pIdUsuario;
+            this.FechaReservacion = pFechaReservacion;
+            this.DiaEntrada = pDiaEntrada;
+            this.DiaSalida = pDiaSalida;
+            this.NumeroPersonas = pNumeroPersonas;
+            this.Comentarios = pComentarios;
+            this.Estado = pEstado;
+        }
+        public ReservacionView()
+        {
+
+        }
+    }
 }

@@ -22,6 +22,7 @@ namespace SysHotel.UI.Controllers
         private AlimentoBL alimentoBL = new AlimentoBL();
         private CategoriaAlimentoBL categoriaBL = new CategoriaAlimentoBL();
         private ProveedorBL proveedorBL = new ProveedorBL();
+        private ReservacionBL reservacionBL = new ReservacionBL();
 
         //Variables para el paginador generico
         private const int registroPorPagina = 16;
@@ -90,6 +91,43 @@ namespace SysHotel.UI.Controllers
             listaCategoria.Add(cat);
             ViewBag.IdCategoria = new SelectList(listaCategoria, "IdCategoriaAlimento", "NombreCategoria", idCategoria);
             return View(paginadorAlimento);
+        }
+
+        //GET: ObtenerReseravacio
+        public async Task<JsonResult>Reservacion(string id)
+        {
+            string mensaje = "Id inválido.";
+            if(!string.IsNullOrEmpty(id))
+            {
+                //verificamos que el id sea un numero
+                int idReservacion;
+                bool res = int.TryParse(id, out idReservacion);
+                if (res)
+                {
+                    //buscamos la reserva por el id
+                    Reservacion reservacion = await reservacionBL.ObtenerReservaPorId(idReservacion);
+                    if(reservacion != null && (reservacion.Estado == 1 || reservacion.Estado == 2))
+                    {
+                        var r = new ReservacionView
+                        {
+                            IdReservacion = reservacion.IdReservacion,
+                            IdHabitacion = reservacion.IdHabitacion,
+                            IdUsuario = reservacion.IdUsuario,
+                            IdCliente = reservacion.IdCliente,
+                            FechaReservacion = reservacion.FechaReservacion.ToShortDateString(),
+                            Comentarios = reservacion.Comentarios,
+                            NumeroPersonas = reservacion.NumeroPersonas,
+                            DiaEntrada = reservacion.DiaEntrada.ToShortDateString(),
+                            DiaSalida = reservacion.DiaSalida.ToShortDateString(),
+                            Estado = reservacion.Estado
+
+                        };
+                        return Json(r, JsonRequestBehavior.AllowGet);//enviamos el objeto en formato json.
+                    }
+                    mensaje = "No existe una reserva activa con este id";
+                }
+            }
+            return Json(mensaje, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Alimento/Details/5
