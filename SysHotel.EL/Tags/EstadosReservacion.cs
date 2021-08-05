@@ -9,7 +9,7 @@ namespace SysHotel.EL.Tags
     /// <summary>
     /// Esta clase solo me sirve para enviar
     /// los estados a la vista index del controlardor
-    /// resercacion.
+    /// reservacion.
     /// </summary>
     public class EstadosReservacion
     {
