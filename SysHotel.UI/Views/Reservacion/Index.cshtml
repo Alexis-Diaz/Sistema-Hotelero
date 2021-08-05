@@ -60,6 +60,9 @@
     <table class="striped">
         <thead>
             <tr style="background-color:rgb(229, 229, 229); color:rgb(59, 57, 57)">
+                 <th>
+                    Codigo
+                </th>
                 <th colspan="2">
                     Nombre Completo
                 </th>
@@ -113,6 +116,9 @@
                         break;
                 }
                 <tr class="@Clase" style="border-bottom: solid 1px rgb(150,150,150)">
+                     <td>
+                        @Html.DisplayFor(modelItem => item.IdReservacion)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.cliente.Nombres)
                     </td>

@@ -106,6 +106,7 @@ namespace SysHotel.UI.Controllers
                 {
                     //buscamos la reserva por el id
                     Reservacion reservacion = await reservacionBL.ObtenerReservaPorId(idReservacion);
+                    
                     if(reservacion != null && (reservacion.Estado == 1 || reservacion.Estado == 2))
                     {
                         var r = new ReservacionView
@@ -114,6 +115,8 @@ namespace SysHotel.UI.Controllers
                             IdHabitacion = reservacion.IdHabitacion,
                             IdUsuario = reservacion.IdUsuario,
                             IdCliente = reservacion.IdCliente,
+                            NombreCliente = reservacion.cliente.Nombres + " " + reservacion.cliente.Apellidos,
+                            NumeroHabitacion = reservacion.habitacion.NumeroHabitacion,
                             FechaReservacion = reservacion.FechaReservacion.ToShortDateString(),
                             Comentarios = reservacion.Comentarios,
                             NumeroPersonas = reservacion.NumeroPersonas,
@@ -128,6 +131,57 @@ namespace SysHotel.UI.Controllers
                 }
             }
             return Json(mensaje, JsonRequestBehavior.AllowGet);
+        }
+
+        //POST:SetCookie
+        [HttpPost]
+        public JsonResult SetCookie(string idReservacion, string nombreCliente, string numeroHabitacion, DateTime diaEntrada, DateTime diaSalida, string idAlimento, string nombreAlimento, string precio, DateTime dia, string tiempoComida, string cantidad, string subtotal)
+        {
+            string key = "UY#9G#HF%";//Llave que identifica la cookie
+            string message = "";//mensaje que se enviara al cliente
+            if(dia >= diaEntrada && dia <= diaSalida)
+            {
+                if(tiempoComida == "1" || tiempoComida == "2" || tiempoComida == "3")
+                {
+                    int Cantidad;
+                    int.TryParse(cantidad, out Cantidad);
+                    if (Cantidad > 0)
+                    {
+                        string detallesDelPedido = idReservacion + "%" + nombreCliente + "%" + numeroHabitacion + "%" + diaEntrada + "%" + diaSalida + "%" + idAlimento + "%" + nombreAlimento + "%" + precio + "%" + dia + "%" + tiempoComida + "%" + cantidad + "%" + subtotal;
+                        //verificamos si ya existe una cookie creada
+                        var cookies = ControllerContext.HttpContext.Request.Cookies[key];
+                        if (cookies!=null)
+                        {
+                            //le agregamos los nuevos detalles
+                            
+                            cookies.Value += "?" + detallesDelPedido;
+                            message = $"Nuevo pedido agregado al carrito%1";
+                        }
+                        else
+                        {
+                            //es el primer detalle
+                            HttpCookie CookiePedido = new HttpCookie($"{key}", detallesDelPedido);
+                            CookiePedido.Path = "/";
+                            CookiePedido.Expires = DateTime.Now.AddDays(1);
+                            ControllerContext.HttpContext.Response.SetCookie(CookiePedido);
+                            message = $"Nuevo pedido agregado al carrito%1";
+                        }
+                    }
+                    else
+                    {
+                        message = "Agregue una cantidad válida%0";
+                    }
+                }
+                else
+                {
+                    message = "Debe elegir el tiempo de comida%0";
+                }
+            }
+            else
+            {
+                message = "El día para el pedido no coincide con los días de la reserva%0";
+            }
+            return Json(message, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Alimento/Details/5

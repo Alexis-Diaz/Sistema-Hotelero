@@ -65,6 +65,8 @@ namespace SysHotel.EL
         public int IdHabitacion { get; set; }
         public int IdCliente { get; set; }
         public int IdUsuario { get; set; }
+        public string NombreCliente { get; set; }
+        public int NumeroHabitacion { get; set; }
         public string FechaReservacion { get; set; }
         public string DiaEntrada { get; set; }
         public string DiaSalida { get; set; }
@@ -72,12 +74,14 @@ namespace SysHotel.EL
         public string Comentarios { get; set; }
         public int Estado { get; set; }
 
-        public ReservacionView(int pIdReservacion, int pIdHabitacion, int pIdCliente, int pIdUsuario, string pFechaReservacion, string pDiaEntrada, string pDiaSalida, int pNumeroPersonas, string pComentarios, int pEstado)
+        public ReservacionView(int pIdReservacion, int pIdHabitacion, int pIdCliente, int pIdUsuario, string pNombreCliente, int pNumeroHabitacion, string pFechaReservacion, string pDiaEntrada, string pDiaSalida, int pNumeroPersonas, string pComentarios, int pEstado)
         {
             this.IdReservacion = pIdReservacion;
             this.IdHabitacion = pIdHabitacion;
             this.IdCliente = pIdCliente;
             this.IdUsuario = pIdUsuario;
+            this.NombreCliente = pNombreCliente;
+            this.NumeroHabitacion = pNumeroHabitacion;
             this.FechaReservacion = pFechaReservacion;
             this.DiaEntrada = pDiaEntrada;
             this.DiaSalida = pDiaSalida;

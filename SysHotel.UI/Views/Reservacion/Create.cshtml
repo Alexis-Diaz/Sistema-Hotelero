@@ -6,7 +6,11 @@
 
 <div class="row">
     <div class="col s12 m6">
+
         <h4>Agregar nueva reserva</h4>
+        <strong class="btn waves-effect waves-light">
+            <span>&#10133</span><a style="color:white" href="~/Reservacion/ConsultarHabitaciones">Buscar por fechas</a>
+        </strong>
         @if (ViewBag.Message != null)
         {
             string clase = "";
@@ -45,13 +49,15 @@
             <br />
             @Html.ValidationSummary(true, "", new { @class = "redText" })
             <div>
-                @Html.LabelFor(model => model.IdCliente, "IdCliente", htmlAttributes: new { @class = "" })
+                <label>Cliente</label>
+                @*@Html.LabelFor(model => model.IdCliente, "IdCliente", htmlAttributes: new { @class = "" })*@
                 @Html.DropDownList("IdCliente", null, htmlAttributes: new { @class = "dropdownList" })
                 @Html.ValidationMessageFor(model => model.IdCliente, "", new { @class = "redText" })
             </div>
 
             <div>
-                @Html.LabelFor(model => model.IdHabitacion, "IdHabitacion", htmlAttributes: new { @class = "" })
+                <label>Número Habitación</label>
+                @*@Html.LabelFor(model => model.IdHabitacion, "IdHabitacion", htmlAttributes: new { @class = "" })*@
                 @Html.DropDownList("IdHabitacion", null, htmlAttributes: new { @class = "dropdownList" })
                 @Html.ValidationMessageFor(model => model.IdHabitacion, "", new { @class = "redText" })
             </div>

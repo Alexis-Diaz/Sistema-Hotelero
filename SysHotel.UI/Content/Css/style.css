@@ -1423,21 +1423,32 @@ opcion "Cuenta" del navbar y que se ubique a la par del icono*/
     background-color: rgb(255 255 255);
 }
 
+#modal-agregar #input-modal-nombreCliente{
+    width:238px;
+}
+
 #modal-info {
     visibility: hidden;
-    padding:2px;
-    margin:3px;
+    padding: 2px;
+    margin: 3px;
     background-color: rgb(255 250 166);
 }
 .btn {
     margin: 3px;
 }
 
-#btn-modal{
+.btn-modal{
     position:relative;
-    height:1.8em;
-    bottom:1px;
-    margin-bottom:3px;
+    bottom:5px;
+    height:27px;
+   
+}
+.btn-modal a{
+   color:white;
+   position:relative;
+   left:1px;
+   height:30px;
+   bottom:2px;
 }
 
 #btn-cesta-modal {
