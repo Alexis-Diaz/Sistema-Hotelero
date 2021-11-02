@@ -13,10 +13,11 @@ using SysHotel.UI.Filtros;
 using SysHotel.EL.Paginador;
 using SysHotel.EL.View;
 using SysHotel.EL.Tags;
+using System.Text;
 
 namespace SysHotel.UI.Controllers
 {
-    [Autenticado]
+    [AutenticadoAttribute]
     public class AlimentoController : Controller
     {
         private AlimentoBL alimentoBL = new AlimentoBL();
@@ -137,7 +138,7 @@ namespace SysHotel.UI.Controllers
         [HttpPost]
         public JsonResult SetCookie(string idReservacion, string nombreCliente, string numeroHabitacion, DateTime diaEntrada, DateTime diaSalida, string idAlimento, string nombreAlimento, string precio, DateTime dia, string tiempoComida, string cantidad, string subtotal)
         {
-            string key = "UY#9G#HF%";//Llave que identifica la cookie
+            string key = string.Format("UY#9G#HF{0}",idReservacion);//Llave que identifica la cookie
             string message = "";//mensaje que se enviara al cliente
             if(dia >= diaEntrada && dia <= diaSalida)
             {
@@ -147,24 +148,37 @@ namespace SysHotel.UI.Controllers
                     int.TryParse(cantidad, out Cantidad);
                     if (Cantidad > 0)
                     {
-                        string detallesDelPedido = idReservacion + "%" + nombreCliente + "%" + numeroHabitacion + "%" + diaEntrada + "%" + diaSalida + "%" + idAlimento + "%" + nombreAlimento + "%" + precio + "%" + dia + "%" + tiempoComida + "%" + cantidad + "%" + subtotal;
+                        string value = "";
+                        string[] detallesDelPedido = { idReservacion, nombreCliente, numeroHabitacion, diaEntrada.ToString(), diaSalida.ToString(), idAlimento, nombreAlimento, precio, dia.ToString(), tiempoComida, cantidad, subtotal };
                         //verificamos si ya existe una cookie creada
                         var cookies = ControllerContext.HttpContext.Request.Cookies[key];
                         if (cookies!=null)
                         {
                             //le agregamos los nuevos detalles
-                            
-                            cookies.Value += "?" + detallesDelPedido;
-                            message = $"Nuevo pedido agregado al carrito%1";
+                            cookies.Path = "/";
+                            cookies.Expires = DateTime.Now.AddDays(1);
+                            cookies.Value += "?";
+                            foreach (var item in detallesDelPedido)
+                            {
+                                value += item + "||";
+                            }
+                            cookies.Value += value;
+                            ControllerContext.HttpContext.Response.SetCookie(cookies);
+                            message = "Nuevo pedido agregado al carrito%1";
+                           
                         }
                         else
                         {
-                            //es el primer detalle
-                            HttpCookie CookiePedido = new HttpCookie($"{key}", detallesDelPedido);
-                            CookiePedido.Path = "/";
-                            CookiePedido.Expires = DateTime.Now.AddDays(1);
-                            ControllerContext.HttpContext.Response.SetCookie(CookiePedido);
-                            message = $"Nuevo pedido agregado al carrito%1";
+                            HttpCookie carrito = new HttpCookie(key);
+                           
+                            foreach (var item in detallesDelPedido)
+                            {
+                                value += item + "||";
+                            }
+                            carrito.Value = value;
+                            carrito.Expires = DateTime.Now.AddDays(1);
+                            ControllerContext.HttpContext.Response.SetCookie(carrito);
+                            message = "Nuevo pedido agregado al carrito%1";
                         }
                     }
                     else
@@ -182,6 +196,24 @@ namespace SysHotel.UI.Controllers
                 message = "El día para el pedido no coincide con los días de la reserva%0";
             }
             return Json(message, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult VerCesta(string id)
+        {
+            int idReserva;
+            bool res = int.TryParse(id, out idReserva);
+            if (res)
+            {
+                string key = string.Format("UY#9G#HF{0}", idReserva);//Llave que identifica la cookie
+                var cookie = ControllerContext.HttpContext.Request.Cookies[key];
+                if (cookie != null)
+                {
+                    ViewBag.InformacionCompra = cookie.Value;
+                    return View();
+                }
+            }
+            ViewBag.InformacionCompra = "No hay ningún artículo agregado";
+            return View();
         }
 
         // GET: Alimento/Details/5

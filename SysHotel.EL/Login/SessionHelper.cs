@@ -66,7 +66,7 @@ namespace SysHotel.EL.Login
         public static void AddUserToSession(string id)
         {
             //La persistencia con valor true sirve para crear una cookie duradera(una que
-            //se guarda en todas las sesiones del navegador. De los contrario el valor es false.
+            //se guarda en todas las sesiones del navegador). De los contrario el valor es false.
             bool persist = true;
             var cookie = FormsAuthentication.GetAuthCookie("usuario", persist);
 

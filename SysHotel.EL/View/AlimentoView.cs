@@ -15,15 +15,15 @@ namespace SysHotel.EL.View
 
         public int IdAlimento { get; set; }
 
-        [Required(ErrorMessage = "Esta campo se debe completar")]
+        [Required(ErrorMessage = "Este campo se debe completar")]
         [StringLength(50)]
         public string Nombre { get; set; }
 
-        [Required(ErrorMessage = "Esta campo se debe completar")]
+        [Required(ErrorMessage = "Este campo se debe completar")]
         [StringLength(100)]
         public string Descripcion { get; set; }
 
-        [Required(ErrorMessage = "Esta campo se debe completar")]
+        [Required(ErrorMessage = "Este campo se debe completar")]
         public decimal Precio { get; set; }
 
 
@@ -33,7 +33,7 @@ namespace SysHotel.EL.View
         public int Estado { get; set; }
 
         [Display(Name = "Proveedor")]
-        [Required(ErrorMessage = "Es dato es requerido")]
+        [Required(ErrorMessage = "Este dato es requerido")]
         public int IdProveedor { get; set; }
 
         [Display(Name = "Categoria")]
