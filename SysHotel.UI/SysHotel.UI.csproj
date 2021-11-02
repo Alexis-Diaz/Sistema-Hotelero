@@ -262,6 +262,7 @@
     <Content Include="Views\Factura\GenerarFactura.cshtml" />
     <Content Include="Views\Reservacion\Marcar.cshtml" />
     <Content Include="Views\Factura\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\Alimento\VerCesta.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

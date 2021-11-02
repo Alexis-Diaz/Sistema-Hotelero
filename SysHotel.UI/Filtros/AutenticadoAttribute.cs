@@ -9,7 +9,10 @@ using System.Web.Routing;
 
 namespace SysHotel.UI.Filtros
 {
-    //Si no estamos logueados, regresamos al login
+    /// <summary>
+    /// Controlodor que sirve de filtro. Este controlador verifica que el 
+    /// usuario se encuentre logueado, si no estamos logueado nos regresa al login.
+    /// </summary>
     public class AutenticadoAttribute : ActionFilterAttribute
     {
         /// <summary>

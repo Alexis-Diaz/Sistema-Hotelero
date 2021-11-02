@@ -1433,6 +1433,9 @@ opcion "Cuenta" del navbar y que se ubique a la par del icono*/
     margin: 3px;
     background-color: rgb(255 250 166);
 }
+#modal-progress{
+    visibility:hidden;
+}
 .btn {
     margin: 3px;
 }

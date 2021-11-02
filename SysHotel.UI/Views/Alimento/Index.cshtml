@@ -95,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            y += 4;/*Aqui se indica cuantas tarjetas mostrar por fila. Se debe modifixcar*/
+            y += 4;/*Aqui se indica cuantas tarjetas mostrar por fila. Se debe modificar*/
         }
         else
         {
@@ -143,7 +143,7 @@
 }
 <!--Estructura del modal-->
 <div id="modal-agregar" style="display:none; overflow:auto;">
-    @using (Html.BeginForm("SetCookie", "Alimento",FormMethod.Post))
+    @using (Html.BeginForm("VerCesta", "Alimento", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         <h1 class="title-modal center green lighten-3">Completa los siguientes campos</h1>
@@ -151,50 +151,55 @@
             <div class="col s12 m12 l6">
                 <fieldset>
                     <legend>Datos de la reserva</legend>
-                    <label for="input-modal-idReservacion" class="label-modal t5">Ingresa el ID de la reserva</label><input id="input-modal-idReservacion" name="idReservacion" type="number" class="input-modal" placeholder="Ejemplo (345)" /><span class="btn btn-small btn-modal" onclick="idReservacion();"><a>Buscar</a></span><br />
-                    <label for="input-modal-nombreCliente" class="label-modal t5">Cliente</label><input id="input-modal-nombreCliente" name="nombreCliente" type="text" class="input-modal" readonly /><br />
-                    <label for="input-modal-numeroHabitacion" class="label-modal t5">Numero de habitación</label><input id="input-modal-numeroHabitacion" name="numeroHabitacion" type="number" class="input-modal" readonly /><br />
-                    <label for="input-modal-diaEntrada" class="label-modal t5">Día Entrada</label><input id="input-modal-diaEntrada" name="diaEntrada" type="text" class="input-modal" readonly /><br />
-                    <label for="input-modal-diaSalida" class="label-modal t5">Día Salida</label><input id="input-modal-diaSalida" name="diaSalida" type="text" class="input-modal" readonly />
+
+                   
+                    <label for="input-modal-idReservacion" class="label-modal t5">Ingresa el código de la reserva</label><input id="input-modal-idReservacion" name="id" type="number" class="input-modal" placeholder="Ejemplo (345)" /><span class="btn btn-small btn-modal" onclick="idReservacion();"><a>Buscar</a></span><br />
+
+                   
+                    <label for="input-modal-nombreCliente" class="label-modal t5">Cliente</label><input id="input-modal-nombreCliente" type="text" class="input-modal" readonly /><br />
+                    <label for="input-modal-numeroHabitacion" class="label-modal t5">Numero de habitación</label><input id="input-modal-numeroHabitacion" type="number" class="input-modal" readonly /><br />
+                    <label for="input-modal-diaEntrada" class="label-modal t5">Día Entrada</label><input id="input-modal-diaEntrada" type="text" class="input-modal" readonly /><br />
+                    <label for="input-modal-diaSalida" class="label-modal t5">Día Salida</label><input id="input-modal-diaSalida" type="text" class="input-modal" readonly />
                     <div id="modal-info"></div>
+                    <div id="modal-progress"></div>
                 </fieldset>
-                
+
             </div>
             <div class="col s12 m12 l6">
                 <fieldset>
                     <legend>Información del alimento</legend>
                     <input id="input-modal-idAlimento" name="idAlimento" type="number" hidden />
-                    <label for="input-modal-nombreAlimento" class="label-modal t5">Nombre</label><input id="input-modal-nombreAlimento" name="nombreAlimento" type="text" class="input-modal" readonly /><br />
-                    <label for="input-modal-precio" class="label-modal t5">Precio</label><input id="input-modal-precio" name="precio" type="text" class="input-modal" readonly />
+                    <label for="input-modal-nombreAlimento" class="label-modal t5">Nombre</label><input id="input-modal-nombreAlimento" type="text" class="input-modal" readonly /><br />
+                    <label for="input-modal-precio" class="label-modal t5">Precio</label><input id="input-modal-precio" type="text" class="input-modal" readonly />
                 </fieldset>
             </div>
 
             <div class="col s12 m12 l6">
                 <fieldset>
                     <legend>Información sobre el pedido</legend>
-                    <label class="label-modal t5">Día</label><input id="input-modal-dia" name="dia" type="date" class="input-modal" /><br />
+                    <label class="label-modal t5">Día</label><input id="input-modal-dia" type="date" class="input-modal" /><br />
                     <label class="label-modal t5">Tiempo de comida</label>
-                    <select id="select-modal-tiempo" name="tiempoComida">
+                    <select id="select-modal-tiempo">
                         <option selected>Seleccionar</option>
                         <option value="1">Desayuno</option>
                         <option value="2">Almuerzo</option>
                         <option value="3">Cena</option>
                     </select><br />
-                    <label class="label-modal t5">Cantidad</label><input id="input-modal-cantidad" name="cantidad" type="number" class="input-modal" onchange="calcularPrecio();" /><br />
-                    <label class="label-modal t5">Subtotal</label><input id="input-modal-subtotal" name="subtotal" type="text" class="input-modal" />
+                    <label class="label-modal t5">Cantidad</label><input id="input-modal-cantidad" type="number" class="input-modal" onchange="calcularPrecio();" /><br />
+                    <label class="label-modal t5">Subtotal</label><input id="input-modal-subtotal" type="text" class="input-modal" readonly/>
                 </fieldset>
             </div>
         </div>
         <div class="row">
             <div class="col s12 ">
-                <span id="btn-modal-cancelar" class="btn waves-effect waves-light" onclick="closeModal();"><a class="white-text">Cancelar</a></span>
-                <button id="btn-modal-comprar" class="btn waves-effect waves-light right">Comprar</button>
+                <span id="btn-modal-cancelar" class="btn waves-effect waves-light" onclick="closeModal();"><a class="white-text">Volver</a></span>
+                <button type="submit" class="btn waves-effect waves-light right">Ver Cesta</button>
                 <span id="btn-modal-cesta" class="btn waves-effect waves-light" onclick="añadirACarritoDeCompra();"><a class="white-text">Añadir a la cesta y seguir comprando</a></span>
             </div>
         </div>
     }
 
-</div>
+    </div>
 <!--Fin modal-->
 <br />
 <br />
@@ -272,26 +277,21 @@
             document.getElementById("input-modal-precio").value = "$ "+precio;
         }
 
-        //cierra el modal y borra los datos ingresados
+        //cierra el modal 
         function closeModal() {
+            limpiarDatosDeCompra();
             let modal = document.getElementById("modal-agregar");
             modal.style.display = "none";
-            limpiarModal();
         }
 
-        function limpiarModal() {
-            document.getElementById("input-modal-idReservacion").value = "";
-            document.getElementById("input-modal-idAlimento").value = "";
-            document.getElementById("input-modal-nombreCliente").value = "";
-            document.getElementById("input-modal-numeroHabitacion").value = "";
-            document.getElementById("input-modal-dia").value = "";
-            document.getElementById("input-modal-cantidad").value = "";
-            document.getElementById("input-modal-subtotal").value = "";
-            document.getElementById("input-modal-diaEntrada").value = "";
-            document.getElementById("input-modal-diaSalida").value = "";
-            document.getElementById("input-modal-nombreAlimento").value = "";
-            document.getElementById("input-modal-precio").value = "";
+
+        //Eliminar todos los datos de la compra
+        function EliminarCarritoDeCompra() {
+            limpiarDatosReserva();
+            limpiarDatosDeCompra();
         }
+
+        //borra los datos solo de la reserva ingresados en el modal
         function limpiarDatosReserva() {
             document.getElementById("input-modal-idReservacion").value = "";
             document.getElementById("input-modal-nombreCliente").value = "";
@@ -299,71 +299,105 @@
             document.getElementById("input-modal-diaEntrada").value = "";
             document.getElementById("input-modal-diaSalida").value = "";
         }
-       //Recuperacion del id ingresado
+
+        //borra los datos ingresados en el modal
+        function limpiarDatosDeCompra() {
+            document.getElementById("input-modal-dia").value = "";
+            document.getElementById("input-modal-cantidad").value = "";
+            document.getElementById("input-modal-subtotal").value = "";
+            document.getElementById("input-modal-idAlimento").value = "";
+            document.getElementById("input-modal-nombreAlimento").value = "";
+            document.getElementById("input-modal-precio").value = "";
+        }
+
+        //peticion al servidor por medio de AJAX
+        const obtenerReserva = id => new Promise((resolve, reject) => {
+            const ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function () {
+                let valor = ajax.readyState;
+                let info = document.getElementById("modal-progress");
+
+                switch (valor) {
+                    case 1:
+                        info.style.visibility = "visible";
+
+                        info.innerHTML = "<div class='progress'><div class='determinate' style ='width: 25%'></div ></div >";
+                        break;
+                    case 2:
+                        info.style.visibility = "visible";
+
+                        info.innerHTML = "<div class='progress'><div class='determinate' style ='width: 50%'></div ></div >";
+                        break;
+                    case 3:
+                        info.style.visibility = "visible";
+
+                        info.innerHTML = "<div class='progress'><div class='determinate' style ='width: 75%'></div ></div >";
+                        break;
+                    case 4:
+                        info.style.visibility = "visible";
+                        info.innerHTML = "<div class='progress'><div class='determinate' style ='width: 100%'></div ></div >";
+                        ajax.onload = function () {
+                            if (ajax.status == 200) {
+                                resolve(JSON.parse(ajax.responseText));
+
+                                //let date1 = formatearFecha(reservaEncontrada.DiaEntrada);
+                                //let date2 = formatearFecha(reservaEncontrada.DiaSalida);
+                            } else {
+                                reject(Error(ajax.statusText));
+                            }
+                        }
+                        break;
+                }
+            }
+            ajax.onerror = (error) => {
+                reject(error);
+            }
+            ajax.open("GET", `Reservacion?id=${id}`, true);
+            ajax.send();
+        });
+
+        //Recuperacion del codigo de reserva ingresado
         function idReservacion() {
             const id = document.getElementById("input-modal-idReservacion").value;
             if (id > 0) {
-                cargarDatosDeReserva(id);
+                obtenerReserva(id)
+                    .then(
+                        respuesta => mostrarDatosEnModal(respuesta),
+                        error => mostrarDatosEnModal(error));
             } else {
                 limpiarDatosReserva();
                 let info = document.getElementById("modal-info");
                 info.style.visibility = "visible";
                 info.innerHTML = "<strong>Debe ingresar un id válido</strong><span onclick='spanClose();' class='right spanClose'>&#10060;</span>";
             }
-           
         }
+
+        function mostrarDatosEnModal(res) {
+
+            if (res.IdReservacion > 0) {
+                document.getElementById("modal-progress").style.visibility = "hidden";
+                document.getElementById("input-modal-idReservacion").setAttribute("readonly", true);
+                //Llenamos los controles del formulario con la información obtenida
+                document.getElementById("input-modal-nombreCliente").value = res["NombreCliente"];
+                document.getElementById("input-modal-numeroHabitacion").value = res["NumeroHabitacion"];
+                document.getElementById("input-modal-diaEntrada").value = res["DiaEntrada"];
+                document.getElementById("input-modal-diaSalida").value = res["DiaSalida"];
+
+            } else {
+                //Le notificamos al usuario que nos existe la reserva
+                document.getElementById("modal-progress").style.visibility = "hidden";
+                let info = document.getElementById("modal-info");
+                info.style.visibility = "visible";
+                info.innerHTML = `<strong>Reservacion no encontrada. Error: ${res}</strong><span onclick="spanClose();" class="right spanClose">&#10060;</span>`;
+            }
+        }
+
         function spanClose() {
             let info = document.getElementById("modal-info");
             info.style.visibility = "hidden";
         }
-         //peticion al servidor por medio de AJAX
-        function cargarDatosDeReserva(id) {
-            const ajax = new XMLHttpRequest();
-            ajax.onreadystatechange = () => {
-                let info = document.getElementById("modal-info");
-                switch (this.readyState) {
-                    case 0:
-                        info.innerHTML = `<div class="progress">< div class="determinate" style = "width: 0%" ></div ></div >`;
-                        break;
-                    case 1:
-                        info.innerHTML = `<div class="progress">< div class="determinate" style = "width: 25%" ></div ></div >`;
-                        break;
-                    case 2:
-                        info.innerHTML = `<div class="progress">< div class="determinate" style = "width: 50%" ></div ></div >`;
-                        break;
-                    case 3:
-                        info.innerHTML = `<div class="progress">< div class="determinate" style = "width: 75%" ></div ></div >`;
-                        break;
-                    case 4:
-                        if (this.status == 400) {
-                            ajax.onload = function () {
-                                info.innerHTML = `<div class="progress">< div class="determinate" style = "width: 100%" ></div ></div >`;
-                                const reservaEncontrada = JSON.parse(ajax.responseText);
-                                //let date1 = formatearFecha(reservaEncontrada.DiaEntrada);
-                                //let date2 = formatearFecha(reservaEncontrada.DiaSalida);
 
-                                if (reservaEncontrada.IdReservacion > 0) {
-                                    console.log(reservaEncontrada);
-                                    //Llenamos los controles del formulario con la información obtenida
-                                    document.getElementById("input-modal-nombreCliente").value = reservaEncontrada["NombreCliente"];
-                                    document.getElementById("input-modal-numeroHabitacion").value = reservaEncontrada["NumeroHabitacion"];
-                                    document.getElementById("input-modal-diaEntrada").value = reservaEncontrada["DiaEntrada"];
-                                    document.getElementById("input-modal-diaSalida").value = reservaEncontrada["DiaSalida"];
-                                } else {
-                                    limpiarDatosReserva();
-                                    let info = document.getElementById("modal-info");
-                                    info.style.visibility = "visible";
-                                    info.innerHTML = "<strong>Reservacion no encontrada</strong><span onclick='spanClose();' class='right spanClose'>&#10060;</span>";
-                                }
-                            }
-                        }
-                        break;
-                }
-            }
-           
-            ajax.open("GET",`Reservacion?id=${id}`);
-            ajax.send();
-        }
+        
 
         //Se puede formatear la fecha si se usa con input type date
         //ya que tiene el formato yyyy/MM/dd
@@ -371,6 +405,7 @@
         //    let time = fecha.split("/");
         //    return `${time[2]}-${time[1]}-${time[0]}`;
         //}
+
         //Calcula el precio de la compra
         function calcularPrecio() {
             let precio = document.getElementById("input-modal-precio").value;
@@ -378,10 +413,40 @@
             
             let cantidad = document.getElementById("input-modal-cantidad").value;
             let subtotal = precio * cantidad;
-            document.getElementById("input-modal-subtotal").value ="$ " + subtotal.toFixed(2);//toPrecision aproxima el numero, le decimos que sean tres
+            document.getElementById("input-modal-subtotal").value ="$ " + subtotal.toFixed(2);//toPrecision aproxima el numero, le decimos que sean dos decimales
         }
 
-        function añadirACarritoDeCompra() {
+        const GuardarArticuloEnCarritoDeCompra = () => new Promise((resolve, reject) => {
+            //const idReservacion = document.getElementById("input-modal-idReservacion").value;
+            //const nombreCliente = document.getElementById("input-modal-nombreCliente").value;
+            //const numeroHabitacion = document.getElementById("input-modal-numeroHabitacion").value;
+            //const diaEntrada = document.getElementById("input-modal-diaEntrada").value;
+            //const diaSalida = document.getElementById("input-modal-diaSalida").value;
+            //const idAlimento = document.getElementById("input-modal-idAlimento").value;
+            //const nombreAlimento = document.getElementById("input-modal-nombreAlimento").value;
+            //const precio = document.getElementById("input-modal-precio").value;
+            //const dia = document.getElementById("input-modal-dia").value;
+            //const tiempoComida = document.getElementById("select-modal-tiempo").value;
+            //const cantidad = document.getElementById("input-modal-cantidad").value;
+            //const subtotal = document.getElementById("input-modal-subtotal").value;
+
+            //const articuloCompra = {
+            //    idReserva: idReservacion,
+            //    nombreCliente: nombreCliente,
+            //    numeroHabitacion: numeroHabitacio,
+            //    diaEntrada: diaEntrada,
+            //    diaSalida: diaSalida,
+            //    idAlimento: idAlimento,
+            //    nombreAlimento: nombreAlimento,
+            //    precio: precio,
+            //    dia: dia,
+            //    tiempoComida: tiempoComida,
+            //    cantidad: cantida,
+            //    subtotal: subtotal
+            //}
+            //const jsonArticulo = JSON.stringify(articuloCompra);
+
+
             const idReservacion = document.getElementById("input-modal-idReservacion").value;
             const nombreCliente = document.getElementById("input-modal-nombreCliente").value;
             const numeroHabitacion = document.getElementById("input-modal-numeroHabitacion").value;
@@ -394,31 +459,48 @@
             const tiempoComida = document.getElementById("select-modal-tiempo").value;
             const cantidad = document.getElementById("input-modal-cantidad").value;
             const subtotal = document.getElementById("input-modal-subtotal").value;
-            
-
             const ajax = new XMLHttpRequest();
             ajax.onload = function () {
-                let response = JSON.parse(ajax.responseText);
-                const data = response.split("%");
-
-                console.log(data);
-                if (data[1] > 0) {
-                    closeModal();
-                    crearNotificacion(data[0]);
+                if (ajax.readyState == 4 && ajax.status == 200) {
+                    resolve(JSON.parse(ajax.responseText));
                    
-                }else{
-                    let info = document.getElementById("modal-info");
-                    info.style.visibility = "visible";
-                    info.innerHTML = `<strong>${data[0]}</strong><span onclick='spanClose();' class='right spanClose'>&#10060;</span>`;
+                } else {
+                    reject(Error(ajax.statusText));
                 }
-            };
-            ajax.open("POST","SetCookie");
+            }
+
+            ajax.open("POST", "SetCookie", true);
             ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            ajax.onerror = (error) => reject(error);
             ajax.send(`idReservacion=${idReservacion}&nombreCliente=${nombreCliente}&numeroHabitacion=${numeroHabitacion}&diaEntrada=${diaEntrada}&diaSalida=${diaSalida}&idAlimento=${idAlimento}&nombreAlimento=${nombreAlimento}&precio=${precio}&dia=${dia}&tiempoComida=${tiempoComida}&cantidad=${cantidad}&subtotal=${subtotal}`);
-            //ajax.send();
-            
+
+        });
+
+        function añadirACarritoDeCompra() {
+            GuardarArticuloEnCarritoDeCompra()
+            .then(
+                res => respuestaHTML(res),
+                err => respuestaHTML(err)
+            )
         }
 
+        function respuestaHTML(res) {
+            console.log(res);
+            //let response = JSON.parse(res);
+            const data = res.split("%");
+
+            console.log(data);
+            if (data[1] == 1) {
+                closeModal();
+                crearNotificacion(data[0]);
+            } else {
+                let info = document.getElementById("modal-info");
+                info.style.visibility = "visible";
+                info.innerHTML = `<strong>${data[0]}</strong><span onclick='spanClose();' class='right spanClose'>&#10060;</span>`;
+            
+            }
+        }
+        
         //Propiedades personalizadas para las toast o mensajes emergentes
         function crearNotificacion(mensaje) {
             const toastHTML = `<span>${mensaje}</span>`;
@@ -435,7 +517,5 @@
             }
             notificacion();
         }
-
-
     </script>
 }
